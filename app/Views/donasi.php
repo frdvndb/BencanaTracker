@@ -139,10 +139,10 @@
                     <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Pencarian Relawan</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Histori Laporan</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
                     </div>
                     <div class="bottom-sidebar">
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Farid</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><?= $username ?></a></li>
                     </div>
                 </ul>
             </div>
