@@ -15,7 +15,6 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         padding: 20px;
-        margin-top: 10px;
         background-color: #1546BA;
     }
 
@@ -129,6 +128,11 @@
         background-color: white;
         font-size: 25px;
     }
+        
+    body{
+        background-color: #E5E5E5;
+    }
+
     </style>
 </head>
 
@@ -159,7 +163,7 @@
             </div>
 
             <div class="col-md-10 card">
-                <h2> Notifikasi Laporan </h2>
+                <h2> Notifikasi </h2>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <?php
             $daftarnama = array(

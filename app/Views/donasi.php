@@ -15,7 +15,6 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         padding: 20px;
-        margin-top: 150px;
         background-color: #1546BA;
     }
 
@@ -132,6 +131,11 @@
     .background-proses {
         background-color: #00cc99;
     }
+        
+    body{
+        background-color: #E5E5E5;
+    }
+
     </style>
 </head>
 
@@ -144,11 +148,11 @@
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
                         <a class="btn btn-primary laporButton" style="color: #FF5757;"
-                            href="<?= base_url(''); ?>">LAPORKAN<br> BENCANA</a>
+                            href="<?= base_url('buat_laporan'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Notifikasi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian
                                 Relawan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
@@ -170,7 +174,7 @@
                     <div class="mt-3">
                         <label class="form-label">Jumlah uang:</label>
                         <input type="text" name="jumlah" placeholder="Masukkan jumlah uang" required
-                            class="form-control col-form-label-sm background-input">
+                            class="form-control col-form-label-sm">
                     </div>
                     <div class="mt-3">
                         <label class="form-label">Metode Pembayaran</label> <br>
@@ -178,7 +182,7 @@
                         <button class="rounded">BRI</button>
                         <div class="mt-3">
                             <input type="text" name="nomor_rekening" placeholder="Nomor Rekening" required
-                                class="form-control col-form-label-sm background-input"><br>
+                                class="form-control col-form-label-sm "><br>
                         </div>
                     </div>
                     <div class="mt-3">

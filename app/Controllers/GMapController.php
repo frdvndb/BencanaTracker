@@ -85,4 +85,11 @@ class GMapController extends Controller
     {
         return view('laporan');
     }
+
+    public function notifikasi()
+    {
+        return view('notifikasi', [
+            "username" => session()->get('username')
+        ]);
+    }
 }
