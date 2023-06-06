@@ -16,7 +16,7 @@ class GMapController extends Controller
             // Menampilkan halaman beranda
             // serta memanggil nilai variabel
             // yang diperlukan oleh halaman
-
+            
 
         $database = \Config\Database::connect();
         $queryBuilder = $database->table('user_locations');
@@ -61,6 +61,7 @@ class GMapController extends Controller
             'gambarProfil' => $mahasiswa->getGambarProfil(),
             'github' => $mahasiswa->getGithub(),
             'gambarBackground' => $mahasiswa->getgambarBackground(),
+            "username" => session()->get('username'),
         ], $location));
         
         
@@ -68,6 +69,8 @@ class GMapController extends Controller
 
     public function donasi()
     {
-        return view('donasi');
+        return view('donasi', [
+            "username" => session()->get('username')
+        ]);
     }
 }

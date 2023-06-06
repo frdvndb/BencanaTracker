@@ -139,10 +139,10 @@
                     <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Pencarian Relawan</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Histori Laporan</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
                     </div>
                     <div class="bottom-sidebar">
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Farid</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><?= $username ?></a></li>
                     </div>
                 </ul>
             </div>
@@ -153,12 +153,14 @@
                 <form action="" method="post">
 						<div class="mt-3">
 							<label class="form-label">Jumlah uang:</label>
-              <input type="text" name="jumlah" placeholder="masukkan jumlah uang" required class="form-control col-form-label-sm background-input"><br>
+              <input type="text" name="jumlah" placeholder="Masukkan jumlah uang" required class="form-control col-form-label-sm background-input">
 						</div>
-            <div>
+            <div class="mt-3">
 							<label class="form-label">Metode Pembayaran</label> <br>
               <button class="rounded">BNI</button>
                 <button class="rounded">BRI</button>
+                <div class="mt-3">
+                <input type="text" name="nomor_rekening" placeholder="Nomor Rekening" required class="form-control col-form-label-sm background-input"><br></div>
 						</div>
             <div class="mt-3">
               <center><input type="submit" name="proses" value="Proses" class="btn btn-outline-success btn-lg text-white background-proses"></center>
