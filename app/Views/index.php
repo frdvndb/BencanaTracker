@@ -25,7 +25,6 @@
         font-size: 1.5rem;
         height: 100vh;
         position: relative;
-
       }
 
       .sidebar a {
