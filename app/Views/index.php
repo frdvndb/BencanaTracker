@@ -20,7 +20,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: #1546BA;
+        background-color: red;
         padding: 20px;
         font-size: 1.5rem;
         height: 100vh;
