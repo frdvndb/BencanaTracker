@@ -46,6 +46,8 @@ $routes->post('/register', 'RegisterController::buat');
 
 $routes->get('/buat_laporan', 'BuatLaporanController::index');
 $routes->post('/buat_laporan', 'BuatLaporanController::buat');
+
+$routes->get('/histori_laporan', 'HistoriLaporanController::index');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

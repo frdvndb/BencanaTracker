@@ -11,21 +11,16 @@
     <style>
     .card {
         margin: auto;
-        width: 30%;
+        width: 75%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         padding: 20px;
-        margin-top: 150px;
+        margin-top: 10px;
         background-color: #1546BA;
     }
 
     .container-fluid {
         max-width: 100%;
-    }
-
-    #gmapBlock {
-        width: 100%;
-        height: 100%;
     }
 
     .sidebar {
@@ -67,18 +62,13 @@
         color: #343a40;
     }
 
-    .background-input {
-        background-color: #1546BA;
-        color: white;
+    img {
+        width: 50px;
+        height: 50px;
     }
 
-    button {
-        background-color: #1546BA;
-        color: white;
-        border-color: white;
-    }
 
-    h1 {
+    h2 {
         color: white;
     }
 
@@ -129,8 +119,15 @@
 
     }
 
-    .background-proses {
-        background-color: #00cc99;
+    .card2 {
+        margin: auto;
+        width: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 10px;
+        background-color: white;
+        font-size: 25px;
     }
     </style>
 </head>
@@ -144,7 +141,7 @@
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
                         <a class="btn btn-primary laporButton" style="color: #FF5757;"
-                            href="<?= base_url(''); ?>">LAPORKAN<br> BENCANA</a>
+                            href="<?= base_url('buat_laporan'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
@@ -162,33 +159,31 @@
             </div>
 
             <div class="col-md-10 card">
-                <center>
-                    <h1> Donasi </h1>
-                </center>
+                <h2> Histori Laporan </h2>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <form action="" method="post">
-                    <div class="mt-3">
-                        <label class="form-label">Jumlah uang:</label>
-                        <input type="text" name="jumlah" placeholder="Masukkan jumlah uang" required
-                            class="form-control col-form-label-sm background-input">
-                    </div>
-                    <div class="mt-3">
-                        <label class="form-label">Metode Pembayaran</label> <br>
-                        <button class="rounded">BNI</button>
-                        <button class="rounded">BRI</button>
-                        <div class="mt-3">
-                            <input type="text" name="nomor_rekening" placeholder="Nomor Rekening" required
-                                class="form-control col-form-label-sm background-input"><br>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <center><input type="submit" name="proses" value="Proses"
-                                class="btn btn-outline-success btn-lg text-white background-proses"></center>
-                    </div>
+                <?php
+            $daftarnama = array(
+              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
+              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
+              array("nama" => "Gempa Bumi", "gambar" => "/assets/img/background.jpg"),
+              array("nama" => "Kecelakaan", "gambar" => "/assets/img/background.jpg"),
+              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
+            );
+
+            foreach ($daftarnama as $item) { 
+              $nama = $item['nama'];
+              $gambar = $item['gambar']
+              ?>
+                <div class="card2">
+                    <img src="<?php echo $gambar; ?>" class="rounded-circle">
+                    <span class="nama">&nbsp;<?php echo $nama; ?></span>
+                </div>
+                <?php
+            }
+            ?>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
