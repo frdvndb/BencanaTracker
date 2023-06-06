@@ -179,11 +179,12 @@
                                 title: 'Clicked Location'
                             });
 
-                            var locationName = prompt("Bencana yang terjadi:");
+
+                            var locationName = "";
                             var latitude = clickedLocation.lat();
                             var longitude = clickedLocation.lng();
 
-                            if (locationName !== null && locationName !== "") {
+                            if (latitude !== null && latitude !== "") {
                                 localStorage.setItem('clickedLocation', JSON.stringify({
                                     latitude: latitude,
                                     longitude: longitude,
