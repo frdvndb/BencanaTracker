@@ -128,7 +128,7 @@
                         <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Notifikasi</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian
                                 Relawan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Histori Laporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
                     </div>
