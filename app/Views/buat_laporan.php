@@ -15,7 +15,7 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         padding: 20px;
-        margin-top: 120px;
+        
         background-color: #1546BA;
     }
 
@@ -204,6 +204,10 @@
                     <div class="form-group">
                         <label for="info">Detail:</label>
                         <textarea id="info" name="info" rows="4" cols="40" class="form-control"></textarea>
+                    </div><br>
+                    <div class="form-group">
+                        <label for="image">Upload Gambar:</label>
+                        <input type="file" id="image" name="image" class="form-control">
                     </div><br>
                     <div class="text-center">
                         <input type="submit" value="Submit" class="btn btn-primary background-proses"
