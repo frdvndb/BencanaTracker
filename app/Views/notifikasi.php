@@ -9,13 +9,18 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-    .container-fluid {
-        max-width: 100%;
+    .card {
+        margin: auto;
+        width: 75%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 10px;
+        background-color: #1546BA;
     }
 
-    #gmapBlock {
-        width: 100%;
-        height: 100%;
+    .container-fluid {
+        max-width: 100%;
     }
 
     .sidebar {
@@ -28,6 +33,7 @@
         font-size: 1.5rem;
         height: 100vh;
         position: relative;
+
     }
 
     .sidebar a {
@@ -56,12 +62,14 @@
         color: #343a40;
     }
 
-    h1 {
-        margin-top: 0;
-        margin-bottom: 0.5rem;
-        font-weight: 700;
-        line-height: 1.2;
-        font-size: calc(1.725rem + 5.7vw);
+    img {
+        width: 50px;
+        height: 50px;
+    }
+
+
+    h2 {
+        color: white;
     }
 
     .text-primary {
@@ -81,7 +89,8 @@
         color: white;
     }
 
-    .h2o {
+    .h2o,
+    label {
         color: #FF5757;
     }
 
@@ -109,6 +118,17 @@
         background-color: #FF5757;
 
     }
+
+    .card2 {
+        margin: auto;
+        width: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 10px;
+        background-color: white;
+        font-size: 25px;
+    }
     </style>
 </head>
 
@@ -125,7 +145,7 @@
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Notifikasi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian
                                 Relawan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
@@ -137,86 +157,30 @@
                     </div>
                 </ul>
             </div>
-            <!-- Bagian konten -->
-            <div class="col-md-10 content">
-                <div id="gmapBlock"></div>
+
+            <div class="col-md-10 card">
+                <h2> Notifikasi Laporan </h2>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script>
-                $(function() {
-                    var script = document.createElement('script');
-                    script.src =
-                        "https://maps.googleapis.com/maps/api/js?key=AIzaSyA85_vUbvIQtqVIFFKYjESeKJpK_rr_rVg&sensor=false&callback=initialize";
-                    document.body.appendChild(script);
-                });
+                <?php
+            $daftarnama = array(
+              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
+              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
+              array("nama" => "Gempa Bumi", "gambar" => "/assets/img/background.jpg"),
+              array("nama" => "Kecelakaan", "gambar" => "/assets/img/background.jpg"),
+              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
+            );
 
-                function initialize() {
-                    var map;
-                    var bounds = new google.maps.LatLngBounds();
-                    var mapOptions = {
-                        mapTypeId: 'roadmap'
-                    };
-
-                    map = new google.maps.Map(document.getElementById("gmapBlock"), mapOptions);
-                    map.setTilt(45);
-
-                    var locationMarkers = JSON.parse(`<?php echo ($locationMarkers); ?>`);
-
-                    var locInfo = JSON.parse(`<?php echo ($locInfo); ?>`);
-
-                    var infoWindow = new google.maps.InfoWindow(),
-                        marker, i;
-                    var clickedMarker = null;
-
-                    for (i = 0; i < locationMarkers.length; i++) {
-                        var position = new google.maps.LatLng(locationMarkers[i][1], locationMarkers[i][2]);
-                        bounds.extend(position);
-                        marker = new google.maps.Marker({
-                            position: position,
-                            map: map,
-                            title: locationMarkers[i][0]
-                        });
-
-                            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                                return function() {
-                                    infoWindow.setContent(locInfo[i][0] + '<a href="<?= base_url("laporan?index=") ?>' + i + '">Detail Bencana</a>');                                    infoWindow.open(map, marker);
-                                    infoWindow.open(map, marker);
-                                }
-                            })(marker, i));
-
-                        map.fitBounds(bounds);
-                    }
-
-                    google.maps.event.addListener(map, 'click', function(event) {
-                        var clickedLocation = event.latLng;
-                        var marker = new google.maps.Marker({
-                            position: clickedLocation,
-                            map: map,
-                            title: 'Clicked Location'
-                        });
-
-
-                        var locationName = "";
-                        var latitude = clickedLocation.lat();
-                        var longitude = clickedLocation.lng();
-
-                        if (latitude !== null && latitude !== "") {
-                            localStorage.setItem('clickedLocation', JSON.stringify({
-                                latitude: latitude,
-                                longitude: longitude,
-                                locationName: locationName
-                            }));
-                            window.location.href = 'buat_laporan';
-                        } else {
-                            marker.setMap(null);
-                        }
-                    });
-
-                    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-                        this.setZoom(5);
-                        google.maps.event.removeListener(boundsListener);
-                    });
-                }
-                </script>
+            foreach ($daftarnama as $item) { 
+              $nama = $item['nama'];
+              $gambar = $item['gambar']
+              ?>
+                <div class="card2">
+                    <img src="<?php echo $gambar; ?>" class="rounded-circle">
+                    <span class="nama">&nbsp;<?php echo $nama; ?></span>
+                </div>
+                <?php
+            }
+            ?>
             </div>
         </div>
     </div>

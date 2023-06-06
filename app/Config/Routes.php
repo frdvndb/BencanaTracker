@@ -48,6 +48,8 @@ $routes->get('/buat_laporan', 'BuatLaporanController::index');
 $routes->post('/buat_laporan', 'BuatLaporanController::buat');
 
 $routes->get('/laporan', 'GMapController::laporan');
+
+$routes->get('/histori_laporan', 'HistoriLaporanController::index');
 /*
  * --------------------------------------------------------------------
  * Additional Routing
