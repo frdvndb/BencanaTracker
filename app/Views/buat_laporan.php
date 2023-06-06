@@ -14,7 +14,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     padding: 20px;
-    margin-top: 150px;
+    margin-top: 120px;
     background-color: #1546BA;
  }
 
@@ -124,6 +124,16 @@
     </style>
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var clickedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
+
+            // Pre-fill the input fields with the clicked location data
+            document.getElementById('latitude').value = clickedLocation.latitude;
+            document.getElementById('longitude').value = clickedLocation.longitude;
+            document.getElementById('locationName').value = clickedLocation.locationName;
+        });
+    </script>
     <div class="container-fluid">
         <div class="row">
             <!-- Bagian sidebar -->
@@ -148,24 +158,69 @@
             </div>
 
             <div class="col-md-10 card">
-              <center><h1> Donasi </h1></center>
+              <center><h1> Buat Laporan </h1></center>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <form action="" method="post">
-						<div class="mt-3">
-							<label class="form-label">Jumlah uang:</label>
-              <input type="text" name="jumlah" placeholder="Masukkan jumlah uang" required class="form-control col-form-label-sm background-input">
-						</div>
-            <div class="mt-3">
-							<label class="form-label">Metode Pembayaran</label> <br>
-              <button class="rounded">BNI</button>
-                <button class="rounded">BRI</button>
-                <div class="mt-3">
-                <input type="text" name="nomor_rekening" placeholder="Nomor Rekening" required class="form-control col-form-label-sm background-input"><br></div>
-						</div>
-            <div class="mt-3">
-              <center><input type="submit" name="proses" value="Proses" class="btn btn-outline-success btn-lg text-white background-proses"></center>
-						</div>
+                <form action="buat_laporan" method="POST">
+                    <div class="form-group">
+                        <label for="location_name">Bencana yang terjadi:</label>
+                        <select id="location_name" name="location_name" onchange="checkCustomLocation(this)" class="form-control">
+                            <option value="pilih" selected disabled>Pilih Bencana</option>
+                            <option value="bencana1">Banjir</option>
+                            <option value="bencana2">Gempa Bumi</option>
+                            <option value="bencana3">Kecelakaan</option>
+                            <option value="bencana4">Tanah Longsor</option>
+                            <option value="custom">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="padding-top: 5px;">
+                        <input type="text" id="custom_location" name="custom_location" style="display: none;" placeholder="Masukkan Bencana Yang Terjadi" class="form-control">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="latitude">Garis Lintang:</label>
+                        <input type="text" id="latitude" name="latitude" class="form-control">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="longitude">Garis Bujur:</label>
+                        <input type="text" id="longitude" name="longitude" class="form-control">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="info">Detail:</label>
+                        <textarea id="info" name="info" rows="4" cols="40" class="form-control"></textarea>
+                    </div><br>
+                    <div class="text-center">
+                        <input type="submit" value="Submit" class="btn btn-primary background-proses" style="width: 100%; max-width: 100%;">
+                    </div>
+                </form>
             </div>
-
 </body>
 </html>
+
+<script>
+    function checkCustomLocation(selectElement) {
+        var customLocationInput = document.getElementById("custom_location");
+        if (selectElement.value === "custom") {
+            customLocationInput.style.display = "block";
+            customLocationInput.required = true;
+            customLocationInput.name = "location_name"; // Change the name attribute to "location_name"
+        } else {
+            customLocationInput.style.display = "none";
+            customLocationInput.required = false;
+            customLocationInput.name = "custom_location"; // Change the name attribute to "custom_location"
+        }
+    }
+
+    document.getElementById("location_name").addEventListener("change", function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var customLocationInput = document.getElementById("custom_location");
+        if (selectedOption.value === "custom") {
+            customLocationInput.value = ""; // Clear previous input
+            customLocationInput.style.display = "block";
+            customLocationInput.required = true;
+            customLocationInput.name = "location_name"; // Change the name attribute to "location_name"
+        } else {
+            customLocationInput.style.display = "none";
+            customLocationInput.required = false;
+            customLocationInput.name = "custom_location"; // Change the name attribute to "custom_location"
+        }
+    });
+</script>

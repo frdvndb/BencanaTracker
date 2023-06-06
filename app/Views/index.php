@@ -109,18 +109,18 @@
                 <h2><span class="h2w">Bencana</span><span class="h2o">Tracker</span></h2>
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
-                        <a class="btn btn-primary laporButton" style="color: #FF5757;" href="<?= base_url(''); ?>">LAPORKAN<br> BENCANA</a>
+                        <a class="btn btn-primary laporButton" style="color: #FF5757;" href="<?= base_url('buat_laporan'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Notifikasi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Pencarian Relawan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian Relawan</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Histori Laporan</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
                     </div>
                     <div class="bottom-sidebar">
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Farid</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><?= $username ?></a></li>
                     </div>
                 </ul>
             </div>
@@ -179,17 +179,19 @@
                                 title: 'Clicked Location'
                             });
 
-                            var locationName = prompt("Bencana yang terjadi:");
+
+                            var locationName = "";
                             var latitude = clickedLocation.lat();
                             var longitude = clickedLocation.lng();
 
-                            if (locationName !== null && locationName !== "") {
-                                $.post("", {location_name: locationName, latitude: latitude, longitude: longitude}, function(data) {
-                                    // Refresh the page to update the markers
-                                    location.reload();
-                                });
+                            if (latitude !== null && latitude !== "") {
+                                localStorage.setItem('clickedLocation', JSON.stringify({
+                                    latitude: latitude,
+                                    longitude: longitude,
+                                    locationName: locationName
+                                }));
+                                window.location.href = 'buat_laporan';
                             } else {
-                                // Remove the marker if location name is not provided
                                 marker.setMap(null);
                             }
                         });
