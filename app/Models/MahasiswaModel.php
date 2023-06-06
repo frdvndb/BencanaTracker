@@ -7,7 +7,6 @@ use CodeIgniter\Model;
 // Pembuatan kelas sebagai model
 class MahasiswaModel extends Model
 {
-    // tes andra mempush mid
     // Pembuatan variabel
     protected $nama = 'M. Farid Pebrian';
     protected $nim = '2110817210015';
