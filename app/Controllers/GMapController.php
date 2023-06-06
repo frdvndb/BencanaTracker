@@ -65,4 +65,9 @@ class GMapController extends Controller
         
         
     }
+
+    public function donasi()
+    {
+        return view('donasi');
+    }
 }
