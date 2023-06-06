@@ -46,6 +46,10 @@
                     </div>
                     <div class="form-floating">
                         <input name="username" type="username" class="form-control" id="floatingInput" placeholder="Username">
+                        <label for="floatingInput">Nomor HP</label>
+                    </div>  
+                    <div class="form-floating">
+                        <input name="username" type="username" class="form-control" id="floatingInput" placeholder="Username">
                         <label for="floatingInput">Username</label>
                     </div>        
                     <button type="submit" class="w-100 mt-2 btn btn-success">Buat</button>
