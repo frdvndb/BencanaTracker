@@ -36,6 +36,8 @@ $routes->get('/beranda', 'GMapController::showMap');
 
 $routes->get('/donasi', 'GMapController::donasi');
 
+$routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');
+
 $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::login');
 

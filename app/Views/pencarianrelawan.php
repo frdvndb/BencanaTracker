@@ -144,7 +144,7 @@
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
                     </div>
                     <div class="bottom-sidebar">
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Farid</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><?= $username ?></a></li>
                     </div>
                 </ul>
             </div>

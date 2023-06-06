@@ -73,4 +73,11 @@ class GMapController extends Controller
             "username" => session()->get('username')
         ]);
     }
+
+    public function pencarianrelawan()
+    {
+        return view('pencarianrelawan', [
+            "username" => session()->get('username')
+        ]);
+    }
 }
