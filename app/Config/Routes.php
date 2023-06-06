@@ -36,11 +36,16 @@ $routes->get('/beranda', 'GMapController::showMap');
 
 $routes->get('/donasi', 'GMapController::donasi');
 
+$routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');
+
 $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::login');
 
 $routes->get('/register', 'RegisterController::index');
 $routes->post('/register', 'RegisterController::buat');
+
+$routes->get('/buat_laporan', 'BuatLaporanController::index');
+$routes->post('/buat_laporan', 'BuatLaporanController::buat');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

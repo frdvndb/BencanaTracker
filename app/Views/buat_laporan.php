@@ -124,6 +124,16 @@
     </style>
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var clickedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
+
+            // Pre-fill the input fields with the clicked location data
+            document.getElementById('latitude').value = clickedLocation.latitude;
+            document.getElementById('longitude').value = clickedLocation.longitude;
+            document.getElementById('locationName').value = clickedLocation.locationName;
+        });
+    </script>
     <div class="container-fluid">
         <div class="row">
             <!-- Bagian sidebar -->
@@ -148,24 +158,22 @@
             </div>
 
             <div class="col-md-10 card">
-              <center><h1> Donasi </h1></center>
+              <center><h1> Buat Laporan </h1></center>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <form action="" method="post">
-						<div class="mt-3">
-							<label class="form-label">Jumlah uang:</label>
-              <input type="text" name="jumlah" placeholder="Masukkan jumlah uang" required class="form-control col-form-label-sm background-input">
-						</div>
-            <div class="mt-3">
-							<label class="form-label">Metode Pembayaran</label> <br>
-              <button class="rounded">BNI</button>
-                <button class="rounded">BRI</button>
-                <div class="mt-3">
-                <input type="text" name="nomor_rekening" placeholder="Nomor Rekening" required class="form-control col-form-label-sm background-input"><br></div>
-						</div>
-            <div class="mt-3">
-              <center><input type="submit" name="proses" value="Proses" class="btn btn-outline-success btn-lg text-white background-proses"></center>
-						</div>
-            </div>
-
+            <form action="buat_laporan" method="POST">
+                <label for="latitude">Latitude:</label>
+                <input type="text" id="latitude" name="latitude" readonly>
+                <br>
+                <label for="longitude">Longitude:</label>
+                <input type="text" id="longitude" name="longitude" readonly>
+                <br>
+                <label for="location_name">Bencana yang terjadi:</label>
+                <input type="text" id="location_name" name="location_name">
+                <br>
+                <label for="info">Detail:</label>
+                <input type="text" id="info" name="info">
+                <br>
+                <input type="submit" value="Submit">
+            </form>
 </body>
 </html>
