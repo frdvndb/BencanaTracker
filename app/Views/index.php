@@ -163,8 +163,7 @@
 
                             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                                 return function() {
-                                    infoWindow.setContent(locInfo[i][0]);
-                                    infoWindow.open(map, marker);
+                                    infoWindow.setContent(locInfo[i][0] + '<a href="<?= base_url("laporan?index=") ?>' + i + '">Detail Bencana</a>');                                    infoWindow.open(map, marker);
                                 }
                             })(marker, i));
 
