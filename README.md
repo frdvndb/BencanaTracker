@@ -7,6 +7,4 @@ M. Farid Pebrian   (2110817210015)
 </pre>
 
 # Penjelasan Aplikasi
-<pre>
 BencanaTracker merupakan aplikasi berbasis web yang berfungsi untuk melihat dan melaporkan bencana yang terjadi.
-</pre>
