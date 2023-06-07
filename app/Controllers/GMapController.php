@@ -83,7 +83,9 @@ class GMapController extends Controller
 
     public function laporan()
     {
-        return view('laporan');
+        return view('laporan', [
+            "username" => session()->get('username')
+        ]);
     }
 
     public function notifikasi()
