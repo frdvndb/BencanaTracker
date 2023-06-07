@@ -157,7 +157,12 @@
                                 Relawan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
+                        <?php if (!$username == null) { ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
+                        <?php } else {?>
+                            <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
+                        <?php } ?>
                     </div>
                     <div class="bottom-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><?= $username ?></a></li>

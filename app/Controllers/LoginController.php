@@ -46,5 +46,17 @@ class LoginController extends BaseController
         }
     }
     
+    public function logout() {
+        session()->remove('username');
+        session()->remove('logged_in');
+        
+
+
+    
+        // Redirect to the login page or any other desired page
+        return redirect()->to(base_url('/login'));
+    }
+    
+    
     
 }

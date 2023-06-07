@@ -40,6 +40,7 @@ $routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');
 
 $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::login');
+$routes->get('/logout', 'LoginController::logout');
 
 $routes->get('/register', 'RegisterController::index');
 $routes->post('/register', 'RegisterController::buat');
