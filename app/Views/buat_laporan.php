@@ -182,7 +182,7 @@
                 </ul>
             </div>
             <?php if ($username == null) { ?>
-            <div class="col-md-10 card">
+            <div class="col-md-10 card" style=" width:75%;">
                 <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat menggunakan fitur ini!</h2>
             </div>
             <?php } else {?>
