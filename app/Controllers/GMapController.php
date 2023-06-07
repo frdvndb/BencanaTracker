@@ -80,4 +80,25 @@ class GMapController extends Controller
             "username" => session()->get('username')
         ]);
     }
+
+    public function laporan()
+    {
+        return view('laporan', [
+            "username" => session()->get('username')
+        ]);
+    }
+
+    public function laporkan_laporan()
+    {
+        return view('laporkan_laporan', [
+            "username" => session()->get('username')
+        ]);
+    }
+    
+    public function notifikasi()
+    {
+        return view('notifikasi', [
+            "username" => session()->get('username')
+        ]);
+    }
 }

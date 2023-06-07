@@ -8,7 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+    .card {
+        margin: auto;
+        width: 30%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        padding: 20px;
+        position: relative;
+        top: 50%;
+        background-color: #1546BA;
+    }
+
     .container-fluid {
         max-width: 100%;
     }
@@ -56,12 +68,24 @@
         color: #343a40;
     }
 
+    .background-input {
+        background-color: #1546BA;
+        color: white;
+    }
+
+    button {
+        background-color: #1546BA;
+        color: white;
+        border-color: white;
+    }
+
     h1 {
-        margin-top: 0;
-        margin-bottom: 0.5rem;
-        font-weight: 700;
-        line-height: 1.2;
-        font-size: calc(1.725rem + 5.7vw);
+        color: white;
+    }
+
+    p {
+        color: white;
+        font-size: 15px;
     }
 
     .text-primary {
@@ -81,8 +105,13 @@
         color: white;
     }
 
-    .h2o {
+    .h2o,
+    h5 {
         color: #FF5757;
+    }
+
+    h5 {
+        margin-bottom: 2px;
     }
 
     .laporButton {
@@ -107,7 +136,46 @@
         width: 80%;
         margin: 0 auto;
         background-color: #FF5757;
+    }
 
+    .background-proses {
+        background-color: #00cc99;
+    }
+
+    .bottom-left-buttons {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .bottom-right-buttons {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .upvote-button,
+    .downvote-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        color: white;
+    }
+
+    .button-count {
+        margin-left: 5px;
+    }
+
+    body {
+        background-color: #E5E5E5;
     }
     </style>
 </head>
@@ -141,86 +209,34 @@
                     </div>
                 </ul>
             </div>
-            <!-- Bagian konten -->
-            <div class="col-md-10 content">
-                <div id="gmapBlock"></div>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script>
-                $(function() {
-                    var script = document.createElement('script');
-                    script.src =
-                        "https://maps.googleapis.com/maps/api/js?key=AIzaSyA85_vUbvIQtqVIFFKYjESeKJpK_rr_rVg&sensor=false&callback=initialize";
-                    document.body.appendChild(script);
-                });
 
-                function initialize() {
-                    var map;
-                    var bounds = new google.maps.LatLngBounds();
-                    var mapOptions = {
-                        mapTypeId: 'roadmap'
-                    };
+            <div class="col-md-10 card">
+                <img src="<?= base_url('../assets/img/banjir.jpeg') ?>" alt="Foto Bencana" class="img-fluid">
+                <h5>Peristiwa:</h5>
+                <p>Banjir</p>
+                <h5>Lokasi:</h5>
+                <p>Kota Banjarmasin</p>
+                <h5>Detail:</h5>
+                <p style="margin-bottom: 50px;">Banjir ini terjadi mulai dari...</p>
 
-                    map = new google.maps.Map(document.getElementById("gmapBlock"), mapOptions);
-                    map.setTilt(45);
-
-                    var locationMarkers = JSON.parse(`<?php echo ($locationMarkers); ?>`);
-
-                    var locInfo = JSON.parse(`<?php echo ($locInfo); ?>`);
-
-                    var infoWindow = new google.maps.InfoWindow(),
-                        marker, i;
-                    var clickedMarker = null;
-
-                    for (i = 0; i < locationMarkers.length; i++) {
-                        var position = new google.maps.LatLng(locationMarkers[i][1], locationMarkers[i][2]);
-                        bounds.extend(position);
-                        marker = new google.maps.Marker({
-                            position: position,
-                            map: map,
-                            title: locationMarkers[i][0]
-                        });
-
-                            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                                return function() {
-                                    infoWindow.setContent(locInfo[i][0] + '<a href="<?= base_url("laporan?index=") ?>' + i + '">Detail Bencana</a>');                                    infoWindow.open(map, marker);
-                                    infoWindow.open(map, marker);
-                                }
-                            })(marker, i));
-
-                        map.fitBounds(bounds);
-                    }
-
-                    google.maps.event.addListener(map, 'click', function(event) {
-                        var clickedLocation = event.latLng;
-                        var marker = new google.maps.Marker({
-                            position: clickedLocation,
-                            map: map,
-                            title: 'Clicked Location'
-                        });
-
-
-                        var locationName = "";
-                        var latitude = clickedLocation.lat();
-                        var longitude = clickedLocation.lng();
-
-                        if (latitude !== null && latitude !== "") {
-                            localStorage.setItem('clickedLocation', JSON.stringify({
-                                latitude: latitude,
-                                longitude: longitude,
-                                locationName: locationName
-                            }));
-                            window.location.href = 'buat_laporan';
-                        } else {
-                            marker.setMap(null);
-                        }
-                    });
-
-                    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-                        this.setZoom(5);
-                        google.maps.event.removeListener(boundsListener);
-                    });
-                }
-                </script>
+                <div class="bottom-left-buttons">
+                    <button class="upvote-button">
+                        <i class="fas fa-chevron-up"></i>
+                        <span class="button-count">10</span>
+                    </button>
+                    <button class="downvote-button">
+                        <i class="fas fa-chevron-down"></i>
+                        <span class="button-count">5</span>
+                    </button>
+                </div>
+                <div class="bottom-right-buttons">
+                    <a class="report-button" href="<?= base_url('laporkan_laporan'); ?>">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </a>
+                    <button class="comment-button">
+                        <i class="fas fa-comment"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

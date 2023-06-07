@@ -6,7 +6,8 @@
     <title>Codeigniter 4 Show Multiple Markers on Google Map Example</title>
     <meta name="description" content="The tiny framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
     .card {
@@ -15,7 +16,6 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         padding: 20px;
-        margin-top: 120px;
         background-color: #1546BA;
     }
 
@@ -132,6 +132,10 @@
     .background-proses {
         background-color: #00cc99;
     }
+
+    body {
+        background-color: #E5E5E5;
+    }
     </style>
 </head>
 
@@ -158,19 +162,30 @@
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Notifikasi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian
                                 Relawan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>">Histori Laporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
+                                Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
+                        <?php if (!$username == null) { ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
+                        <?php } else {?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
+                        <?php } ?>
                     </div>
                     <div class="bottom-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><?= $username ?></a></li>
                     </div>
                 </ul>
             </div>
-
+            <?php if ($username == null) { ?>
+            <div class="col-md-10 card" style=" width:75%;">
+                <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat menggunakan fitur ini!</h2>
+            </div>
+            <?php } else {?>
             <div class="col-md-10 card">
                 <center>
                     <h1> Buat Laporan </h1>
@@ -194,6 +209,10 @@
                             placeholder="Masukkan Bencana Yang Terjadi" class="form-control">
                     </div><br>
                     <div class="form-group">
+                        <label for="nama_lokasi">Lokasi:</label>
+                        <input type="text" id="nama_lokasi" name="nama_lokasi" class="form-control">
+                    </div><br>
+                    <div class="form-group">
                         <label for="latitude">Garis Lintang:</label>
                         <input type="text" id="latitude" name="latitude" class="form-control">
                     </div><br>
@@ -205,11 +224,16 @@
                         <label for="info">Detail:</label>
                         <textarea id="info" name="info" rows="4" cols="40" class="form-control"></textarea>
                     </div><br>
+                    <div class="form-group">
+                        <label for="image">Upload Gambar:</label>
+                        <input type="file" id="image" name="image" class="form-control">
+                    </div><br>
                     <div class="text-center">
                         <input type="submit" value="Submit" class="btn btn-primary background-proses"
                             style="width: 100%; max-width: 100%;">
                     </div>
                 </form>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -244,5 +268,11 @@ document.getElementById("location_name").addEventListener("change", function() {
         customLocationInput.required = false;
         customLocationInput.name = "custom_location"; // Change the name attribute to "custom_location"
     }
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    $('.searchable-select').select2();
 });
 </script>

@@ -40,6 +40,7 @@ $routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');
 
 $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::login');
+$routes->get('/logout', 'LoginController::logout');
 
 $routes->get('/register', 'RegisterController::index');
 $routes->post('/register', 'RegisterController::buat');
@@ -47,7 +48,15 @@ $routes->post('/register', 'RegisterController::buat');
 $routes->get('/buat_laporan', 'BuatLaporanController::index');
 $routes->post('/buat_laporan', 'BuatLaporanController::buat');
 
+$routes->get('/laporan', 'GMapController::laporan');
+
+$routes->get('/laporkan_laporan', 'GMapController::laporkan_laporan');
+
+$routes->get('/notifikasi', 'GMapController::notifikasi');
+
 $routes->get('/histori_laporan', 'HistoriLaporanController::index');
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
