@@ -79,15 +79,6 @@
             border-color: white;
         }
 
-        h1 {
-            color: white;
-        }
-
-        p {
-            color: white;
-            font-size: 15px;
-        }
-
         .text-primary {
             --bs-primary-rgb: 189, 93, 56;
             --bs-text-opacity: 1;
@@ -111,7 +102,6 @@
         }
 
         h5 {
-            margin-bottom: 2px;
         }
 
         .laporButton {
@@ -154,20 +144,6 @@
             display: flex;
             gap: 10px;
             align-items: center;
-        }
-
-        .upvote-button,
-        .downvote-button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            color: white;
-        }
-
-        .button-count {
-            margin-left: 5px;
         }
 
         body {
@@ -277,7 +253,12 @@
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian Relawan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
+                        <?php if (!$username == null) { ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
+                        <?php } else {?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
+                        <?php } ?>
                     </div>
                     <div class="bottom-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><?= $username ?></a></li>
@@ -285,15 +266,15 @@
                 </ul>
             </div>
 
-            <!-- Inside the <div class="col-md-10 card"> -->
+            <?php if ($username == null) { ?>
+            <div class="col-md-10 card" style=" width:75%;">
+                <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat menggunakan
+                    fitur ini!</h2>
+            </div>
+            <?php } else {?>
             <div class="col-md-10 card">
-                <!-- Existing card content -->
-
-                <!-- Comment section -->
                 <div class="comments-section">
                     <h3 style="text-align: center; color: white;">Komentar</h3>
-
-                    <!-- Comment -->
                     <?php for ($i = 0; $i < 3; $i++) { ?>
                         <div class="comment">
                             <div class="user-profile">
@@ -309,16 +290,13 @@
                             </div>
                         </div>
                     <?php } ?>
-                    <!-- End of Comment -->
-
-                    <!-- Add new comment -->
                     <div class="add-comment">
                         <textarea class="comment-input" placeholder="Tulis komentar..." style="color: white;"></textarea>
                         <button class="post-button background-proses">Post</button>
                     </div>
                 </div>
-                <!-- End of Comment section -->
             </div>
+            <?php } ?>
         </div>
     </div>
 </body>

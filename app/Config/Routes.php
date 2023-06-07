@@ -40,6 +40,7 @@ $routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');
 
 $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::login');
+$routes->get('/logout', 'LoginController::logout');
 
 $routes->get('/register', 'RegisterController::index');
 $routes->post('/register', 'RegisterController::buat');
@@ -50,6 +51,8 @@ $routes->post('/buat_laporan', 'BuatLaporanController::buat');
 $routes->get('/laporan', 'GMapController::laporan');
 
 $routes->get('/komentar', 'GMapController::komentar');
+
+$routes->get('/laporkan_laporan', 'GMapController::laporkan_laporan');
 
 $routes->get('/notifikasi', 'GMapController::notifikasi');
 

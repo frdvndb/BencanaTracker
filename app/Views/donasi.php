@@ -131,11 +131,10 @@
     .background-proses {
         background-color: #00cc99;
     }
-        
-    body{
+
+    body {
         background-color: #E5E5E5;
     }
-
     </style>
 </head>
 
@@ -152,19 +151,31 @@
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian
                                 Relawan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
+                                Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
+                        <?php if (!$username == null) { ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
+                        <?php } else {?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
+                        <?php } ?>
                     </div>
                     <div class="bottom-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><?= $username ?></a></li>
                     </div>
                 </ul>
             </div>
-
+            <?php if ($username == null) { ?>
+            <div class="col-md-10 card" style=" width:75%;">
+                <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat menggunakan
+                    fitur ini!</h2>
+            </div>
+            <?php } else {?>
             <div class="col-md-10 card">
                 <center>
                     <h1> Donasi </h1>
@@ -190,6 +201,7 @@
                                 class="btn btn-outline-success btn-lg text-white background-proses"></center>
                     </div>
             </div>
+            <?php } ?>
         </div>
     </div>
 
