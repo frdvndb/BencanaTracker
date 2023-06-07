@@ -49,6 +49,8 @@ $routes->post('/buat_laporan', 'BuatLaporanController::buat');
 
 $routes->get('/laporan', 'GMapController::laporan');
 
+$routes->get('/laporkan_laporan', 'GMapController::laporkan_laporan');
+
 $routes->get('/notifikasi', 'GMapController::notifikasi');
 
 $routes->get('/histori_laporan', 'HistoriLaporanController::index');

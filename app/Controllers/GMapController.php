@@ -88,6 +88,13 @@ class GMapController extends Controller
         ]);
     }
 
+    public function laporkan_laporan()
+    {
+        return view('laporkan_laporan', [
+            "username" => session()->get('username')
+        ]);
+    }
+    
     public function notifikasi()
     {
         return view('notifikasi', [

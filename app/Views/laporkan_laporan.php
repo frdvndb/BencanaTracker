@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
     .card {
         margin: auto;
@@ -16,8 +15,6 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         padding: 20px;
-        position: relative;
-        top: 50%;
         background-color: #1546BA;
     }
 
@@ -40,6 +37,7 @@
         font-size: 1.5rem;
         height: 100vh;
         position: relative;
+
     }
 
     .sidebar a {
@@ -83,11 +81,6 @@
         color: white;
     }
 
-    p {
-        color: white;
-        font-size: 15px;
-    }
-
     .text-primary {
         --bs-primary-rgb: 189, 93, 56;
         --bs-text-opacity: 1;
@@ -106,12 +99,8 @@
     }
 
     .h2o,
-    h5 {
+    label {
         color: #FF5757;
-    }
-
-    h5 {
-        margin-bottom: 2px;
     }
 
     .laporButton {
@@ -136,51 +125,34 @@
         width: 80%;
         margin: 0 auto;
         background-color: #FF5757;
+
     }
 
     .background-proses {
         background-color: #00cc99;
     }
 
-    .bottom-left-buttons {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .bottom-right-buttons {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .upvote-button,
-    .downvote-button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        color: white;
-    }
-
-    .button-count {
-        margin-left: 5px;
-    }
-
     body {
         background-color: #E5E5E5;
+    }
+
+    h1 {
+        padding-bottom: 20px;
     }
     </style>
 </head>
 
 <body>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var clickedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
+
+        // Pre-fill the input fields with the clicked location data
+        document.getElementById('latitude').value = clickedLocation.latitude;
+        document.getElementById('longitude').value = clickedLocation.longitude;
+        document.getElementById('locationName').value = clickedLocation.locationName;
+    });
+    </script>
     <div class="container-fluid">
         <div class="row">
             <!-- Bagian sidebar -->
@@ -193,9 +165,12 @@
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian Relawan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian
+                                Relawan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
+                                Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Logout</a></li>
                     </div>
@@ -206,32 +181,20 @@
             </div>
 
             <div class="col-md-10 card">
-                <img src="<?= base_url('../assets/img/banjir.jpeg') ?>" alt="Foto Bencana" class="img-fluid">
-                <h5>Peristiwa:</h5>
-                <p>Banjir</p>
-                <h5>Lokasi:</h5>
-                <p>Kota Banjarmasin</p>
-                <h5>Detail:</h5>
-                <p style="margin-bottom: 50px;">Banjir ini terjadi mulai dari...</p>
-
-                <div class="bottom-left-buttons">
-                    <button class="upvote-button">
-                        <i class="fas fa-chevron-up"></i>
-                        <span class="button-count">10</span>
-                    </button>
-                    <button class="downvote-button">
-                        <i class="fas fa-chevron-down"></i>
-                        <span class="button-count">5</span>
-                    </button>
-                </div>
-                <div class="bottom-right-buttons">
-                    <a class="report-button" href="<?= base_url('laporkan_laporan'); ?>">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </a>
-                    <button class="comment-button">
-                        <i class="fas fa-comment"></i>
-                    </button>
-                </div>
+                <center>
+                    <h1> Laporkan Laporan </h1>
+                </center>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <form action="buat_laporan" method="POST">
+                    <div class="form-group">
+                        <label for="info">Alasan Pelaporan:</label>
+                        <textarea id="info" name="info" rows="4" cols="40" class="form-control"></textarea>
+                    </div><br>
+                    <div class="text-center">
+                        <input type="submit" value="Kirim" name="submit" class="btn btn-primary background-proses"
+                            style="width: 100%; max-width: 100%;">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
