@@ -6,7 +6,8 @@
     <title>Codeigniter 4 Show Multiple Markers on Google Map Example</title>
     <meta name="description" content="The tiny framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
     .card {
@@ -198,6 +199,10 @@
                             placeholder="Masukkan Bencana Yang Terjadi" class="form-control">
                     </div><br>
                     <div class="form-group">
+                        <label for="nama_lokasi">Lokasi:</label>
+                        <input type="text" id="nama_lokasi" name="nama_lokasi" class="form-control">
+                    </div><br>
+                    <div class="form-group">
                         <label for="latitude">Garis Lintang:</label>
                         <input type="text" id="latitude" name="latitude" class="form-control">
                     </div><br>
@@ -253,4 +258,10 @@ document.getElementById("location_name").addEventListener("change", function() {
         customLocationInput.name = "custom_location"; // Change the name attribute to "custom_location"
     }
 });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.searchable-select').select2();
+    });
 </script>
