@@ -94,4 +94,12 @@ class GMapController extends Controller
             "username" => session()->get('username')
         ]);
     }
+
+    public function komentar()
+    {
+        return view('komentar', [
+            "username" => session()->get('username')
+        ]);
+    }
+
 }

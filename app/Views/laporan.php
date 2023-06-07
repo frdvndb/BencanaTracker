@@ -177,6 +177,11 @@
     body {
         background-color: #E5E5E5;
     }
+
+    .comment-button a {
+        color: white;
+        text-decoration: none;
+    }
     </style>
 </head>
 
@@ -229,7 +234,9 @@
                         <i class="fas fa-exclamation-circle"></i>
                     </button>
                     <button class="comment-button">
-                        <i class="fas fa-comment"></i>
+                        <a href="<?= base_url('komentar'); ?>">
+                            <i class="fas fa-comment"></i>
+                        </a>
                     </button>
                 </div>
             </div>
