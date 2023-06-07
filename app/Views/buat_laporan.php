@@ -168,12 +168,12 @@
                                 Relawan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
                                 Laporan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>       
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
                         <?php } else {?>
-                            <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
                         <?php } ?>
                     </div>
                     <div class="bottom-sidebar">
@@ -181,7 +181,11 @@
                     </div>
                 </ul>
             </div>
-
+            <?php if ($username == null) { ?>
+            <div class="col-md-10 card">
+                <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat menggunakan fitur ini!</h2>
+            </div>
+            <?php } else {?>
             <div class="col-md-10 card">
                 <center>
                     <h1> Buat Laporan </h1>
@@ -229,6 +233,7 @@
                             style="width: 100%; max-width: 100%;">
                     </div>
                 </form>
+                <?php } ?>
             </div>
         </div>
     </div>

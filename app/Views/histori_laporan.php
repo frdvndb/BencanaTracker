@@ -166,7 +166,12 @@
                     </div>
                 </ul>
             </div>
-
+            <?php if ($username == null) { ?>
+            <div class="col-md-10 card">
+                <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat menggunakan
+                    fitur ini!</h2>
+            </div>
+            <?php } else {?>
             <div class="col-md-10 card">
                 <h2> Histori Laporan </h2>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -191,6 +196,7 @@
             }
             ?>
             </div>
+            <?php } ?>
         </div>
     </div>
 </body>

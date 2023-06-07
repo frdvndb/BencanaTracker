@@ -184,7 +184,12 @@
                     </div>
                 </ul>
             </div>
-
+            <?php if ($username == null) { ?>
+            <div class="col-md-10 card">
+                <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat menggunakan
+                    fitur ini!</h2>
+            </div>
+            <?php } else {?>
             <div class="col-md-10 card">
                 <center>
                     <h1> Laporkan Laporan </h1>
@@ -201,6 +206,7 @@
                     </div>
                 </form>
             </div>
+            <?php } ?>
         </div>
     </div>
 </body>
