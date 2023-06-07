@@ -177,6 +177,16 @@
     body {
         background-color: #E5E5E5;
     }
+
+    .comment-button a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .report-button a {
+        color: white;
+        text-decoration: none;
+    }
     </style>
 </head>
 
@@ -230,11 +240,15 @@
                     </button>
                 </div>
                 <div class="bottom-right-buttons">
-                    <a class="report-button" href="<?= base_url('laporkan_laporan'); ?>">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </a>
+                    <button class="report-button">
+                        <a href="<?= base_url('laporkan_laporan'); ?>">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </a>
+                    </button>
                     <button class="comment-button">
-                        <i class="fas fa-comment"></i>
+                        <a href="<?= base_url('komentar'); ?>">
+                            <i class="fas fa-comment"></i>
+                        </a>
                     </button>
                 </div>
             </div>
