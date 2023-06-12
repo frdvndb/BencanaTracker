@@ -2,38 +2,29 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
-use CodeIgniter\HTTP\RequestInterface;
-use App\Models\MahasiswaModel;
+use App\Models\LaporanBencanaModel;
+use App\Controllers\BaseController;
 
-class GMapController extends Controller
+class GMapController extends BaseController
 {
     public function showMap()
     {
-            // Pembuatan objek
-            $mahasiswa = new MahasiswaModel();
-
-            // Menampilkan halaman beranda
-            // serta memanggil nilai variabel
-            // yang diperlukan oleh halaman
-            
-
         $database = \Config\Database::connect();
-        $queryBuilder = $database->table('user_locations');
+        $queryBuilder = $database->table('laporan_bencana');
 
-        if ($this->request->getMethod() === 'post') {
-            $locationName = $this->request->getPost('location_name');
-            $latitude = $this->request->getPost('latitude');
-            $longitude = $this->request->getPost('longitude');
+        // if ($this->request->getMethod() === 'post') {
+        //     $locationName = $this->request->getPost('peristiwa');
+        //     $latitude = $this->request->getPost('latitude');
+        //     $longitude = $this->request->getPost('longitude');
 
-            $data = [
-                'location_name' => $locationName,
-                'latitude' => $latitude,
-                'longitude' => $longitude
-            ];
+        //     $data = [
+        //         'location_name' => $locationName,
+        //         'latitude' =>  $latitude,
+        //         'longitude' => $longitude
+        //     ];
 
-            $queryBuilder->insert($data);
-        }
+        //     $queryBuilder->insert($data);
+        // }
 
         $query = $queryBuilder->select('*')->limit(30)->get();
         $records = $query->getResult();
@@ -43,12 +34,12 @@ class GMapController extends Controller
 
         foreach ($records as $value) {
             $locationMarkers[] = [
-                $value->location_name,
-                $value->latitude,
-                $value->longitude
+                $value->peristiwa,
+                $value->garis_lintang,
+                $value->garis_bujur
             ];
             $locInfo[] = [
-                "<div class=info_content><h4>".$value->location_name."</h4><p>".$value->info."</p></div>"
+                "<div class=info_content><h4>".$value->peristiwa."</h4><p>".$value->detail."</p></div>"
             ];
         }
 
@@ -56,15 +47,8 @@ class GMapController extends Controller
         $location['locInfo'] = json_encode($locInfo);
 
         return view('index', array_merge([
-            'nama' => $mahasiswa->getNama(),
-            'nim' => $mahasiswa->getNim(),
-            'gambarProfil' => $mahasiswa->getGambarProfil(),
-            'github' => $mahasiswa->getGithub(),
-            'gambarBackground' => $mahasiswa->getgambarBackground(),
-            "username" => session()->get('username'),
-        ], $location));
-        
-        
+            "username" => session()->get('username')
+        ], $location)); 
     }
 
     public function donasi()
@@ -83,6 +67,7 @@ class GMapController extends Controller
 
     public function laporan()
     {
+        $model = new LaporanBencanaModel();
         return view('laporan', [
             "username" => session()->get('username')
         ]);

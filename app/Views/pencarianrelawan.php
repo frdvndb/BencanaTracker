@@ -16,6 +16,7 @@
         border-radius: 5px;
         padding: 20px;
         background-color: #1546BA;
+        margin-top: 3%;
     }
 
     .container-fluid {
@@ -119,6 +120,8 @@
     }
 
     .card2 {
+        display: flex;
+        align-items: center;
         margin: auto;
         width: 100%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -127,12 +130,33 @@
         margin-top: 10px;
         background-color: white;
         font-size: 25px;
-    }
-        
-    body{
-        background-color: #E5E5E5;
+        position: relative;
     }
 
+    .card2 img {
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+    }
+
+    .card2 .info-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-top: -5px;
+    }
+
+    .card2 label {
+        margin-bottom: -5px;
+    }
+
+    .detail-button {
+        position: absolute;
+        right: 15px;
+    }
+
+    body {
+        background-color: #E5E5E5;
+    }
     </style>
 </head>
 
@@ -149,16 +173,18 @@
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian
                                 Relawan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
+                                Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
                         <?php } else {?>
-                            <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
                         <?php } ?>
                     </div>
                     <div class="bottom-sidebar">
@@ -169,27 +195,31 @@
 
             <div class="col-md-10 card">
                 <h2> Pencarian Relawan </h2>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <?php
-            $daftarnama = array(
-              array("nama" => "Andra", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Farid", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Azhar", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Ajai", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Wawan", "gambar" => "/assets/img/background.jpg"),
-            );
+                <form action="<?= base_url('cariRelawan') ?>" method="GET" class="d-flex">
+                    <div class="input-group" style="width: 300px;">
+                        <input name="query" type="text" class="form-control"
+                            placeholder="Nama Relawan">
+                        <button type="submit" class="btn btn-success">Cari</button>
+                    </div>
+                </form>
 
-            foreach ($daftarnama as $item) { 
-              $nama = $item['nama'];
-              $gambar = $item['gambar']
-              ?>
+                <?php
+            foreach ($data as $relawan) { 
+                ?>
                 <div class="card2">
-                    <img src="<?php echo $gambar; ?>" class="rounded-circle">
-                    <span class="nama">&nbsp;<?php echo $nama; ?></span>
+                    <div class="image-wrapper">
+                        <img src="data:image/jpeg;base64,<?= base64_encode($relawan['gambar_relawan']); ?>"
+                            class="rounded-circle">
+                    </div>
+                    <div class="info-wrapper">
+                        <span class="nama"><?= $relawan['nama']; ?></span>
+                    </div>
+                    <div class="detail-button">
+                        <a href="#" class="btn-detail btn btn-success">Detail</a>
+                    </div>
                 </div>
                 <?php
-            }
-            ?>
+            } ?>
             </div>
         </div>
     </div>

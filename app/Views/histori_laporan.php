@@ -16,6 +16,7 @@
         border-radius: 5px;
         padding: 20px;
         background-color: #1546BA;
+        margin-top: 3%;
     }
 
     .container-fluid {
@@ -119,6 +120,8 @@
     }
 
     .card2 {
+        display: flex;
+        align-items: center;
         margin: auto;
         width: 100%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -127,6 +130,28 @@
         margin-top: 10px;
         background-color: white;
         font-size: 25px;
+        position: relative;
+    }
+
+    .card2 img {
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+    }
+
+    .card2 .info-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-top: -5px;
+    }
+
+    .card2 label {
+        margin-bottom: -5px;
+    }
+
+    .detail-button {
+        position: absolute;
+        right: 15px;
     }
         
     body{
@@ -176,27 +201,24 @@
                 <h2> Histori Laporan </h2>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <?php
-            $daftarnama = array(
-              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Gempa Bumi", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Kecelakaan", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
-            );
-
-            foreach ($daftarnama as $item) { 
-              $nama = $item['nama'];
-              $gambar = $item['gambar']
-              ?>
+            foreach ($data as $histori) { 
+                ?>
                 <div class="card2">
-                    <img src="<?php echo $gambar; ?>" class="rounded-circle">
-                    <span class="nama">&nbsp;<?php echo $nama; ?></span>
+                    <div class="image-wrapper">
+                        <img src="data:image/jpeg;base64,<?= base64_encode($histori['gambar_peristiwa']); ?>"
+                            class="rounded-circle">
+                    </div>
+                    <div class="info-wrapper">
+                        <span class="nama"><?= $histori['peristiwa']; ?></span>
+                    </div>
+                    <div class="detail-button">
+                        <a href="#" class="btn-detail btn btn-success">Detail</a>
+                    </div>
                 </div>
                 <?php
-            }
-            ?>
-            </div>
-            <?php } ?>
+            } ?>
+              </div>
+              <?php } ?>
         </div>
     </div>
 </body>
