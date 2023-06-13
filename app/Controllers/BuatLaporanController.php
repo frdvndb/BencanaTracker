@@ -3,7 +3,10 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\LaporanModel;
+use App\Models\HistoriLaporanModel;
+use App\Models\LaporanBencanaModel;
+
+
 class BuatLaporanController extends BaseController
 {
     protected $helpers = ['form'];
@@ -16,19 +19,25 @@ class BuatLaporanController extends BaseController
 
     public function buat()
     {
+    $gambar_peristiwa = $this->request->getFile('gambar_peristiwa');
+    $fileData = file_get_contents($gambar_peristiwa->getTempName());
 
-        $latitude = $this->request->getPost('latitude');
-        $longitude = $this->request->getPost('longitude');
-        $location_name = $this->request->getPost('location_name');
-        $info = $this->request->getPost('info');
-        $model = new LaporanModel();
+        $model = new LaporanBencanaModel();
         $model->insert([
-            "latitude" => $latitude,
-            "longitude" => $longitude,
-            "location_name" => $location_name,
-            "info" => $info,
+            'garis_lintang' => $this->request->getPost('garis_lintang'),
+            'garis_bujur' => $this->request->getPost('garis_bujur'),
+            'nama_lokasi' => $this->request->getPost('nama_lokasi'),
+            'peristiwa' => $this->request->getPost('peristiwa'),
+            'gambar_peristiwa' => $fileData,
+            'detail' => $this->request->getPost('detail'),
         ]);
-
+ 
+        $modelHistori = new HistoriLaporanModel();
+        $modelHistori->insert([
+            "id_user" => session()->get('id'),
+            "id_laporan" => $model->insertID()
+        ]);
         return redirect()->to(base_url('/beranda'));
     }
+
 }

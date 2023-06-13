@@ -145,9 +145,9 @@
         var clickedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
 
         // Pre-fill the input fields with the clicked location data
-        document.getElementById('latitude').value = clickedLocation.latitude;
-        document.getElementById('longitude').value = clickedLocation.longitude;
-        document.getElementById('locationName').value = clickedLocation.locationName;
+        document.getElementById('garis_lintang').value = clickedLocation.latitude;
+        document.getElementById('garis_bujur').value = clickedLocation.longitude;
+        document.getElementById('peristiwa').value = clickedLocation.locationName;
     });
     </script>
     <div class="container-fluid">
@@ -191,21 +191,21 @@
                     <h1> Buat Laporan </h1>
                 </center>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <form action="buat_laporan" method="POST">
+                <form action="buat_laporan" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="location_name">Bencana yang terjadi:</label>
-                        <select id="location_name" name="location_name" onchange="checkCustomLocation(this)"
+                        <label for="peristiwa">Bencana yang terjadi:</label>
+                        <select id="peristiwa" name="peristiwa" onchange="checkPeristiwaLainnya(this)"
                             class="form-control">
                             <option value="pilih" selected disabled>Pilih Bencana</option>
-                            <option value="bencana1">Banjir</option>
-                            <option value="bencana2">Gempa Bumi</option>
-                            <option value="bencana3">Kecelakaan</option>
-                            <option value="bencana4">Tanah Longsor</option>
-                            <option value="custom">Lainnya</option>
+                            <option value="Banjir">Banjir</option>
+                            <option value="Gempa Bumi">Gempa Bumi</option>
+                            <option value="Kecelakaan">Kecelakaan</option>
+                            <option value="Tanah Longsor">Tanah Longsor</option>
+                            <option value="peristiwa_lainnya">Lainnya</option>
                         </select>
                     </div>
                     <div class="form-group" style="padding-top: 5px;">
-                        <input type="text" id="custom_location" name="custom_location" style="display: none;"
+                        <input type="text" id="peristiwa_lainnya" name="peristiwa_lainnya" style="display: none;"
                             placeholder="Masukkan Bencana Yang Terjadi" class="form-control">
                     </div><br>
                     <div class="form-group">
@@ -213,20 +213,20 @@
                         <input type="text" id="nama_lokasi" name="nama_lokasi" class="form-control">
                     </div><br>
                     <div class="form-group">
-                        <label for="latitude">Garis Lintang:</label>
-                        <input type="text" id="latitude" name="latitude" class="form-control">
+                        <label for="garis_lintang">Garis Lintang:</label>
+                        <input type="text" id="garis_lintang" name="garis_lintang" class="form-control">
                     </div><br>
                     <div class="form-group">
-                        <label for="longitude">Garis Bujur:</label>
-                        <input type="text" id="longitude" name="longitude" class="form-control">
+                        <label for="garis_bujur">Garis Bujur:</label>
+                        <input type="text" id="garis_bujur" name="garis_bujur" class="form-control">
                     </div><br>
                     <div class="form-group">
-                        <label for="info">Detail:</label>
-                        <textarea id="info" name="info" rows="4" cols="40" class="form-control"></textarea>
+                        <label for="detail">Detail:</label>
+                        <textarea id="detail" name="detail" rows="4" cols="40" class="form-control"></textarea>
                     </div><br>
                     <div class="form-group">
-                        <label for="image">Upload Gambar:</label>
-                        <input type="file" id="image" name="image" class="form-control">
+                        <label for="gambar_peristiwa">Upload Gambar:</label>
+                        <input type="file" id="gambar_peristiwa" name="gambar_peristiwa" class="form-control">
                     </div><br>
                     <div class="text-center">
                         <input type="submit" value="Submit" class="btn btn-primary background-proses"
@@ -242,31 +242,31 @@
 </html>
 
 <script>
-function checkCustomLocation(selectElement) {
-    var customLocationInput = document.getElementById("custom_location");
-    if (selectElement.value === "custom") {
-        customLocationInput.style.display = "block";
-        customLocationInput.required = true;
-        customLocationInput.name = "location_name"; // Change the name attribute to "location_name"
+function checkPeristiwaLainnya(selectElement) {
+    var peristiwaLainnya = document.getElementById("peristiwa_lainnya");
+    if (selectElement.value === "peristiwa_lainnya") {
+        peristiwaLainnya.style.display = "block";
+        peristiwaLainnya.required = true;
+        peristiwaLainnya.name = "peristiwa";
     } else {
-        customLocationInput.style.display = "none";
-        customLocationInput.required = false;
-        customLocationInput.name = "custom_location"; // Change the name attribute to "custom_location"
+        peristiwaLainnya.style.display = "none";
+        peristiwaLainnya.required = false;
+        peristiwaLainnya.name = "peristiwa_lainnya"; 
     }
 }
 
 document.getElementById("location_name").addEventListener("change", function() {
     var selectedOption = this.options[this.selectedIndex];
-    var customLocationInput = document.getElementById("custom_location");
-    if (selectedOption.value === "custom") {
-        customLocationInput.value = ""; // Clear previous input
-        customLocationInput.style.display = "block";
-        customLocationInput.required = true;
-        customLocationInput.name = "location_name"; // Change the name attribute to "location_name"
+    var peristiwaLainnya = document.getElementById("peristiwa_lainnya");
+    if (selectedOption.value === "peristiwa_lainnya") {
+        peristiwaLainnya.value = ""; 
+        peristiwaLainnya.style.display = "block";
+        peristiwaLainnya.required = true;
+        peristiwaLainnya.name = "peristiwa"; 
     } else {
-        customLocationInput.style.display = "none";
-        customLocationInput.required = false;
-        customLocationInput.name = "custom_location"; // Change the name attribute to "custom_location"
+        peristiwaLainnya.style.display = "none";
+        peristiwaLainnya.required = false;
+        peristiwaLainnya.name = "peristiwa_lainnya";
     }
 });
 </script>

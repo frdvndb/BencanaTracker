@@ -34,6 +34,7 @@ class LoginController extends BaseController
         if ($user) {
             if (password_verify($data['password'], $user['password'])) {
                 session()->set([
+                    "id" => $user['id'],
                     "username" => $user['username'],
                     'logged_in' => true
                 ]);
@@ -49,14 +50,7 @@ class LoginController extends BaseController
     public function logout() {
         session()->remove('username');
         session()->remove('logged_in');
-        
 
-
-    
-        // Redirect to the login page or any other desired page
         return redirect()->to(base_url('/login'));
-    }
-    
-    
-    
+    }  
 }

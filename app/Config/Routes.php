@@ -31,12 +31,14 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 // $routes->get('/', 'Home::index');
 $routes->get('/', 'GMapController::showMap');
-$routes->post('/', 'GMapController::showMap');
+// $routes->post('/', 'GMapController::showMap');
 $routes->get('/beranda', 'GMapController::showMap');
 
 $routes->get('/donasi', 'GMapController::donasi');
 
-$routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');
+// $routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');
+$routes->get('/pencarianrelawan', 'PencarianRelawanController::index');
+$routes->get('/cariRelawan', 'PencarianRelawanController::pencarianRelawan');
 
 $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::login');
@@ -48,6 +50,7 @@ $routes->post('/register', 'RegisterController::buat');
 $routes->get('/buat_laporan', 'BuatLaporanController::index');
 $routes->post('/buat_laporan', 'BuatLaporanController::buat');
 
+$routes->get('/laporan/(:num)', 'GMapController::laporan/$1');
 $routes->get('/laporan', 'GMapController::laporan');
 
 $routes->get('/komentar', 'GMapController::komentar');
