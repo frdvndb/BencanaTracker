@@ -34,7 +34,9 @@ $routes->get('/', 'GMapController::showMap');
 // $routes->post('/', 'GMapController::showMap');
 $routes->get('/beranda', 'GMapController::showMap');
 
-$routes->get('/donasi', 'GMapController::donasi');
+// $routes->get('/donasi', 'GMapController::donasi');
+$routes->get('/donasi', 'DonasiController::index');
+$routes->post('/donasi', 'DonasiController::buatDonasi');
 
 // $routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');
 $routes->get('/pencarianrelawan', 'PencarianRelawanController::index');
@@ -50,7 +52,7 @@ $routes->post('/register', 'RegisterController::buat');
 $routes->get('/buat_laporan', 'BuatLaporanController::index');
 $routes->post('/buat_laporan', 'BuatLaporanController::buat');
 
-$routes->get('/laporan/(:num)', 'GMapController::laporan/$1');
+// $routes->get('/laporan/(:num)', 'GMapController::laporan/$1');
 $routes->get('/laporan', 'GMapController::laporan');
 
 $routes->get('/komentar', 'GMapController::komentar');

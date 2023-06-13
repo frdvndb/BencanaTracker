@@ -15,7 +15,7 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         padding: 20px;
-        background-color: #1546BA;
+        background-color: #00cc99;
     }
 
     .container-fluid {
@@ -128,29 +128,6 @@
 
     }
 
-    .background-proses {
-        background-color: #00cc99;
-    }
-
-    .custom-radio input[type="radio"] {
-        display: none;
-    }
-
-    .custom-radio input[type="radio"]+label {
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        padding: 0.375rem 0.75rem;
-        cursor: pointer;
-        font-weight: bold;
-        background-color: white;
-    }
-
-    .custom-radio input[type="radio"]:checked+label {
-        background-color: #007bff;
-        color: #fff;
-        border-color: #007bff;
-
-    }
     body {
         background-color: #E5E5E5;
     }
@@ -197,34 +174,8 @@
             <?php } else {?>
             <div class="col-md-10 card">
                 <center>
-                    <h1> Donasi </h1>
+                    <h1 class="pesan-sukses"> Berhasil Donasi! </h1>
                 </center>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <form action="donasi" method="post">
-                    <div class="mt-3">
-                        <label class="form-label fw-bold">Jumlah uang:</label>
-                        <input type="text" name="jumlah_uang" placeholder="Masukkan jumlah uang, misal: 50000" required
-                            class="form-control col-form-label-sm">
-                    </div>
-                    <div class="mt-3">
-                        <label class="form-label fw-bold">Metode Pembayaran</label> <br>
-                        <div class="custom-radio">
-                            <input type="radio" name="metode_pembayaran" id="radio-bni" value="BNI">
-                            <label for="radio-bni">BNI</label>
-
-                            <input type="radio" name="metode_pembayaran" id="radio-bri" value="BRI">
-                            <label for="radio-bri">BRI</label>
-                        </div>
-                        <div class="mt-3">
-                            <input type="text" name="nomor_rekening" placeholder="Nomor Rekening" required
-                                class="form-control col-form-label-sm"><br>
-                        </div>
-                    </div>
-                    <div class="mt-3" style="text-align: center;">
-                        <input type="submit" name="proses" value="Proses"
-                            class="btn btn-outline-success btn-lg text-white background-proses">
-                    </div>
-                </form>
             </div>
             <?php } ?>
         </div>
