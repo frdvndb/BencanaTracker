@@ -23,13 +23,16 @@ class BuatLaporanController extends BaseController
     $fileData = file_get_contents($gambar_peristiwa->getTempName());
 
         $model = new LaporanBencanaModel();
+        $detail = $this->request->getPost('detail');
+        $detailDenganBR = str_replace("\r\n", "<br>", $detail);
+        
         $model->insert([
             'garis_lintang' => $this->request->getPost('garis_lintang'),
             'garis_bujur' => $this->request->getPost('garis_bujur'),
             'nama_lokasi' => $this->request->getPost('nama_lokasi'),
             'peristiwa' => $this->request->getPost('peristiwa'),
             'gambar_peristiwa' => $fileData,
-            'detail' => $this->request->getPost('detail'),
+            'detail' => $detailDenganBR,
         ]);
  
         $modelHistori = new HistoriLaporanModel();

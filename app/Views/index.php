@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
     <style>
     .container-fluid {
         max-width: 100%;
@@ -146,117 +148,65 @@
                 <div id="gmapBlock"></div>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <script>
-                $(function() {
-                    var script = document.createElement('script');
-                    script.src =
-                        "https://maps.googleapis.com/maps/api/js?key=AIzaSyA85_vUbvIQtqVIFFKYjESeKJpK_rr_rVg&libraries=geometry&sensor=false&callback=initialize";
-                    document.body.appendChild(script);
+                    var map = L.map('gmapBlock').setView([-3.89, 115.28], 4);
+
+                    // set map tiles source
+                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                        maxZoom: 18
+                    }).addTo(map);
+
+                    map.on('click', function(event) {
+                    var clickedLocation = event.latlng;
+                    var marker = L.marker(clickedLocation).addTo(map);
+
+                    var locationName = "";
+                    var latitude = clickedLocation.lat;
+                    var longitude = clickedLocation.lng;
+
+                    if (latitude !== null && latitude !== "") {
+                        localStorage.setItem('clickedLocation', JSON.stringify({
+                            latitude: latitude,
+                            longitude: longitude,
+                            locationName: locationName
+                        }));
+                        window.location.href = '<?= base_url("buat_laporan") ?>';
+                    } else {
+                        marker.remove();
+                    }
                 });
 
-                function initialize() {
-                    var map;
-                    var bounds = new google.maps.LatLngBounds();
-                    var mapOptions = {
-                        mapTypeId: 'roadmap'
-                    };
 
-                    map = new google.maps.Map(document.getElementById("gmapBlock"), mapOptions);
-                    map.setTilt(45);
-
+                    // retrieve marker data from the database
                     var locationMarkers = JSON.parse(`<?php echo ($locationMarkers); ?>`);
                     var locInfo = JSON.parse(`<?php echo ($locInfo); ?>`);
                     var maxId = JSON.parse(`<?php echo ($maxId); ?>`);
-
-                    var infoWindow = new google.maps.InfoWindow(),
-                        marker, i;
-                    var clickedMarker = null;
-
-                    // var center = new google.maps.LatLng(22.78225200784254, 39.02130577604732);
-                    // var dummyMarker = new google.maps.LatLng(23.401147317952685, 38.79857839528568);
+                    // loop through the marker data and add markers to the map
+                    for (var i = 0; i < locationMarkers.length; i++) {
+                        var marker = L.marker([locationMarkers[i][1], locationMarkers[i][2]])
+                            .addTo(map)
+                            .bindPopup(locInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + i + '">Detail Bencana</a>');
+                    }     
                     
-                    // var distance = google.maps.geometry.spherical.computeDistanceBetween(dummyMarker, center);
-                    // alert("rabigh ke al nasaif = " + distance + "m");
-
-
-                    for (i = 0; i < locationMarkers.length; i++) {
-                        var position = new google.maps.LatLng(locationMarkers[i][1], locationMarkers[i][2]);
-                        bounds.extend(position);
-                        marker = new google.maps.Marker({
-                            position: position,
-                            map: map,
-                            title: locationMarkers[i][0]
-                        });
-
-                            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                                return function() {
-                                    infoWindow.setContent(locInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + i + '">Detail Bencana</a>');                                    infoWindow.open(map, marker);
-                                    infoWindow.open(map, marker);
-                                }
-                            })(marker, i));
-
-                        map.fitBounds(bounds);
-                    }
-
-                    google.maps.event.addListener(map, 'click', function(event) {
-                        var clickedLocation = event.latLng;
-                        var marker = new google.maps.Marker({
-                            position: clickedLocation,
-                            map: map,
-                            title: 'Clicked Location'
-                        });
-
-                        
-
-                        var locationName = "";
-                        var latitude = clickedLocation.lat();
-                        var longitude = clickedLocation.lng();
-
-                        if (latitude !== null && latitude !== "") {
-                            localStorage.setItem('clickedLocation', JSON.stringify({
-                                latitude: latitude,
-                                longitude: longitude,
-                                locationName: locationName
-                            }));
-                            window.location.href = 'buat_laporan';
-                        } else {
-                            marker.setMap(null);
-                        }
-                    });
-
-                    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-                        this.setZoom(5);
-                        google.maps.event.removeListener(boundsListener);
-                    });
-                    function getLatestReports() {                        
+                    function getLatestReports() {  
                             // Kirim permintaan ke server untuk mendapatkan data laporan terbaru
                             $.ajax({
                                 url: '<?= base_url() ?>' + '/latest/' + maxId.id,
                                 method: 'GET',
                                 dataType: 'json',
                                 success: function (response) {
+                                    // alert('1');
 
                                     var dataMarker = JSON.parse(response.locationMarkers);
                                     var dataLocInfo = JSON.parse(response.locInfo);
                                     maxId = JSON.parse(response.maxId);
 
-                                    for (i = 0; i < dataMarker.length; i++) {
-                                        var position = new google.maps.LatLng(dataMarker[i][1], dataMarker[i][2]);
-                                        bounds.extend(position);
-                                        marker = new google.maps.Marker({
-                                            position: position,
-                                            map: map,
-                                            title: dataMarker[i][0]
-                                        });
+                                    for (var i = 0; i < dataMarker.length; i++) {
+                                        var marker = L.marker([dataMarker[i][1], dataMarker[i][2]])
+                                            .addTo(map)
+                                            .bindPopup(dataLocInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + i + '">Detail Bencana</a>');
+                                    }     
 
-                                            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                                                return function() {
-                                                    infoWindow.setContent(dataLocInfo[i][0] + '<a href="<?= base_url("laporan?index=") ?>' + i + '">Detail Bencana</a>');                                    infoWindow.open(map, marker);
-                                                    infoWindow.open(map, marker);
-                                                }
-                                            })(marker, i));
-
-                                        // map.fitBounds(bounds);
-                                    }
                                 },
                                 error: function (xhr, status, error) {
                                     alert(xhr.responseText);
@@ -266,10 +216,8 @@
 
                         getLatestReports(); // Panggil fungsi untuk pertama kali
 
-                        // Panggil fungsi getLatestReports setiap 5 detik
                         setInterval(getLatestReports, 5000);
 
-                }
                 </script>
             </div>
         </div>
