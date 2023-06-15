@@ -149,7 +149,7 @@
                 $(function() {
                     var script = document.createElement('script');
                     script.src =
-                        "https://maps.googleapis.com/maps/api/js?key=AIzaSyA85_vUbvIQtqVIFFKYjESeKJpK_rr_rVg&sensor=false&callback=initialize";
+                        "https://maps.googleapis.com/maps/api/js?key=AIzaSyA85_vUbvIQtqVIFFKYjESeKJpK_rr_rVg&libraries=geometry&sensor=false&callback=initialize";
                     document.body.appendChild(script);
                 });
 
@@ -164,12 +164,19 @@
                     map.setTilt(45);
 
                     var locationMarkers = JSON.parse(`<?php echo ($locationMarkers); ?>`);
-
                     var locInfo = JSON.parse(`<?php echo ($locInfo); ?>`);
+                    var maxId = JSON.parse(`<?php echo ($maxId); ?>`);
 
                     var infoWindow = new google.maps.InfoWindow(),
                         marker, i;
                     var clickedMarker = null;
+
+                    // var center = new google.maps.LatLng(22.78225200784254, 39.02130577604732);
+                    // var dummyMarker = new google.maps.LatLng(23.401147317952685, 38.79857839528568);
+                    
+                    // var distance = google.maps.geometry.spherical.computeDistanceBetween(dummyMarker, center);
+                    // alert("rabigh ke al nasaif = " + distance + "m");
+
 
                     for (i = 0; i < locationMarkers.length; i++) {
                         var position = new google.maps.LatLng(locationMarkers[i][1], locationMarkers[i][2]);
@@ -182,7 +189,7 @@
 
                             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                                 return function() {
-                                    infoWindow.setContent(locInfo[i][0] + '<a href="<?= base_url("laporan?index=") ?>' + i + '">Detail Bencana</a>');                                    infoWindow.open(map, marker);
+                                    infoWindow.setContent(locInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + i + '">Detail Bencana</a>');                                    infoWindow.open(map, marker);
                                     infoWindow.open(map, marker);
                                 }
                             })(marker, i));
@@ -198,6 +205,7 @@
                             title: 'Clicked Location'
                         });
 
+                        
 
                         var locationName = "";
                         var latitude = clickedLocation.lat();
@@ -219,6 +227,48 @@
                         this.setZoom(5);
                         google.maps.event.removeListener(boundsListener);
                     });
+                    function getLatestReports() {                        
+                            // Kirim permintaan ke server untuk mendapatkan data laporan terbaru
+                            $.ajax({
+                                url: '<?= base_url() ?>' + '/latest/' + maxId.id,
+                                method: 'GET',
+                                dataType: 'json',
+                                success: function (response) {
+
+                                    var dataMarker = JSON.parse(response.locationMarkers);
+                                    var dataLocInfo = JSON.parse(response.locInfo);
+                                    maxId = JSON.parse(response.maxId);
+
+                                    for (i = 0; i < dataMarker.length; i++) {
+                                        var position = new google.maps.LatLng(dataMarker[i][1], dataMarker[i][2]);
+                                        bounds.extend(position);
+                                        marker = new google.maps.Marker({
+                                            position: position,
+                                            map: map,
+                                            title: dataMarker[i][0]
+                                        });
+
+                                            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                                                return function() {
+                                                    infoWindow.setContent(dataLocInfo[i][0] + '<a href="<?= base_url("laporan?index=") ?>' + i + '">Detail Bencana</a>');                                    infoWindow.open(map, marker);
+                                                    infoWindow.open(map, marker);
+                                                }
+                                            })(marker, i));
+
+                                        // map.fitBounds(bounds);
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    alert(xhr.responseText);
+                                }
+                            });
+                        }
+
+                        getLatestReports(); // Panggil fungsi untuk pertama kali
+
+                        // Panggil fungsi getLatestReports setiap 5 detik
+                        setInterval(getLatestReports, 5000);
+
                 }
                 </script>
             </div>

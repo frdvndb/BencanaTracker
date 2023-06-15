@@ -34,6 +34,8 @@ $routes->get('/', 'GMapController::showMap');
 // $routes->post('/', 'GMapController::showMap');
 $routes->get('/beranda', 'GMapController::showMap');
 
+$routes->get('/latest/(:num)', 'GMapController::getLatestReports/$1');
+
 $routes->get('/donasi', 'GMapController::donasi');
 
 // $routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');

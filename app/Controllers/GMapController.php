@@ -26,7 +26,7 @@ class GMapController extends BaseController
         //     $queryBuilder->insert($data);
         // }
 
-        $query = $queryBuilder->select('*')->limit(30)->get();
+        $query = $queryBuilder->select('*')->get();
         $records = $query->getResult();
 
         $locationMarkers = [];
@@ -43,13 +43,50 @@ class GMapController extends BaseController
             ];
         }
 
+        $query = $queryBuilder->selectMax('id')->get();
+        $result = $query->getRow();
+
         $location['locationMarkers'] = json_encode($locationMarkers);
         $location['locInfo'] = json_encode($locInfo);
+        $location['maxId'] = json_encode($result);
 
         return view('index', array_merge([
             "username" => session()->get('username')
         ], $location)); 
     }
+
+    public function getLatestReports($id)
+    {
+        $database = \Config\Database::connect();
+        $queryBuilder = $database->table('laporan_bencana');
+
+        $query = $queryBuilder->select('*')->where('id >', $id)->get();
+        $records = $query->getResult();
+
+        $locationMarkers = [];
+        $locInfo = [];
+
+        foreach ($records as $value) {
+            $locationMarkers[] = [
+                $value->peristiwa,
+                $value->garis_lintang,
+                $value->garis_bujur
+            ];
+            $locInfo[] = [
+                "<div class=info_content><h4>".$value->peristiwa."</h4><p>".$value->detail."</p></div>"
+            ];
+        }
+
+        $query = $queryBuilder->selectMax('id')->get();
+        $result = $query->getRow();
+
+        $location['locationMarkers'] = json_encode($locationMarkers);
+        $location['locInfo'] = json_encode($locInfo);
+        $location['maxId'] = json_encode($result);
+
+        return $this->response->setJSON($location);
+    }
+
 
     public function donasi()
     {
