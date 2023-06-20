@@ -185,7 +185,7 @@
                     for (var i = 0; i < locationMarkers.length; i++) {
                         var marker = L.marker([locationMarkers[i][1], locationMarkers[i][2]])
                             .addTo(map)
-                            .bindPopup(locInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + i + '">Detail Bencana</a>');
+                            .bindPopup(locInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + locationMarkers[i][3] + '">Detail Bencana</a>');
                     }     
                     
                     function getLatestReports() {  
@@ -204,7 +204,7 @@
                                     for (var i = 0; i < dataMarker.length; i++) {
                                         var marker = L.marker([dataMarker[i][1], dataMarker[i][2]])
                                             .addTo(map)
-                                            .bindPopup(dataLocInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + i + '">Detail Bencana</a>');
+                                            .bindPopup(dataLocInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + dataMarker[i][3] + '">Detail Bencana</a>');
                                     }     
 
                                 },

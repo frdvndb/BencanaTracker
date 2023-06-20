@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\LaporanBencanaModel;
 use App\Controllers\BaseController;
+use CodeIgniter\Controller;
+use CodeIgniter\HTTP\CURLRequest;
 
 class GMapController extends BaseController
 {
@@ -36,7 +38,8 @@ class GMapController extends BaseController
             $locationMarkers[] = [
                 $value->peristiwa,
                 $value->garis_lintang,
-                $value->garis_bujur
+                $value->garis_bujur,
+                $value->id
             ];
             $locInfo[] = [
                 "<div class=info_content><h4>".$value->peristiwa."</h4><p>".$value->detail."</p></div>"
@@ -70,7 +73,8 @@ class GMapController extends BaseController
             $locationMarkers[] = [
                 $value->peristiwa,
                 $value->garis_lintang,
-                $value->garis_bujur
+                $value->garis_bujur,
+                $value->id
             ];
             $locInfo[] = [
                 "<div class=info_content><h4>".$value->peristiwa."</h4><p>".$value->detail."</p></div>"
@@ -102,10 +106,65 @@ class GMapController extends BaseController
         ]);
     }
 
-    public function laporan()
+    public function laporan($id)
     {
         $model = new LaporanBencanaModel();
+        $laporan = $model->find($id);
+
+        $gambarBase64 = base64_encode($laporan['gambar_peristiwa']);
+        $gambarSrc = 'data:image/jpeg;base64,' . $gambarBase64;
+
+        //$url = "https://nominatim.openstreetmap.org/reverse?format=json&lat={$laporan['garis_lintang']}&lon={$laporan['garis_bujur']}";
+
+        $lat = -6.1754;  // contoh koordinat garis lintang
+        $lon = 106.8272;  // contoh koordinat garis bujur
+
+        $url = "https://nominatim.openstreetmap.org/reverse?format=json&lat={$laporan['garis_lintang']}&lon={$laporan['garis_bujur']}";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_REFERER, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36");
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        // return json_decode($response, true);
+
+        // $client = new \CodeIgniter\HTTP\CURLRequest(
+        //     new \Config\App(),
+        //     new \CodeIgniter\HTTP\URI(),
+        //     new \CodeIgniter\HTTP\Response(new \Config\App()),
+        // );
+        
+        // $headers = [
+        //     'Referer: http://localhost', // Ganti dengan Referer yang valid
+        //     'User-Agent: MyApplication/1.0', // Ganti dengan User-Agent yang valid
+        // ];
+        
+        // $response = $client->request('GET', $url, [], $headers);
+        // if ($response->getStatusCode() === 200) {
+        //     $data = json_decode($response->getBody(), true);
+        //     $nama_lokasi = $data['display_name'];
+        //     echo "Nama Lokasi: " . $nama_lokasi;
+        // } else {
+        //     echo "Permintaan gagal.";
+        // }
+        
+        // $url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=52.5487429714954&lon=-1.81602098644987&zoom=18&addressdetails=1'; // URL eksternal yang ingin Anda ambil kontennya
+        // // Mendapatkan isi konten dari URL eksternal
+        // $content = file_get_contents(urlencode($url));
+
+        $lokasi = json_decode($response);
+        
         return view('laporan', [
+            "laporan" => $laporan,
+            "gambarSrc" => $gambarSrc,
+            "lokasi" => $lokasi,
             "username" => session()->get('username')
         ]);
     }

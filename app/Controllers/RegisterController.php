@@ -25,12 +25,16 @@ class RegisterController extends BaseController
         $username = $this->request->getPost('username');
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
+        $garis_lintang = $this->request->getPost('latitude');
+        $garis_bujur = $this->request->getPost('longitude');
 
         $model = new UserModel();
         $model->insert([
             "username" => $username,
             "email" => $email,
-            "password" => password_hash($password, PASSWORD_DEFAULT)
+            "password" => password_hash($password, PASSWORD_DEFAULT),
+            'garis_lintang' => $garis_lintang,
+            'garis_bujur' => $garis_bujur
         ]);
 
         return redirect()->to(base_url('/login'));

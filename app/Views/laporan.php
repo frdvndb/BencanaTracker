@@ -221,13 +221,20 @@
             </div>
 
             <div class="col-md-10 card">
-                <img src="<?= base_url('../assets/img/banjir.jpeg') ?>" alt="Foto Bencana" class="img-fluid">
+
+                <img src="<?= $gambarSrc ?>" alt="Gambar Peristiwa" class="img-fluid" style="max-height: 300px;">
                 <h5>Peristiwa:</h5>
-                <p>Banjir</p>
-                <h5>Lokasi:</h5>
-                <p>Kota Banjarmasin</p>
+                <p><?= $laporan['peristiwa'] ?></p>
+                <h5>Lokasi yang terdeteksi:</h5>
+                <p><?php if (isset($lokasi->display_name)) {
+                    echo $lokasi->display_name;
+                } else {
+                    echo "Lokasi tidak tersedia";
+                } ?></p>
+                <h5>Lokasi dari pengguna:</h5>
+                <p><?= $laporan['nama_lokasi'] ?></p>
                 <h5>Detail:</h5>
-                <p style="margin-bottom: 50px;">Banjir ini terjadi mulai dari...</p>
+                <p style="margin-bottom: 50px;"><?= $laporan['detail'] ?></p>
 
                 <div class="bottom-left-buttons">
                     <button class="upvote-button">

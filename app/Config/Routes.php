@@ -54,8 +54,8 @@ $routes->post('/register', 'RegisterController::buat');
 $routes->get('/buat_laporan', 'BuatLaporanController::index');
 $routes->post('/buat_laporan', 'BuatLaporanController::buat');
 
-// $routes->get('/laporan/(:num)', 'GMapController::laporan/$1');
-$routes->get('/laporan', 'GMapController::laporan');
+$routes->get('/laporan/(:num)', 'GMapController::laporan/$1');
+// $routes->get('/laporan', 'GMapController::laporan');
 
 $routes->get('/komentar', 'GMapController::komentar');
 
