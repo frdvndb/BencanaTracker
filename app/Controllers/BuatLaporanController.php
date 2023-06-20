@@ -69,13 +69,9 @@ class BuatLaporanController extends BaseController
                 $email->setFrom($alamat_pengirim);
                 $subject = 'Bencana Baru';
                 $email->setSubject($subject);
-                $pesan = 'Seseorang melaporkan bencana: ' . $this->request->getPost('peristiwa') . '<br/>' . $detailDenganBR . '<a href="' . base_url('laporan/') . $model->getInsertID() . '"> Lihat Laporan</a>';
+                $pesan = 'Seseorang melaporkan bencana: ' . $this->request->getPost('peristiwa') . '<br/>' . $detailDenganBR . '<br/>' . '<a href="' . str_replace('\\', '/', base_url('laporan/')) . $model->getInsertID() . '">Lihat laporan</a>';
                 $email->setMessage($pesan);
-                if ($email->send()) {
-                    echo '<script>alert("email terkirim")</script>';
-                } else {
-                    echo '<script>alert("email gagal dikirim: ' . $email->printDebugger() . '")</script>';
-                }        
+                $email->send();
             }
         }
 
