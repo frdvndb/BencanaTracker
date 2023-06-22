@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\HistoriLaporanModel;
 use App\Models\LaporanBencanaModel;
+use App\Models\NotifikasiLaporanModel;
 use App\Models\UserModel;
 
 class BuatLaporanController extends BaseController
@@ -34,11 +35,17 @@ class BuatLaporanController extends BaseController
             'gambar_peristiwa' => $fileData,
             'detail' => $detailDenganBR,
         ]);
- 
+        $sessionNow = session()->get('id');
+        $idlaporanNow = $model->insertID();
         $modelHistori = new HistoriLaporanModel();
         $modelHistori->insert([
-            "id_user" => session()->get('id'),
-            "id_laporan" => $model->insertID()
+            "id_user" => $sessionNow,
+            "id_laporan" => $idlaporanNow
+        ]);
+        $modelNotifikasi = new NotifikasiLaporanModel();
+        $modelNotifikasi->insert([
+            "id_user" => $sessionNow ,
+            "id_laporan" => $idlaporanNow
         ]);
 
         $modelUser = new UserModel();
