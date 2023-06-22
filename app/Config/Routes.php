@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Controllers\AdminController;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -65,6 +67,14 @@ $routes->get('/notifikasi', 'GMapController::notifikasi');
 
 $routes->get('/histori_laporan', 'HistoriLaporanController::index');
 
+$routes->get('/admin_daftar_lb', 'AdminController::daftarLaporanBencana');
+$routes->get('/admin_daftar_user', 'AdminController::daftarUser');
+$routes->get('/edit_laporan_bencana/(:num)', 'AdminController::editViewLaporanBencana/$1');
+$routes->post('/edit_laporan_bencana/(:num)', 'AdminController::editUpdateLaporanBencana/$1');
+$routes->get('/edit_user/(:num)', 'AdminController::editViewUser/$1');
+$routes->post('/edit_user/(:num)', 'AdminController::editUpdateUser/$1');
+$routes->delete('/hapus_laporan_bencana/(:num)', 'AdminController::deleteLaporanBencana/$1');
+$routes->delete('/hapus_user/(:num)', 'AdminController::deleteUser/$1');
 
 /*
  * --------------------------------------------------------------------

@@ -41,4 +41,11 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+    public array $aturanLaporanBencana = [
+        'peristiwa' => 'required',
+        'nama_lokasi' => 'required',
+        'detail' => 'required',
+        'garis_lintang' => 'required',
+        'garis_bujur' => 'required'
+    ];
 }
