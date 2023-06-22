@@ -120,6 +120,8 @@
     }
 
     .card2 {
+        display: flex;
+        align-items: center;
         margin: auto;
         width: 100%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -128,6 +130,28 @@
         margin-top: 10px;
         background-color: white;
         font-size: 25px;
+        position: relative;
+    }
+
+    .card2 img {
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+    }
+
+    .card2 .info-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-top: -5px;
+    }
+
+    .card2 label {
+        margin-bottom: -5px;
+    }
+
+    .detail-button {
+        position: absolute;
+        right: 15px;
     }
         
     body{
@@ -188,8 +212,16 @@
             foreach ($data as $item) { 
               ?>
                 <div class="card2">
-                    <img src="data:image/jpeg;base64,<?= base64_encode($histori['gambar_peristiwa']); ?>">
-                    <span class="nama">&nbsp;<?php echo $data['peristiwa']; ?></span>
+                    <div class="image-wrapper">
+                        <img src="data:image/jpeg;base64,<?= base64_encode($item['gambar_peristiwa']); ?>"
+                            class="rounded-circle">
+                    </div>
+                    <div class="info-wrapper">
+                        <span class="nama"><?= $item['peristiwa']; ?></span>
+                    </div>
+                    <div class="detail-button">
+                        <a href="<?= base_url('laporan/' . $item['id_laporan']); ?>" class="btn-detail btn btn-success">Detail</a>
+                    </div>
                 </div>
                 <?php
             }
