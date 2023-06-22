@@ -52,10 +52,9 @@
         background-color: #E5E5E5;
         background-size: cover;
         background-position: center;
-        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
         font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         font-weight: 500;
-        color: #343a40;
+        overflow: auto;
     }
 
     h1 {
@@ -129,6 +128,20 @@
     td {
         color: white;
     }
+
+
+    .gambar-peristiwa img {
+        width: 420px;
+    }
+
+    .form-gambar {
+        margin-top: 20px;
+    }
+
+    .into-content {
+        display: flex;
+        justify-content: space-between;
+    }
     </style>
 </head>
 
@@ -141,7 +154,7 @@
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
                         <a class="btn btn-primary laporButton" style="color: #FF5757;"
-                            href="<?= base_url('buat_laporan'); ?>">LAPORKAN<br> BENCANA</a>
+                            href="<?= base_url('map'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
@@ -152,8 +165,10 @@
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
                                 Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
+                        <?php if ($isAdmin == 1) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>">Daftar Laporan Bencana</a></li>    
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar Pengguna</a></li>  
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar Pengguna</a></li>
+                        <?php } ?> 
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
                         <?php } else {?>
@@ -169,9 +184,6 @@
             <!-- Bagian konten -->
             <div class="col-md-10 content">
                 <h1>Daftar Laporan Bencana</h1>
-                <!-- Validasi data yang dimasukkan
-        untuk menentukan apakah sudah sesuai 
-        aturan atau tidak. -->
                 <?php if (validation_list_errors()) : ?>
                 <div class="alert alert-danger" style="width: fit-content;">
                     <p><?= validation_list_errors(); ?></p>
@@ -179,36 +191,50 @@
                 <?php endif; ?>
 
                 <!-- Formulir edit data. -->
-                <div class="col-3">
-                    <form action="<?= base_url('edit_laporan_bencana/'.$data['id']) ?>" method="post">
-                        <div class="mb-3">
-                            <label for="peristiwa" class="form-label">Peristiwa</label>
-                            <input type="text" class="form-control" id="peristiwa" name="peristiwa"
-                                value="<?= $data['peristiwa'] ?>">
+                <div class="into-content">
+                    <div class="col-6">
+                        <form action="<?= base_url('edit_laporan_bencana/'.$data['id']) ?>" method="post"  enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="gambar_peristiwa">Gambar Peristiwa:</label>
+                                
+                                <input type="file" id="gambar_peristiwa" name="gambar_peristiwa" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="peristiwa" class="form-label">Peristiwa</label>
+                                <input type="text" class="form-control" id="peristiwa" name="peristiwa"
+                                    value="<?= $data['peristiwa'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama_lokasi" class="form-label">Nama lokasi</label>
+                                <input type="text" class="form-control" id="nama_lokasi" name="nama_lokasi"
+                                    value="<?= $data['nama_lokasi'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="detail" class="form-label">Detail</label>
+                                <textarea type="text" class="form-control" rows="4" id="detail" name="detail"
+                                    ><?= $data['detail'] ?></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="garis_lintang" class="form-label">Garis Lintang</label>
+                                <input type="text" class="form-control" id="garis_lintang" name="garis_lintang"
+                                    value="<?= $data['garis_lintang'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="garis_bujur" class="form-label">Garis Bujur</label>
+                                <input type="text" class="form-control" id="garis_bujur" name="garis_bujur"
+                                    value="<?= $data['garis_bujur'] ?>">
+                            </div>
+                            <button type="submit" class="w-100 btn btn-primary">Edit</button>
+                        </form>
+                        <?php if(isset($data['gambar_peristiwa'])): ?>
+                    </div>
+                    <div class="form-gambar">
+                        <div class="gambar-peristiwa">
+                            <img src="data:image/jpeg;base64,<?= base64_encode($data['gambar_peristiwa']); ?>" />
                         </div>
-                        <div class="mb-3">
-                            <label for="nama_lokasi" class="form-label">Nama lokasi</label>
-                            <input type="text" class="form-control" id="nama_lokasi" name="nama_lokasi"
-                                value="<?= $data['nama_lokasi'] ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="detail" class="form-label">Detail</label>
-                            <input type="text" class="form-control" id="detail" name="detail"
-                                value="<?= $data['detail'] ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="garis_lintang" class="form-label">Garis Lintang</label>
-                            <input type="text" class="form-control" id="garis_lintang" name="garis_lintang"
-                                value="<?= $data['garis_lintang'] ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="garis_bujur" class="form-label">Garis Bujur</label>
-                            <input type="text" class="form-control" id="garis_bujur" name="garis_bujur"
-                                value="<?= $data['garis_bujur'] ?>">
-                        </div>
-                        <button type="submit" class="w-100 btn btn-primary">Edit</button>
-                        <a href="<?= base_url('/') ?>" class="w-100 btn btn-danger backBtn">Kembali</a>
-                    </form>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

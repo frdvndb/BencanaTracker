@@ -56,6 +56,7 @@
         font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         font-weight: 500;
         color: #343a40;
+        overflow: auto;
     }
 
     h1 {
@@ -133,6 +134,8 @@
     .pagination-links {
         display: flex;
         justify-content: left;
+        margin-left: 10px;
+        height: 20px;
     }
 
     .pagination-links .pagination {
@@ -178,7 +181,7 @@
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
                         <a class="btn btn-primary laporButton" style="color: #FF5757;"
-                            href="<?= base_url('buat_laporan'); ?>">LAPORKAN<br> BENCANA</a>
+                            href="<?= base_url('map'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
@@ -189,8 +192,12 @@
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
                                 Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>">Daftar Laporan Bencana</a></li>    
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar Pengguna</a></li>  
+                        <?php if ($isAdmin == 1) { ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>">Daftar
+                                Laporan Bencana</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar
+                                Pengguna</a></li>
+                        <?php } ?>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
                         <?php } else {?>
@@ -206,20 +213,28 @@
             <!-- Bagian konten -->
             <div class="col-md-10 content">
                 <h1>Daftar Laporan Bencana</h1>
-                <div class="pagination-links">
-                    <?= $pager->links() ?>
-                </div>
+                <form action="<?= base_url('cariRelawan') ?>" method="GET" class="d-flex">
+                    <div class="input-group" style="width: 300px;">
+                        <input name="query" type="text" class="form-control" placeholder="Cari Bencana">
+                        <button type="submit" class="btn btn-success">Cari</button>
+                    </div>
+                    <div class="ml-auto">
+                        <div class="pagination-links">
+                            <?= $pager->links() ?>
+                        </div>
+                    </div>
+                </form>
 
                 <div class="table-wrapper">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>ID Laporan</th>
+                                <th>ID Pengguna</th>
                                 <th>Peristiwa</th>
-                                <th>Nama Lokasi</th>
+                                <th>Lokasi</th>
                                 <th>Detail</th>
-                                <th>Garis Lintang</th>
-                                <th>Garis Bujur</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -231,18 +246,20 @@
                             <?php foreach ($data as $data) : ?>
                             <tr>
                                 <td><?= $i+=1; ?></td>
+                                <td><?= $data['id_laporan'] ?></td>
+                                <td><?= $data['id_user'] ?></td>
                                 <td><?= $data['peristiwa'] ?></td>
                                 <td><?= $data['nama_lokasi'] ?></td>
                                 <td><?= $data['detail'] ?></td>
-                                <td><?= $data['garis_lintang'] ?></td>
-                                <td><?= $data['garis_bujur'] ?></td>
                                 <td>
                                     <!-- Tombol edit data. -->
-                                    <a href="<?= base_url('edit_laporan_bencana/'.$data['id']) ?>" class="btn btn-warning">Edit</a>
+                                    <a href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>"
+                                        class="btn btn-warning">Edit</a>
 
                                     <!-- Tombol hapus data. -->
-                                    <form action="<?= base_url('/hapus_laporan_bencana/'.$data['id']) ?>" method="post"
-                                        style="display: inline-block;" onsubmit="return confirm('Yakin Hapus?')">
+                                    <form action="<?= base_url('/hapus_laporan_bencana/'.$data['id_laporan']) ?>"
+                                        method="post" style="display: inline-block;"
+                                        onsubmit="return confirm('Yakin Hapus?')">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <button class="btn btn-danger" type="submit">Hapus</button>
                                     </form>

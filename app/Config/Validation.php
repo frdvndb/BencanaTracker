@@ -48,4 +48,10 @@ class Validation extends BaseConfig
         'garis_lintang' => 'required',
         'garis_bujur' => 'required'
     ];
+    public array $aturanUser = [
+        'username' => 'required',
+        'email' => 'required',
+        'garis_lintang' => 'required',
+        'garis_bujur' => 'required'
+    ];
 }

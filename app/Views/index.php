@@ -123,7 +123,7 @@
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
                         <a class="btn btn-primary laporButton" style="color: #FF5757;"
-                            href="<?= base_url('buat_laporan'); ?>">LAPORKAN<br> BENCANA</a>
+                            href="<?= base_url('map'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
@@ -131,8 +131,10 @@
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian Relawan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
+                        <?php if ($isAdmin == 1) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>">Daftar Laporan Bencana</a></li>    
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar Pengguna</a></li>                
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar Pengguna</a></li>
+                        <?php } ?>                
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
                         <?php } else {?>

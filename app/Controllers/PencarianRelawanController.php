@@ -12,7 +12,8 @@ class PencarianRelawanController extends BaseController
         $model = new RelawanModel();
         return view('pencarianrelawan', [
             "data" => $model->findAll(),
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 
@@ -27,6 +28,7 @@ class PencarianRelawanController extends BaseController
         return view('pencarianrelawan', [ 
             "data" => $model->cariRelawan($query),
             "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 

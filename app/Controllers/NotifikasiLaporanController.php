@@ -21,7 +21,8 @@ class NotifikasiLaporanController extends BaseController
     
         return view('notifikasi', [
             "data" => $data,
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
     

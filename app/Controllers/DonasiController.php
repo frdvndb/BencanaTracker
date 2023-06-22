@@ -11,7 +11,8 @@ class DonasiController extends BaseController
     public function index()
     {
         return view('donasi', [
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 
@@ -28,7 +29,8 @@ class DonasiController extends BaseController
             "id_donasi" => $model->insertID()
         ]);
         return view('donasi_pesan_berhasil', [
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 }

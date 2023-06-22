@@ -21,7 +21,8 @@ class HistoriLaporanController extends BaseController
     
         return view('histori_laporan', [
             "data" => $data,
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
     
