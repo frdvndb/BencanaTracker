@@ -209,7 +209,7 @@
 
                                 },
                                 error: function (xhr, status, error) {
-                                    alert(xhr.responseText);
+                                    log(xhr.responseText);
                                 }
                             });
                         }
