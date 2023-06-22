@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Codeigniter 4 Show Multiple Markers on Google Map Example</title>
+    <title>BencanaTracker</title>
     <meta name="description" content="The tiny framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,6 +16,7 @@
         border-radius: 5px;
         padding: 20px;
         background-color: #1546BA;
+        margin-top: 3%;
     }
 
     .container-fluid {
@@ -176,21 +177,19 @@
                 <h2> Notifikasi </h2>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <?php
-            $daftarnama = array(
-              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Gempa Bumi", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Kecelakaan", "gambar" => "/assets/img/background.jpg"),
-              array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
-            );
+            // $daftarnama = array(
+            //   array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
+            //   array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
+            //   array("nama" => "Gempa Bumi", "gambar" => "/assets/img/background.jpg"),
+            //   array("nama" => "Kecelakaan", "gambar" => "/assets/img/background.jpg"),
+            //   array("nama" => "Banjir", "gambar" => "/assets/img/background.jpg"),
+            // );
 
-            foreach ($daftarnama as $item) { 
-              $nama = $item['nama'];
-              $gambar = $item['gambar']
+            foreach ($data as $item) { 
               ?>
                 <div class="card2">
-                    <img src="<?php echo $gambar; ?>" class="rounded-circle">
-                    <span class="nama">&nbsp;<?php echo $nama; ?></span>
+                    <img src="data:image/jpeg;base64,<?= base64_encode($histori['gambar_peristiwa']); ?>">
+                    <span class="nama">&nbsp;<?php echo $data['peristiwa']; ?></span>
                 </div>
                 <?php
             }

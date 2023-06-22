@@ -212,7 +212,7 @@
                         <span class="nama"><?= $histori['peristiwa']; ?></span>
                     </div>
                     <div class="detail-button">
-                        <a href="#" class="btn-detail btn btn-success">Detail</a>
+                        <a href="<?= base_url('laporan/' . $histori['id_laporan']); ?>" class="btn-detail btn btn-success">Detail</a>
                     </div>
                 </div>
                 <?php

@@ -61,7 +61,7 @@ $routes->get('/komentar', 'GMapController::komentar');
 
 $routes->get('/laporkan_laporan', 'GMapController::laporkan_laporan');
 
-$routes->get('/notifikasi', 'GMapController::notifikasi');
+$routes->get('/notifikasi', 'NotifikasiLaporanController::index');
 
 $routes->get('/histori_laporan', 'HistoriLaporanController::index');
 
