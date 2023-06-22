@@ -27,7 +27,7 @@
         align-items: center;
         background-color: #1546BA;
         padding: 20px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         height: 100vh;
         position: relative;
     }
@@ -131,6 +131,8 @@
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian Relawan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>">Daftar Laporan Bencana</a></li>    
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar Pengguna</a></li>                
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
                         <?php } else {?>
