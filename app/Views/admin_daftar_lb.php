@@ -130,6 +130,10 @@
     td {
         color: white;
     }
+    table img{
+        height: 30px;
+        width: 60px;
+    }
 
     .pagination-links {
         display: flex;
@@ -234,6 +238,7 @@
                                 <th>ID Pengguna</th>
                                 <th>Peristiwa</th>
                                 <th>Lokasi</th>
+                                <th>Gambar</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -249,6 +254,7 @@
                                 <td><?= $data['id_user'] ?></td>
                                 <td><?= $data['peristiwa'] ?></td>
                                 <td><?= $data['nama_lokasi'] ?></td>
+                                <td><img src="data:image/jpeg;base64,<?= base64_encode($data['gambar_peristiwa']); ?>"></td>
                                 <td>
                                     <!-- Tombol edit data. -->
                                     <a href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>"
