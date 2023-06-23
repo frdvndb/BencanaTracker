@@ -47,6 +47,8 @@ $routes->post('/donasi', 'DonasiController::buatDonasi');
 $routes->get('/pencarianrelawan', 'PencarianRelawanController::index');
 $routes->get('/cariRelawan', 'PencarianRelawanController::pencarianRelawan');
 
+$routes->get('/relawan/(:num)', 'PencarianRelawanController::detail_relawan/$1');
+
 $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::login');
 $routes->get('/logout', 'LoginController::logout');
