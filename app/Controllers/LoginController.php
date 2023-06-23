@@ -38,7 +38,7 @@ class LoginController extends BaseController
                     "username" => $user['username'],
                     'logged_in' => true
                 ]);
-                return redirect()->to(base_url('/'));
+                return redirect()->to(base_url('/map'));
             } else {
                 return redirect()->to(base_url('/login'))->with("pesan", "Password1 atau Email Salah");
             }

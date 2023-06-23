@@ -190,4 +190,11 @@ class GMapController extends BaseController
         ]);
     }
 
+    public function beranda()
+    {
+        return view('beranda', [
+            "username" => session()->get('username')
+        ]);
+    }
+
 }

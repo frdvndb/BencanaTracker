@@ -169,7 +169,7 @@
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
                         <a class="btn btn-primary laporButton" style="color: #FF5757;"
-                            href="<?= base_url('buat_laporan'); ?>">LAPORKAN<br> BENCANA</a>
+                            href="<?= base_url('map'); ?>">LIHAT<br> PETA</a>
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>

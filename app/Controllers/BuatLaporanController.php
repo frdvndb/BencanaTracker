@@ -84,7 +84,7 @@ class BuatLaporanController extends BaseController
             }
         }
 
-        return redirect()->to(base_url('/beranda'));
+        return redirect()->to(base_url('/map'));
     }
 
 }

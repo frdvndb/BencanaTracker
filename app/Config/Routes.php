@@ -32,9 +32,11 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 // $routes->get('/', 'Home::index');
-$routes->get('/', 'GMapController::showMap');
+$routes->get('/', 'GMapController::beranda');
 // $routes->post('/', 'GMapController::showMap');
-$routes->get('/beranda', 'GMapController::showMap');
+$routes->get('/beranda', 'GMapController::beranda');
+
+$routes->get('/map', 'GMapController::showMap');
 
 $routes->get('/latest/(:num)', 'GMapController::getLatestReports/$1');
 
