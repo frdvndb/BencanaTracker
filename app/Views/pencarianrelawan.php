@@ -158,7 +158,11 @@
     body {
         background-color: #E5E5E5;
     }
+    .d-flex .btn {
+        margin-left: 5px;
+    }
     </style>
+
 </head>
 
 <body>
@@ -203,14 +207,14 @@
 
             <div class="col-md-10 card">
                 <h2> Pencarian Relawan </h2>
-                <form action="<?= base_url('cariRelawan') ?>" method="GET" class="d-flex">
-                    <div class="input-group" style="width: 300px;">
-                        <input name="query" type="text" class="form-control"
-                            placeholder="Nama Relawan">
+                <div class="d-flex">
+                    <form action="<?= base_url('cariRelawan') ?>" method="GET" class="input-group"
+                        style="width: 300px;">
+                        <input name="query" type="text" class="form-control" placeholder="Nama Relawan">
                         <button type="submit" class="btn btn-success">Cari</button>
-                    </div>
-                </form>
-
+                    </form>
+                    <a class="btn btn-warning" href="<?= base_url('daftar_relawan') ?>">Menjadi Relawan</a>
+                </div>
                 <?php
             foreach ($data as $relawan) { 
                 ?>
@@ -223,7 +227,8 @@
                         <span class="nama"><?= $relawan['nama']; ?></span>
                     </div>
                     <div class="detail-button">
-                        <a href="<?= base_url('relawan/' . $relawan['id']); ?>" class="btn-detail btn btn-success">Detail</a>
+                        <a href="<?= base_url('relawan/' . $relawan['id']); ?>"
+                            class="btn-detail btn btn-success">Detail</a>
                     </div>
                 </div>
                 <?php
@@ -232,5 +237,18 @@
         </div>
     </div>
 </body>
+<!-- Include library SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<!-- Cek flash data 'success' -->
+<?php if (session()->getFlashdata('success')): ?>
+    <script>
+        // Tampilkan pesan popup menggunakan SweetAlert
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '<?= session()->getFlashdata('success') ?>'
+        });
+    </script>
+<?php endif; ?>
 </html>

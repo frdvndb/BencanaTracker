@@ -14,14 +14,17 @@
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
         integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
         crossorigin=""></script>
+
     <style>
     .container-fluid {
         max-width: 100%;
     }
 
     #gmapBlock {
-        width: 100%;
-        height: 100%;
+        width: 80%;
+        height: 80%;
+        margin-left: 40px;
+        margin-top: 30px;
     }
 
     .sidebar {
@@ -52,10 +55,8 @@
         background-color: #E5E5E5;
         background-size: cover;
         background-position: center;
-        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
         font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         font-weight: 500;
-        color: #343a40;
         overflow: auto;
     }
 
@@ -131,48 +132,9 @@
         color: white;
     }
 
-    table img {
-        height: 30px;
-        width: 60px;
-    }
-
-    .pagination-links {
+    .into-content {
         display: flex;
-        justify-content: left;
-        margin-left: 10px;
-        height: 20px;
-    }
-
-    .pagination-links .pagination {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        padding: 0;
-    }
-
-    .pagination-links .pagination .active {
-        background-color: #FF5757;
-        color: white;
-    }
-
-    .pagination-links .pagination li {
-        margin-right: 5px;
-    }
-
-    .pagination-links .pagination a {
-        display: inline-block;
-        padding: 5px 10px;
-        background-color: white;
-        color: #FF5757;
-        border: none;
-        text-decoration: none;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .pagination-links .pagination a:hover {
-        background-color: #FF5757;
-        color: white;
+        justify-content: space-between;
     }
     </style>
 </head>
@@ -202,10 +164,6 @@
                                     class="bi bi-list-check"></i> Daftar Peristiwa</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>"><i
                                     class="bi bi-people"></i> Daftar Pengguna</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pelaporan'); ?>"><i
-                                    class="bi bi-flag"></i> Daftar Pelaporan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_relawan'); ?>"><i
-                                    class="bi bi-people-fill"></i> Daftar Relawan</a></li>
                         <?php } else {?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('/'); ?>"><i
                                     class="bi bi-house-fill"></i> Beranda</a></li>
@@ -237,69 +195,47 @@
             </div>
             <!-- Bagian konten -->
             <div class="col-md-10 content">
-                <h1>Daftar Laporan Bencana</h1>
-                <form action="<?= base_url('cariRelawan') ?>" method="GET" class="d-flex">
-                    <div class="input-group" style="width: 300px;">
-                        <input name="query" type="text" class="form-control" placeholder="Cari Bencana">
-                        <button type="submit" class="btn btn-success">Cari</button>
-                    </div>
-                    <div class="ml-auto">
-                        <div class="pagination-links">
-                            <?= $pager->links() ?>
-                        </div>
-                    </div>
-                </form>
+                <h1>Daftar Relawan</h1>
+                <?php if (validation_list_errors()) : ?>
+                <div class="alert alert-danger" style="width: fit-content;">
+                    <p><?= validation_list_errors(); ?></p>
+                </div>
+                <?php endif; ?>
 
-                <div class="table-wrapper">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>ID Laporan</th>
-                                <th>ID Pengguna</th>
-                                <th>Peristiwa</th>
-                                <th>Lokasi</th>
-                                <th>Gambar</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Perulangan foreach()
-                    untuk memanggil memanggil
-                    semua data yang diperlukan. -->
-                            <?php $i = 0; ?>
-                            <?php foreach ($data as $data) : ?>
-                            <tr>
-                                <td><?= $i+=1; ?></td>
-                                <td><?= $data['id_laporan'] ?></td>
-                                <td><?= $data['id_user'] ?></td>
-                                <td><?= $data['peristiwa'] ?></td>
-                                <td><?= $data['nama_lokasi'] ?></td>
-                                <td><img src="data:image/jpeg;base64,<?= base64_encode($data['gambar_peristiwa']); ?>">
-                                </td>
-                                <td>
-                                    <a href="<?= base_url('laporan/' . $data['id_laporan']) ?>"
-                                        class="btn btn-success">View</a>
-                                    <!-- Tombol edit data. -->
-                                    <a href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>"
-                                        class="btn btn-warning">Edit</a>
-
-                                    <!-- Tombol hapus data. -->
-                                    <form action="<?= base_url('/hapus_laporan_bencana/'.$data['id_laporan']) ?>"
-                                        method="post" style="display: inline-block;"
-                                        onsubmit="return confirm('Yakin Hapus?')">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button class="btn btn-danger" type="submit">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <?php endforeach ?>
-                        </tbody>
-                    </table>
+                <!-- Formulir edit data. -->
+                <div class="into-content">
+                    <div class="col-6">
+                        <form action="<?= base_url('daftar_relawan') ?>" method="post" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Relawan:</label>
+                                <input type="text" class="form-control" id="nama" name="nama">
+                            </div>
+                            <div class="mb-3">
+                                <label for="jenis_bencana" class="form-label">Bencana yang ditangani:</label>
+                                <input type="text" class="form-control" id="jenis_bencana" name="jenis_bencana">
+                            </div>
+                            <div class="mb-3">
+                                <label for="detail" class="form-label">Upload Foto Gambar Relawan:</label>
+                                <input type="file" class="form-control" id="gambar_relawan" name="gambar_relawan">
+                            </div>
+                            <div class="mb-3">
+                                <label for="detail" class="form-label">Detail:</label>
+                                <textarea id="detail" name="detail" rows="4" cols="40" class="form-control"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="no_hp" class="form-label">Nomor HP:</label>
+                                <input type="text" class="form-control" id="no_hp" name="no_hp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="text" class="form-control" id="email" name="email">
+                            </div>
+                            <button type="submit" class="w-100 btn btn-primary">Daftar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

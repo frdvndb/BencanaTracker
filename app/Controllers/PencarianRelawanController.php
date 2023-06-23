@@ -7,11 +7,13 @@ use App\Models\RelawanModel;
 
 class PencarianRelawanController extends BaseController
 {
+    protected $helpers = ['form'];
     public function index()
     {
         $model = new RelawanModel();
+        $data = $model->where('diverifikasi', 1)->findAll();
         return view('pencarianrelawan', [
-            "data" => $model->findAll(),
+            "data" => $data,
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
@@ -46,5 +48,35 @@ class PencarianRelawanController extends BaseController
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
+    }
+    public function daftarMenjadiRelawanView()
+    {
+        return view('daftar_relawan', [
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]);
+    }
+
+
+    public function daftarMenjadiRelawanAdd()
+    {
+        if(!$this->validate('aturanRelawan')){
+            return redirect()->back()->withInput();  
+        }
+
+        $model = new RelawanModel();
+        $gambar_relawan= $this->request->getFile('gambar_relawan');
+        $fileData = file_get_contents($gambar_relawan->getTempName());
+
+        $model->insert([
+            "nama" =>  $this->request->getPost('nama'),
+            "jenis_bencana" => $this->request->getPost('jenis_bencana'),
+            "detail" =>$this->request->getPost('detail'),
+            "gambar_relawan" => $fileData,
+            "no_hp" => $this->request->getPost('no_hp'),
+            "email"=> $this->request->getPost('email')
+        ]);
+        session()->setFlashdata('success', 'Admin akan memverifikasi dalam waktu kurang lebih 2 minggu');
+        return redirect()->to(base_url('pencarianrelawan'));
     }
 }

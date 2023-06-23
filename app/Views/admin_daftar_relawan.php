@@ -14,6 +14,8 @@
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
         integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
         crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
     .container-fluid {
         max-width: 100%;
@@ -237,7 +239,7 @@
             </div>
             <!-- Bagian konten -->
             <div class="col-md-10 content">
-                <h1>Daftar Laporan Bencana</h1>
+                <h1>Daftar Relawan</h1>
                 <form action="<?= base_url('cariRelawan') ?>" method="GET" class="d-flex">
                     <div class="input-group" style="width: 300px;">
                         <input name="query" type="text" class="form-control" placeholder="Cari Bencana">
@@ -255,11 +257,12 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>ID Laporan</th>
-                                <th>ID Pengguna</th>
-                                <th>Peristiwa</th>
-                                <th>Lokasi</th>
-                                <th>Gambar</th>
+                                <th>Nama</th>
+                                <th>Bencana yang ditangani</th>
+                                <th>Nomor HP</th>
+                                <th>Email</th>
+                                <th>Foto Profil</th>
+                                <th>Verifikasi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -268,29 +271,47 @@
                     untuk memanggil memanggil
                     semua data yang diperlukan. -->
                             <?php $i = 0; ?>
-                            <?php foreach ($data as $data) : ?>
+                            <?php foreach ($data as $relawan) : ?>
                             <tr>
                                 <td><?= $i+=1; ?></td>
-                                <td><?= $data['id_laporan'] ?></td>
-                                <td><?= $data['id_user'] ?></td>
-                                <td><?= $data['peristiwa'] ?></td>
-                                <td><?= $data['nama_lokasi'] ?></td>
-                                <td><img src="data:image/jpeg;base64,<?= base64_encode($data['gambar_peristiwa']); ?>">
+                                <td><?= $relawan['nama'] ?></td>
+                                <td><?= $relawan['jenis_bencana'] ?></td>
+                                <td><?= $relawan['no_hp'] ?></td>
+                                <td><?= $relawan['email'] ?></td>
+                                <td><img src="data:image/jpeg;base64,<?= base64_encode($relawan['gambar_relawan']); ?>">
                                 </td>
+                                <td><?php $relawan['diverifikasi']; 
+                                if ($relawan['diverifikasi'] == 0){
+                                    echo "Belum";
+                                }else{
+                                    echo 'Sudah';
+                                }
+                                 ?></td>
                                 <td>
-                                    <a href="<?= base_url('laporan/' . $data['id_laporan']) ?>"
-                                        class="btn btn-success">View</a>
-                                    <!-- Tombol edit data. -->
-                                    <a href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>"
-                                        class="btn btn-warning">Edit</a>
-
-                                    <!-- Tombol hapus data. -->
-                                    <form action="<?= base_url('/hapus_laporan_bencana/'.$data['id_laporan']) ?>"
-                                        method="post" style="display: inline-block;"
-                                        onsubmit="return confirm('Yakin Hapus?')">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button class="btn btn-danger" type="submit">Hapus</button>
-                                    </form>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Aksi
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <form action="<?= base_url('/verifikasi_relawan/'.$relawan['id']) ?>"
+                                                method="post" onsubmit="return confirm('Verifikasi/Batalkan?')">
+                                                <input type="hidden" name="_method" value="VERIFIKASI">
+                                                <button class="dropdown-item" type="submit">Verifikasi/Batalkan</button>
+                                            </form>
+                                            <a class="dropdown-item" href="<?= base_url('relawan/' . $relawan['id']) ?>"
+                                                class="btn btn-success">View</a>
+                                            <a class="dropdown-item"
+                                                href="<?= base_url('edit_relawan/'.$relawan['id']) ?>"
+                                                class="btn btn-warning">Edit</a>
+                                            <form action="<?= base_url('/hapus_relawan/'.$relawan['id']) ?>"
+                                                method="post" onsubmit="return confirm('Yakin Hapus?')">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button class="dropdown-item" type="submit">Hapus</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <?php endforeach ?>
@@ -300,6 +321,25 @@
             </div>
         </div>
     </div>
+    <script>
+    $(document).ready(function() {
+        // Initialize the dropdown
+        $('.dropdown-toggle').dropdown();
+
+        // Close dropdown when clicking outside
+        $(document).on('click', function(event) {
+            var target = $(event.target);
+            if (!target.closest('.dropdown').length && !target.hasClass('dropdown-toggle')) {
+                $('.dropdown-toggle').each(function() {
+                    if ($(this).siblings('.dropdown-menu').hasClass('show')) {
+                        $(this).dropdown('toggle');
+                    }
+                });
+            }
+        });
+    });
+    </script>
+
 </body>
 
 </html>

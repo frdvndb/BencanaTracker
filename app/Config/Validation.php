@@ -54,4 +54,7 @@ class Validation extends BaseConfig
         'garis_lintang' => 'required',
         'garis_bujur' => 'required'
     ];
+    public array $aturanRelawan = [
+        'nama' => 'required'
+    ];
 }

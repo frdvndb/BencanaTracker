@@ -13,7 +13,7 @@ class RelawanModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama','jenis_bencana','detail','gambar_relawan',];
+    protected $allowedFields    = ['nama','jenis_bencana','detail','gambar_relawan', 'no_hp','email', 'diverifikasi'];
 
     // Dates
     protected $useTimestamps = false;

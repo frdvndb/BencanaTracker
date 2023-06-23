@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\LaporanBencanaModel;
 use App\Models\LaporkanLaporanModel;
+use App\Models\RelawanModel;
 use App\Models\UserModel;
 
 class AdminController extends BaseController
@@ -45,6 +46,17 @@ class AdminController extends BaseController
         ]);
     }
 
+    public function daftarRelawan()
+    {
+        $model = new RelawanModel();
+        return view("admin_daftar_relawan", [
+            'data' => $model->paginate(10),
+            'pager' => $model->pager,
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]);
+    }
+
     public function deleteLaporanBencana($id){
         $model = new LaporanBencanaModel();
         $model->delete($id);
@@ -61,6 +73,28 @@ class AdminController extends BaseController
         $model = new LaporkanLaporanModel();
         $model->delete($id);
         return redirect()->to(base_url('admin_daftar_pelaporan'));
+    }
+
+    public function deleteRelawan($id){
+        $model = new RelawanModel();
+        $model->delete($id);
+        return redirect()->to(base_url('admin_daftar_relawan'));
+    }
+
+    public function verifikasiRelawan($id){
+        $model = new RelawanModel();
+        $relawan = $model->find($id);
+        if ($relawan['diverifikasi'] == 0){
+            $data = [
+                "diverifikasi" => 1,
+            ];
+        } else {
+            $data = [
+                "diverifikasi" => 0,
+            ];
+        }
+        $model->update($id, $data);
+        return redirect()->to(base_url('admin_daftar_relawan'));
     }
 
     public function editUpdateLaporanBencana($id){
@@ -94,13 +128,10 @@ class AdminController extends BaseController
                 'gambar_peristiwa' => $gambar_peristiwa,
             ];
         }
-
-        
         $model->update($id, $data);
-
         return redirect()->to(base_url('admin_daftar_lb'));
-        
     }
+
     public function editViewLaporanBencana($id){
         $model = new LaporanBencanaModel();
         return view('admin_edit_lb', [
@@ -132,6 +163,49 @@ class AdminController extends BaseController
     public function editViewUser($id){
         $model = new UserModel();
         return view('admin_edit_user', [
+            "data" => $model->find($id),
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]);
+    }
+
+    public function editUpdateRelawan($id){
+
+        // Validasi aturan buku.
+        if(!$this->validate('aturanRelawan')){
+            return redirect()->back()->withInput();
+        }
+        $model = new RelawanModel();
+        $gambar_relawan = $this->request->getFile('gambar_relawan');
+        if ($gambar_relawan->getSize() > 0) {
+            
+            $fileData = file_get_contents($gambar_relawan->getTempName());
+            $data = [
+                "nama" => $this->request->getPost('nama'),
+                "jenis_bencana" => $this->request->getPost('jenis_bencana'),
+                "detail" => $this->request->getPost('detail'),
+                "no_hp" => $this->request->getPost('no_hp'),
+                "email" => $this->request->getPost('email'),
+                'gambar_relawan' => $fileData,
+            ];
+        } else {
+            $gambar_relawan = $model->select('gambar_relawan')->where('id', $id)->first();
+            $data = [
+                "nama" => $this->request->getPost('nama'),
+                "jenis_bencana" => $this->request->getPost('jenis_bencana'),
+                "detail" => $this->request->getPost('detail'),
+                "no_hp" => $this->request->getPost('no_hp'),
+                "email" => $this->request->getPost('email'),
+                'gambar_relawan' => $gambar_relawan,
+            ];
+        }
+        $model->update($id, $data);
+        return redirect()->to(base_url('admin_daftar_relawan'));
+    }
+    
+    public function editViewRelawan($id){
+        $model = new RelawanModel();
+        return view('admin_edit_relawan', [
             "data" => $model->find($id),
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
