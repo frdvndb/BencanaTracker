@@ -62,7 +62,8 @@ $routes->get('/laporan/(:num)', 'GMapController::laporan/$1');
 
 $routes->get('/komentar', 'GMapController::komentar');
 
-$routes->get('/laporkan_laporan', 'GMapController::laporkan_laporan');
+$routes->get('/laporkan_laporan/(:num)', 'LaporkanLaporanController::laporkan_laporan/$1');
+$routes->post('/laporkan_laporan/(:num)', 'LaporkanLaporanController::submitPelaporanLaporan/$1');
 
 $routes->get('/notifikasi', 'NotifikasiLaporanController::index');
 

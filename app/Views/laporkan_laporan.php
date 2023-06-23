@@ -199,10 +199,10 @@
                     <h1> Laporkan Laporan </h1>
                 </center>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <form action="buat_laporan" method="POST">
+                <form action="<?= base_url('laporkan_laporan/'.$data['id']) ?>" method="POST">
                     <div class="form-group">
-                        <label for="info">Alasan Pelaporan:</label>
-                        <textarea id="info" name="info" rows="4" cols="40" class="form-control"></textarea>
+                        <label for="alasan">Alasan Pelaporan:</label>
+                        <textarea id="alasan" name="alasan" rows="4" cols="40" class="form-control"></textarea>
                     </div><br>
                     <div class="text-center">
                         <input type="submit" value="Kirim" name="submit" class="btn btn-primary background-proses"

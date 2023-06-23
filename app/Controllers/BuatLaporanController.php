@@ -84,8 +84,8 @@ class BuatLaporanController extends BaseController
                 $email->send();
             }
         }
-
-        return redirect()->to(base_url('/beranda'));
+        session()->setFlashdata('success', 'Berhasil Melaporkan Bencana.');
+        return redirect()->to(base_url('/map'));
     }
 
 }

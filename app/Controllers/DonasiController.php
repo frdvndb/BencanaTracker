@@ -28,9 +28,8 @@ class DonasiController extends BaseController
             "id_user" => session()->get('id'),
             "id_donasi" => $model->insertID()
         ]);
-        return view('donasi_pesan_berhasil', [
-            "username" => session()->get('username'),
-            "isAdmin" => session()->get('isAdmin')
-        ]);
+
+        session()->setFlashdata('success', 'Terimakasih Atas Dukungannnya!');
+        return redirect()->to(base_url('donasi'));
     }
 }

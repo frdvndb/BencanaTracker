@@ -179,13 +179,13 @@ class GMapController extends BaseController
         ]);
     }
 
-    public function laporkan_laporan()
-    {
-        return view('laporkan_laporan', [
-            "username" => session()->get('username'),
-            "isAdmin" => session()->get('isAdmin')
-        ]);
-    }
+    // public function laporkan_laporan()
+    // {
+    //     return view('laporkan_laporan', [
+    //         "username" => session()->get('username'),
+    //         "isAdmin" => session()->get('isAdmin')
+    //     ]);
+    // }
     
     public function notifikasi()
     {
