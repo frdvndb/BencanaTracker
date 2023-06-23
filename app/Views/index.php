@@ -111,6 +111,10 @@
         background-color: #FF5757;
 
     }
+
+    .leaflet-popup-content {
+        text-transform: none;
+    }
     </style>
 </head>
 
@@ -189,7 +193,7 @@
                     for (var i = 0; i < locationMarkers.length; i++) {
                         var marker = L.marker([locationMarkers[i][1], locationMarkers[i][2]])
                             .addTo(map)
-                            .bindPopup(locInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + locationMarkers[i][3] + '">Detail Bencana</a>');
+                            .bindPopup(locInfo[i][0] + '<br><a href="<?= base_url("laporan/") ?>' + locationMarkers[i][3] + '" class="btn btn-primary" style="color: #fff;">Lihat detail laporan</a>');
                     }     
                     
                     function getLatestReports() {  
