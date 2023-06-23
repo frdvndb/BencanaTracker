@@ -6,6 +6,7 @@
     <title>BencanaTracker</title>
     <meta name="description" content="The tiny framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -169,27 +170,30 @@
                             href="<?= base_url('map'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('/'); ?>"><i
+                                    class="bi bi-house-fill"></i> Beranda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>"><i
+                                    class="bi bi-bell-fill"></i> Notifikasi</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian
-                                Relawan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
-                                Laporan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
-                        <?php if ($isAdmin == 1) { ?>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>">Daftar Laporan Bencana</a></li>    
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar Pengguna</a></li>
-                        <?php } ?> 
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>"><i
+                                    class="bi bi-people-fill"></i> Cari Relawan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>"><i
+                                    class="bi bi-clock-history"></i> Histori Laporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>"><i
+                                    class="bi bi-cash-stack"></i> Donasi</a></li>
                         <?php if (!$username == null) { ?>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>"><i
+                                    class="bi bi-box-arrow-right"></i> Logout</a></li>
                         <?php } else {?>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>"><i
+                                    class="bi bi-person-plus-fill"></i> Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>"><i
+                                    class="bi bi-box-arrow-in-right"></i> Login</a></li>
                         <?php } ?>
                     </div>
                     <div class="bottom-sidebar">
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><?= $username ?></a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url(''); ?>"><i
+                                    class="bi bi-person"></i> <?= $username ?></a></li>
                     </div>
                 </ul>
             </div>

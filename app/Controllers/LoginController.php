@@ -51,6 +51,7 @@ class LoginController extends BaseController
     public function logout() {
         session()->remove('username');
         session()->remove('logged_in');
+        session()->remove('isAdmin');
 
         return redirect()->to(base_url('/login'));
     }  
