@@ -32,4 +32,19 @@ class PencarianRelawanController extends BaseController
         ]);
     }
 
+    public function detail_relawan($id)
+    {
+        $model = new RelawanModel();
+        $relawan = $model->find($id);
+
+        $gambarBase64 = base64_encode($relawan['gambar_relawan']);
+        $gambarSrc = 'data:image/jpeg;base64,' . $gambarBase64;
+
+        return view('relawan', [
+            "relawan" => $relawan,
+            "gambarSrc" => $gambarSrc,
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]);
+    }
 }

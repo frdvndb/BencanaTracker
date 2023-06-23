@@ -219,7 +219,7 @@
                         <span class="nama"><?= $relawan['nama']; ?></span>
                     </div>
                     <div class="detail-button">
-                        <a href="#" class="btn-detail btn btn-success">Detail</a>
+                        <a href="<?= base_url('relawan/' . $relawan['id']); ?>" class="btn-detail btn btn-success">Detail</a>
                     </div>
                 </div>
                 <?php
