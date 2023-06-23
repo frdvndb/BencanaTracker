@@ -48,7 +48,7 @@ class GMapController extends BaseController
                 $value->id
             ];
             $locInfo[] = [
-                "<div class=info_content><h4>".$value->peristiwa."</h4><p>".$value->detail."</p></div>"
+                "<div class='info_content'> <h4>". (strlen($value->peristiwa) > 25 ? substr($value->peristiwa, 0, 25).'...' : $value->peristiwa) ."</h4> <p>". (strlen($value->detail) > 40 ? substr($value->detail, 0, 40).'...' : $value->detail) ."</p> </div>"
             ];
         }
 
@@ -84,7 +84,7 @@ class GMapController extends BaseController
                 $value->id
             ];
             $locInfo[] = [
-                "<div class=info_content><h4>".$value->peristiwa."</h4><p>".$value->detail."</p></div>"
+                "<div class='info_content'> <h4>". (strlen($value->peristiwa) > 25 ? substr($value->peristiwa, 0, 25).'...' : $value->peristiwa) ."</h4> <p>". (strlen($value->detail) > 40 ? substr($value->detail, 0, 40).'...' : $value->detail) ."</p> </div>"
             ];
         }
 
