@@ -9,6 +9,12 @@ use CodeIgniter\HTTP\CURLRequest;
 
 class GMapController extends BaseController
 {
+    public function landingPage(){
+        return view('landing',[
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]);
+    }
     public function showMap()
     {
         $database = \Config\Database::connect();
@@ -54,7 +60,8 @@ class GMapController extends BaseController
         $location['maxId'] = json_encode($result);
 
         return view('index', array_merge([
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ], $location)); 
     }
 
@@ -92,17 +99,19 @@ class GMapController extends BaseController
     }
 
 
-    public function donasi()
-    {
-        return view('donasi', [
-            "username" => session()->get('username')
-        ]);
-    }
+    // public function donasi()
+    // {
+    //     return view('donasi', [
+    //         "username" => session()->get('username'),
+    //         "isAdmin" => session()->get('isAdmin')
+    //     ]);
+    // }
 
     public function pencarianrelawan()
     {
         return view('pencarianrelawan', [
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 
@@ -165,28 +174,32 @@ class GMapController extends BaseController
             "laporan" => $laporan,
             "gambarSrc" => $gambarSrc,
             "lokasi" => $lokasi,
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 
     public function laporkan_laporan()
     {
         return view('laporkan_laporan', [
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
     
     public function notifikasi()
     {
         return view('notifikasi', [
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 
     public function komentar()
     {
         return view('komentar', [
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 

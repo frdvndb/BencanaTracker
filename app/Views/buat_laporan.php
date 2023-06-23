@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Codeigniter 4 Show Multiple Markers on Google Map Example</title>
+    <title>BencanaTracker</title>
     <meta name="description" content="The tiny framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -35,7 +35,7 @@
         align-items: center;
         background-color: #1546BA;
         padding: 20px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         height: 100vh;
         position: relative;
 
@@ -158,7 +158,7 @@
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
                         <a class="btn btn-primary laporButton" style="color: #FF5757;"
-                            href="<?= base_url('map'); ?>">LIHAT<br> PETA</a>
+                            href="<?= base_url('map'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
@@ -169,6 +169,10 @@
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
                                 Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
+                        <?php if ($isAdmin == 1) { ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>">Daftar Laporan Bencana</a></li>    
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar Pengguna</a></li>
+                        <?php } ?> 
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
                         <?php } else {?>

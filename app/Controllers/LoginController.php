@@ -36,7 +36,8 @@ class LoginController extends BaseController
                 session()->set([
                     "id" => $user['id'],
                     "username" => $user['username'],
-                    'logged_in' => true
+                    'logged_in' => true,
+                    'isAdmin' => $user['is_admin']
                 ]);
                 return redirect()->to(base_url('/map'));
             } else {

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Codeigniter 4 Show Multiple Markers on Google Map Example</title>
+    <title>BencanaTracker</title>
     <meta name="description" content="The tiny framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -17,6 +17,7 @@
         padding: 20px;
         background-color: #1546BA;
         margin-top: 3%;
+
     }
 
     .container-fluid {
@@ -30,7 +31,7 @@
         align-items: center;
         background-color: #1546BA;
         padding: 20px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         height: 100vh;
         position: relative;
 
@@ -149,15 +150,19 @@
         margin-bottom: -5px;
     }
 
+    .scroll-container {
+        max-height: 600px;
+        overflow-y: auto;
+    }
+
     .detail-button {
         position: absolute;
         right: 15px;
     }
-        
-    body{
+
+    body {
         background-color: #E5E5E5;
     }
-
     </style>
 </head>
 
@@ -170,20 +175,28 @@
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
                         <a class="btn btn-primary laporButton" style="color: #FF5757;"
-                            href="<?= base_url('map'); ?>">LIHAT<br> PETA</a>
+                            href="<?= base_url('map'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('beranda'); ?>">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>">Notifikasi</a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('pencarianrelawan'); ?>">Pencarian
                                 Relawan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori Laporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>">Histori
+                                Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>">Donasi</a></li>
+                        <?php if ($isAdmin == 1) { ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>">Daftar
+                                Laporan Bencana</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>">Daftar
+                                Pengguna</a></li>
+                        <?php } ?>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>">Logout</a></li>
                         <?php } else {?>
-                            <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('register'); ?>">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login'); ?>">Login</a></li>
                         <?php } ?>
                     </div>
                     <div class="bottom-sidebar">
@@ -200,25 +213,28 @@
             <div class="col-md-10 card">
                 <h2> Histori Laporan </h2>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <?php
+                <div class="scroll-container">
+                    <?php
             foreach ($data as $histori) { 
                 ?>
-                <div class="card2">
-                    <div class="image-wrapper">
-                        <img src="data:image/jpeg;base64,<?= base64_encode($histori['gambar_peristiwa']); ?>"
-                            class="rounded-circle">
+                    <div class="card2">
+                        <div class="image-wrapper">
+                            <img src="data:image/jpeg;base64,<?= base64_encode($histori['gambar_peristiwa']); ?>"
+                                class="rounded-circle">
+                        </div>
+                        <div class="info-wrapper">
+                            <span class="nama"><?= $histori['peristiwa']; ?></span>
+                        </div>
+                        <div class="detail-button">
+                            <a href="<?= base_url('laporan/' . $histori['id_laporan']); ?>"
+                                class="btn-detail btn btn-success">Detail</a>
+                        </div>
                     </div>
-                    <div class="info-wrapper">
-                        <span class="nama"><?= $histori['peristiwa']; ?></span>
-                    </div>
-                    <div class="detail-button">
-                        <a href="<?= base_url('laporan/' . $histori['id_laporan']); ?>" class="btn-detail btn btn-success">Detail</a>
-                    </div>
-                </div>
-                <?php
+                    <?php
             } ?>
-              </div>
-              <?php } ?>
+                </div>
+                <?php } ?>
+            </div>
         </div>
     </div>
 </body>

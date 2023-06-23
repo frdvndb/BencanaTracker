@@ -14,7 +14,7 @@ $routes = Services::routes();
  */
 $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('GMapController');
-$routes->setDefaultMethod('showMap');
+$routes->setDefaultMethod('landingPage');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
@@ -32,10 +32,9 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 // $routes->get('/', 'Home::index');
-$routes->get('/', 'GMapController::beranda');
+$routes->get('/', 'GMapController::landingPage');
 // $routes->post('/', 'GMapController::showMap');
-$routes->get('/beranda', 'GMapController::beranda');
-
+$routes->get('/beranda', 'GMapController::landingPage');
 $routes->get('/map', 'GMapController::showMap');
 
 $routes->get('/latest/(:num)', 'GMapController::getLatestReports/$1');

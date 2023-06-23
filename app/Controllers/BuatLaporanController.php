@@ -14,7 +14,8 @@ class BuatLaporanController extends BaseController
     public function index()
     {
         return view("buat_laporan", [
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 

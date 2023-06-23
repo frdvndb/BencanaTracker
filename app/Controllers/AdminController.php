@@ -13,9 +13,12 @@ class AdminController extends BaseController
     {
         $model = new LaporanBencanaModel();
         return view("admin_daftar_lb", [
-            'data' => $model->paginate(10),
+            'data' => $model->select('laporan_bencana.*, histori_laporan.*')
+            ->join('histori_laporan', 'laporan_bencana.id = histori_laporan.id_laporan', 'left')
+            ->paginate(10),
             'pager' => $model->pager,
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 
@@ -25,7 +28,8 @@ class AdminController extends BaseController
         return view("admin_daftar_user", [
             'data' => $model->paginate(10),
             'pager' => $model->pager,
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 
@@ -47,13 +51,15 @@ class AdminController extends BaseController
         if(!$this->validate('aturanLaporanBencana')){
             return redirect()->back()->withInput();
         }
-
+        $gambar_peristiwa = $this->request->getFile('gambar_peristiwa');
+        $fileData = file_get_contents($gambar_peristiwa->getTempName());
         $data = [
             "peristiwa" => $this->request->getPost('peristiwa'),
             "nama_lokasi" => $this->request->getPost('nama_lokasi'),
             "detail" => $this->request->getPost('detail'),
             "garis_lintang" => $this->request->getPost('garis_lintang'),
-            "garis_bujur" => $this->request->getPost('garis_bujur')
+            "garis_bujur" => $this->request->getPost('garis_bujur'),
+            'gambar_peristiwa' => $fileData,
         ];
 
         $model = new LaporanBencanaModel();
@@ -66,36 +72,36 @@ class AdminController extends BaseController
         $model = new LaporanBencanaModel();
         return view('admin_edit_lb', [
             "data" => $model->find($id),
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 
     public function editUpdateUser($id){
 
         // Validasi aturan buku.
-        if(!$this->validate('aturanLaporanBencana')){
+        if(!$this->validate('aturanUser')){
             return redirect()->back()->withInput();
         }
 
         $data = [
-            "peristiwa" => $this->request->getPost('peristiwa'),
-            "nama_lokasi" => $this->request->getPost('nama_lokasi'),
-            "detail" => $this->request->getPost('detail'),
+            "username" => $this->request->getPost('username'),
+            "email" => $this->request->getPost('email'),
             "garis_lintang" => $this->request->getPost('garis_lintang'),
             "garis_bujur" => $this->request->getPost('garis_bujur')
         ];
 
-        $model = new LaporanBencanaModel();
+        $model = new UserModel();
         $model->update($id, $data);
-
-        return redirect()->to(base_url('admin_daftar_lb'));
+        return redirect()->to(base_url('admin_daftar_user'));
         
     }
     public function editViewUser($id){
-        $model = new LaporanBencanaModel();
-        return view('admin_edit_lb', [
+        $model = new UserModel();
+        return view('admin_edit_user', [
             "data" => $model->find($id),
-            "username" => session()->get('username')
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
         ]);
     }
 
