@@ -101,9 +101,6 @@
             color: #FF5757;
         }
 
-        h5 {
-        }
-
         .laporButton {
             background-color: white;
             color: #FF5757;
