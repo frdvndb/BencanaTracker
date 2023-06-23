@@ -155,6 +155,9 @@
     body {
         background-color: #E5E5E5;
     }
+    .mt-3 p {
+        color: white;
+    }
     </style>
 </head>
 
@@ -205,51 +208,21 @@
             <?php } else {?>
             <div class="col-md-10 card">
                 <center>
-                    <h1> Donasi </h1>
+                    <h1> Support Us </h1>
                 </center>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <form action="donasi" method="post">
                     <div class="mt-3">
-                        <label class="form-label fw-bold">Jumlah uang:</label>
-                        <input type="text" name="jumlah_uang" placeholder="Masukkan jumlah uang, misal: 50000" required
-                            class="form-control col-form-label-sm">
+                        <label class="form-label fw-bold">Bantu Pengembangan Aplikasi:</label>
+                        <p>Rekening BRI:</p>
+                        <p>048292302291</p>
+                        <p>Rekening BNI:</p>
+                        <p>048532302291</p>
                     </div>
-                    <div class="mt-3">
-                        <label class="form-label fw-bold">Metode Pembayaran</label> <br>
-                        <div class="custom-radio">
-                            <input type="radio" name="metode_pembayaran" id="radio-bni" value="BNI">
-                            <label for="radio-bni">BNI</label>
-
-                            <input type="radio" name="metode_pembayaran" id="radio-bri" value="BRI">
-                            <label for="radio-bri">BRI</label>
-                        </div>
-                        <div class="mt-3">
-                            <input type="text" name="nomor_rekening" placeholder="Nomor Rekening" required
-                                class="form-control col-form-label-sm"><br>
-                        </div>
-                    </div>
-                    <div class="mt-3" style="text-align: center;">
-                        <input type="submit" name="proses" value="Proses"
-                            class="btn btn-outline-success btn-lg text-white background-proses">
-                    </div>
-                </form>
+                    
             </div>
             <?php } ?>
         </div>
     </div>
 
 </body>
-<!-- Include library SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<?php if (session()->getFlashdata('success')): ?>
-    <script>
-        // Tampilkan pesan popup menggunakan SweetAlert
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: '<?= session()->getFlashdata('success') ?>'
-        });
-    </script>
-<?php endif; ?>
 
 </html>
