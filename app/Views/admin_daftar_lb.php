@@ -256,6 +256,8 @@
                                 <td><?= $data['nama_lokasi'] ?></td>
                                 <td><img src="data:image/jpeg;base64,<?= base64_encode($data['gambar_peristiwa']); ?>"></td>
                                 <td>
+                                <a href="<?= base_url('laporan/' . $data['id_laporan']) ?>"
+                                        class="btn btn-success">View</a>
                                     <!-- Tombol edit data. -->
                                     <a href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>"
                                         class="btn btn-warning">Edit</a>
