@@ -37,6 +37,11 @@
     .h2o {
         color: #FF5757;
     }
+
+    .sign-upStyle {
+        text-decoration: none;
+        color: #bd5d38;
+    }
     </style>
 </head>
 
@@ -45,9 +50,6 @@
         <?php if (session()->get('pesan')) : ?>
         <p><?php echo session()->get('pesan'); ?></p>
         <?php endif; ?>
-        <div class="pt-5 d-flex justify-content-end">
-            <a href="<?= base_url('register') ?>" class="btn btn-warning">Register</a>
-        </div>
         <main class="form-signin w-100 m-auto text-center">
             <form action="<?= base_url('login') ?>" method="POST">
                 <h2><span class="h2w">Bencana</span><span class="h2o">Tracker</span></h2>
@@ -63,6 +65,9 @@
                     <label for="floatingPassword">Password</label>
                 </div>
                 <button class="w-100 mt-2 btn btn-lg btn-success" type="submit">Sign in</button>
+                <p class="fw-bold" style="text-align: center; color:white">Belum punya akun?
+                    <a href="<?= base_url('register') ?>" class="sign-upStyle">Sign up</a>
+                </p>
             </form>
         </main>
 

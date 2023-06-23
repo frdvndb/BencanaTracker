@@ -27,6 +27,7 @@ class RegisterController extends BaseController
         $password = $this->request->getPost('password');
         $garis_lintang = $this->request->getPost('latitude');
         $garis_bujur = $this->request->getPost('longitude');
+        $nomor_hp = $this->request->getPost('nomor_hp');
 
         $model = new UserModel();
         $model->insert([
@@ -34,7 +35,8 @@ class RegisterController extends BaseController
             "email" => $email,
             "password" => password_hash($password, PASSWORD_DEFAULT),
             'garis_lintang' => $garis_lintang,
-            'garis_bujur' => $garis_bujur
+            'garis_bujur' => $garis_bujur,
+            'nomor_hp' => $nomor_hp
         ]);
 
         return redirect()->to(base_url('/login'));

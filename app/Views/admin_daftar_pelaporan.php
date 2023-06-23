@@ -237,7 +237,7 @@
             </div>
             <!-- Bagian konten -->
             <div class="col-md-10 content">
-                <h1>Daftar Laporan Bencana</h1>
+                <h1>Daftar Laporan Pelaporan</h1>
                 <form action="<?= base_url('cariRelawan') ?>" method="GET" class="d-flex">
                     <div class="input-group" style="width: 300px;">
                         <input name="query" type="text" class="form-control" placeholder="Cari Bencana">

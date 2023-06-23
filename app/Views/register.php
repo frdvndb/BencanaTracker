@@ -68,8 +68,8 @@
                         <label for="floatingPassword">Password</label>
                     </div>
                     <div class="form-floating">
-                        <input name="username" type="username" class="form-control" id="floatingInput"
-                            placeholder="Username">
+                        <input name="nomor_hp" type="nomor_hp" class="form-control" id="floatingInput"
+                            placeholder="Nomor HP">
                         <label for="floatingInput">Nomor HP</label>
                     </div>
                     <div class="form-floating">
