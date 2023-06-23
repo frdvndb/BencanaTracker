@@ -201,7 +201,7 @@
                 <p><?= $relawan['nama'] ?></p>
                 <h5>Jenis bencana </h5>
                 <p><?= $relawan['jenis_bencana'] ?></p>
-                <h5>Detail Bencana:</h5>
+                <h5>Detail :</h5>
                 <p><?= $relawan['detail'] ?></p>
                 <h5>No HP Untuk WA/Telegram :</h5>
                 <p><?= $relawan['no_hp'] ?></p>
