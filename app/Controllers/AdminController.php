@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\LaporanBencanaModel;
+use App\Models\LaporkanLaporanModel;
 use App\Models\UserModel;
 
 class AdminController extends BaseController
@@ -33,6 +34,17 @@ class AdminController extends BaseController
         ]);
     }
 
+    public function daftarPelaporanLaporan()
+    {
+        $model = new LaporkanLaporanModel();
+        return view("admin_daftar_pelaporan", [
+            'data' => $model->paginate(10),
+            'pager' => $model->pager,
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]);
+    }
+
     public function deleteLaporanBencana($id){
         $model = new LaporanBencanaModel();
         $model->delete($id);
@@ -43,6 +55,12 @@ class AdminController extends BaseController
         $model = new UserModel();
         $model->delete($id);
         return redirect()->to(base_url('admin_daftar_user'));
+    }
+
+    public function deletePelaporanLaporan($id){
+        $model = new LaporkanLaporanModel();
+        $model->delete($id);
+        return redirect()->to(base_url('admin_daftar_pelaporan'));
     }
 
     public function editUpdateLaporanBencana($id){

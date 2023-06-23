@@ -14,6 +14,8 @@
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
         integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
         crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
     .container-fluid {
         max-width: 100%;
@@ -131,6 +133,11 @@
         color: white;
     }
 
+    table img {
+        height: 30px;
+        width: 60px;
+    }
+
     .pagination-links {
         display: flex;
         justify-content: left;
@@ -230,7 +237,7 @@
             </div>
             <!-- Bagian konten -->
             <div class="col-md-10 content">
-                <h1>Daftar Pengguna</h1>
+                <h1>Daftar Laporan Bencana</h1>
                 <form action="<?= base_url('cariRelawan') ?>" method="GET" class="d-flex">
                     <div class="input-group" style="width: 300px;">
                         <input name="query" type="text" class="form-control" placeholder="Cari Bencana">
@@ -248,36 +255,52 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Garis Lintang</th>
-                                <th>Garis Bujur</th>
+                                <th>ID Laporan</th>
+                                <th>ID Pelapor Bencana</th>
+                                <th>ID Pelapor Laporan</th>
+                                <th>Alasan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Perulangan foreach()
                     untuk memanggil memanggil
-                    semua baris yang diperlukan. -->
+                    semua data yang diperlukan. -->
                             <?php $i = 0; ?>
-                            <?php foreach ($data as $baris) : ?>
+                            <?php foreach ($data as $data) : ?>
                             <tr>
                                 <td><?= $i+=1; ?></td>
-                                <td><?= $baris['username'] ?></td>
-                                <td><?= $baris['email'] ?></td>
-                                <td><?= $baris['garis_lintang'] ?></td>
-                                <td><?= $baris['garis_bujur'] ?></td>
+                                <td><?= $data['id_laporan'] ?></td>
+                                <td><?= $data['id_pelapor_bencana'] ?></td>
+                                <td><?= $data['id_pelapor_laporan'] ?></td>
+                                <td><?= $data['alasan'] ?></td>
                                 <td>
-                                    <!-- Tombol edit baris. -->
-                                    <a href="<?= base_url('edit_user/'.$baris['id']) ?>"
-                                        class="btn btn-warning">Edit</a>
-
-                                    <!-- Tombol hapus baris. -->
-                                    <form action="<?= base_url('/hapus_user/'.$baris['id']) ?>" method="post"
-                                        style="display: inline-block;" onsubmit="return confirm('Yakin Hapus?')">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button class="btn btn-danger" type="submit">Hapus</button>
-                                    </form>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Aksi
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item"
+                                                href="<?= base_url('laporan/' . $data['id_laporan']) ?>">Lihat Laporan Bencana</a>
+                                            <a class="dropdown-item"
+                                                href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>">Edit Laporan Bencana</a>
+                                            <form
+                                                action="<?= base_url('/hapus_laporan_bencana/'.$data['id_laporan']) ?>"
+                                                method="post" onsubmit="return confirm('Yakin Hapus?')">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button class="dropdown-item" type="submit">Hapus Laporan
+                                                    Bencana</button>
+                                            </form>
+                                            <form action="<?= base_url('/hapus_laporan_pelaporan/'.$data['id']) ?>"
+                                                method="post" onsubmit="return confirm('Yakin Hapus?')">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button class="dropdown-item" type="submit">Hapus Laporan
+                                                    Pelaporan</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <?php endforeach ?>
@@ -287,6 +310,12 @@
             </div>
         </div>
     </div>
+    <script>
+    $(document).ready(function() {
+        $('.dropdown-toggle').dropdown();
+    });
+    </script>
+
 </body>
 
 </html>

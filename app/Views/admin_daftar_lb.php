@@ -130,7 +130,8 @@
     td {
         color: white;
     }
-    table img{
+
+    table img {
         height: 30px;
         width: 60px;
     }
@@ -201,6 +202,8 @@
                                     class="bi bi-list-check"></i> Daftar Peristiwa</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>"><i
                                     class="bi bi-people"></i> Daftar Pengguna</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pelaporan'); ?>"><i
+                                    class="bi bi-flag"></i> Daftar Pelaporan</a></li>
                         <?php } else {?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('/'); ?>"><i
                                     class="bi bi-house-fill"></i> Beranda</a></li>
@@ -270,9 +273,10 @@
                                 <td><?= $data['id_user'] ?></td>
                                 <td><?= $data['peristiwa'] ?></td>
                                 <td><?= $data['nama_lokasi'] ?></td>
-                                <td><img src="data:image/jpeg;base64,<?= base64_encode($data['gambar_peristiwa']); ?>"></td>
+                                <td><img src="data:image/jpeg;base64,<?= base64_encode($data['gambar_peristiwa']); ?>">
+                                </td>
                                 <td>
-                                <a href="<?= base_url('laporan/' . $data['id_laporan']) ?>"
+                                    <a href="<?= base_url('laporan/' . $data['id_laporan']) ?>"
                                         class="btn btn-success">View</a>
                                     <!-- Tombol edit data. -->
                                     <a href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>"
