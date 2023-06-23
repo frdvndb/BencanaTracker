@@ -234,7 +234,6 @@
                                 <th>ID Pengguna</th>
                                 <th>Peristiwa</th>
                                 <th>Lokasi</th>
-                                <th>Detail</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -250,7 +249,6 @@
                                 <td><?= $data['id_user'] ?></td>
                                 <td><?= $data['peristiwa'] ?></td>
                                 <td><?= $data['nama_lokasi'] ?></td>
-                                <td><?= $data['detail'] ?></td>
                                 <td>
                                     <!-- Tombol edit data. -->
                                     <a href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>"

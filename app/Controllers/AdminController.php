@@ -51,18 +51,33 @@ class AdminController extends BaseController
         if(!$this->validate('aturanLaporanBencana')){
             return redirect()->back()->withInput();
         }
-        $gambar_peristiwa = $this->request->getFile('gambar_peristiwa');
-        $fileData = file_get_contents($gambar_peristiwa->getTempName());
-        $data = [
-            "peristiwa" => $this->request->getPost('peristiwa'),
-            "nama_lokasi" => $this->request->getPost('nama_lokasi'),
-            "detail" => $this->request->getPost('detail'),
-            "garis_lintang" => $this->request->getPost('garis_lintang'),
-            "garis_bujur" => $this->request->getPost('garis_bujur'),
-            'gambar_peristiwa' => $fileData,
-        ];
 
         $model = new LaporanBencanaModel();
+        $gambar_peristiwa = $this->request->getFile('gambar_peristiwa');
+        if ($gambar_peristiwa->getSize() > 0) {
+            
+            $fileData = file_get_contents($gambar_peristiwa->getTempName());
+            $data = [
+                "peristiwa" => $this->request->getPost('peristiwa'),
+                "nama_lokasi" => $this->request->getPost('nama_lokasi'),
+                "detail" => $this->request->getPost('detail'),
+                "garis_lintang" => $this->request->getPost('garis_lintang'),
+                "garis_bujur" => $this->request->getPost('garis_bujur'),
+                'gambar_peristiwa' => $fileData,
+            ];
+        } else {
+            $gambar_peristiwa = $model->select('gambar_peristiwa')->where('id', $id)->first();
+            $data = [
+                "peristiwa" => $this->request->getPost('peristiwa'),
+                "nama_lokasi" => $this->request->getPost('nama_lokasi'),
+                "detail" => $this->request->getPost('detail'),
+                "garis_lintang" => $this->request->getPost('garis_lintang'),
+                "garis_bujur" => $this->request->getPost('garis_bujur'),
+                'gambar_peristiwa' => $gambar_peristiwa,
+            ];
+        }
+
+        
         $model->update($id, $data);
 
         return redirect()->to(base_url('admin_daftar_lb'));

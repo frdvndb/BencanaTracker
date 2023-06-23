@@ -196,10 +196,8 @@
                         <form action="<?= base_url('edit_laporan_bencana/'.$data['id']) ?>" method="post"  enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="gambar_peristiwa">Gambar Peristiwa:</label>
-                                
                                 <input type="file" id="gambar_peristiwa" name="gambar_peristiwa" class="form-control">
                             </div>
-
                             <div class="mb-3">
                                 <label for="peristiwa" class="form-label">Peristiwa</label>
                                 <input type="text" class="form-control" id="peristiwa" name="peristiwa"
