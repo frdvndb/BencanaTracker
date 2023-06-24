@@ -38,7 +38,7 @@ class RegisterController extends BaseController
             'garis_bujur' => $garis_bujur,
             'nomor_hp' => $nomor_hp
         ]);
-
+        session()->setFlashdata('success', 'Berhasil Membuat Akun.');
         return redirect()->to(base_url('/login'));
     }
 }
