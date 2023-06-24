@@ -167,9 +167,15 @@
                     <div class="main-sidebar">
                         <?php if (!$isAdmin == null && $isAdmin == 1) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>"><i
-                                    class="bi bi-list-check"></i> Daftar no_hp</a></li>
+                                    class="bi bi-list-check"></i> Daftar Peristiwa</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>"><i
                                     class="bi bi-people"></i> Daftar Pengguna</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pelaporan'); ?>"><i
+                                    class="bi bi-flag"></i> Daftar Pelaporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_relawan'); ?>"><i
+                                    class="bi bi-people-fill"></i> Daftar Relawan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pembelian'); ?>"><i
+                                    class="bi bi-bar-chart"></i> Daftar Pembelian</a></li>
                         <?php } else {?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('/'); ?>"><i
                                     class="bi bi-house-fill"></i> Beranda</a></li>
@@ -211,7 +217,8 @@
                 <!-- Formulir edit data. -->
                 <div class="into-content">
                     <div class="col-6">
-                        <form action="<?= base_url('edit_relawan/'.$data['id']) ?>" method="post"  enctype="multipart/form-data">
+                        <form action="<?= base_url('edit_relawan/'.$data['id']) ?>" method="post"
+                            enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="gambar_relawan">Foto Profil Relawan:</label>
                                 <input type="file" id="gambar_relawan" name="gambar_relawan" class="form-control">
@@ -228,8 +235,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="detail" class="form-label">Detail:</label>
-                                <textarea type="text" class="form-control" rows="4" id="detail" name="detail"
-                                    ><?= $data['detail'] ?></textarea>
+                                <textarea type="text" class="form-control" rows="4" id="detail"
+                                    name="detail"><?= $data['detail'] ?></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="no_hp" class="form-label">Nomor HP:</label>

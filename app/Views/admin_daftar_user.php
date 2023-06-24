@@ -201,6 +201,8 @@
                                     class="bi bi-flag"></i> Daftar Pelaporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_relawan'); ?>"><i
                                     class="bi bi-people-fill"></i> Daftar Relawan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pembelian'); ?>"><i
+                                    class="bi bi-bar-chart"></i> Daftar Pembelian</a></li>
                         <?php } else {?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('/'); ?>"><i
                                     class="bi bi-house-fill"></i> Beranda</a></li>
