@@ -85,6 +85,36 @@ class BuatLaporanController extends BaseController
             }
         }
         session()->setFlashdata('success', 'Berhasil Melaporkan Bencana.');
+        $message = "Laporan baru, deskripsi: \n" . $detailDenganBR;
+        // $user_id = $this->input->post("user_id");
+        $content = array(
+            "en" => "$message"
+        );
+
+        $fields = array(
+            'app_id' => "9c243ca7-57c4-4d7c-9915-888c2167975e",
+            'included_segments' => array("All"),
+            'contents' => $content
+        );
+
+        $fields = json_encode($fields);
+        print("\nJSON sent:\n");
+        print($fields);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+            'Authorization: Basic MmRiYzliOTEtMWNlMi00MDc4LThlNjAtMTVjNTA5OGMxMzkw'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        // return $response;
+        
         return redirect()->to(base_url('/map'));
     }
 
