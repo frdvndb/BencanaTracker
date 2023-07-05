@@ -46,6 +46,8 @@ $routes->post('/donasi', 'DonasiController::buatDonasi');
 // $routes->get('/pencarianrelawan', 'GMapController::pencarianrelawan');
 $routes->get('/pencarianrelawan', 'PencarianRelawanController::index');
 $routes->get('/cariRelawan', 'PencarianRelawanController::pencarianRelawan');
+$routes->get('/daftar_relawan', 'PencarianRelawanController::daftarMenjadiRelawanView');
+$routes->post('/daftar_relawan', 'PencarianRelawanController::daftarMenjadiRelawanAdd');
 
 $routes->get('/relawan/(:num)', 'PencarianRelawanController::detail_relawan/$1');
 
@@ -74,13 +76,18 @@ $routes->get('/histori_laporan', 'HistoriLaporanController::index');
 $routes->get('/admin_daftar_lb', 'AdminController::daftarLaporanBencana');
 $routes->get('/admin_daftar_user', 'AdminController::daftarUser');
 $routes->get('/admin_daftar_pelaporan', 'AdminController::daftarPelaporanLaporan');
+$routes->get('/admin_daftar_relawan', 'AdminController::daftarRelawan');
 $routes->get('/edit_laporan_bencana/(:num)', 'AdminController::editViewLaporanBencana/$1');
 $routes->post('/edit_laporan_bencana/(:num)', 'AdminController::editUpdateLaporanBencana/$1');
 $routes->get('/edit_user/(:num)', 'AdminController::editViewUser/$1');
 $routes->post('/edit_user/(:num)', 'AdminController::editUpdateUser/$1');
+$routes->get('/edit_relawan/(:num)', 'AdminController::editViewRelawan/$1');
+$routes->post('/edit_relawan/(:num)', 'AdminController::editUpdateRelawan/$1');
 $routes->delete('/hapus_laporan_bencana/(:num)', 'AdminController::deleteLaporanBencana/$1');
 $routes->delete('/hapus_user/(:num)', 'AdminController::deleteUser/$1');
 $routes->delete('/hapus_laporan_pelaporan/(:num)', 'AdminController::deletePelaporanLaporan/$1');
+$routes->delete('/hapus_relawan/(:num)', 'AdminController::deleteRelawan/$1');
+$routes->post('/verifikasi_relawan/(:num)', 'AdminController::verifikasiRelawan/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

@@ -80,6 +80,7 @@
 
     h1 {
         color: white;
+        margin-left: 50px;
     }
 
     .text-primary {
@@ -88,20 +89,16 @@
         color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
     }
 
-    .img-profile {
-        border: 10px solid white;
-        border-radius: 50%;
-        width: 150px;
-        height: 150px;
-    }
-
     .h2w {
         color: white;
     }
 
-    .h2o,
-    label {
+    .h2o {
         color: #FF5757;
+    }
+
+    label{
+        color: darkorange;
     }
 
     .laporButton {
@@ -110,6 +107,10 @@
         font-weight: bold;
         width: 100%;
         margin-top: 40px;
+    }
+
+    .field{
+    background-color: black;
     }
 
     .bottom-sidebar {
@@ -137,6 +138,17 @@
         display: none;
     }
 
+    .card2 {
+        align-items: center;
+        width: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        padding: 5px;
+        background-color: darkorange;
+        font-size: 15px;
+        position: relative;
+    }
+
     .custom-radio input[type="radio"]+label {
         border: 1px solid #ced4da;
         border-radius: 4px;
@@ -158,6 +170,20 @@
     .mt-3 p {
         color: white;
     }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .container img {
+      border-radius: 50%;
+      margin-right: 10px;
+      max-height: 50px;
+      max-width: 50px;
+    }
+
     </style>
 </head>
 
@@ -207,15 +233,18 @@
             </div>
             <?php } else {?>
             <div class="col-md-10 card">
-                <center>
-                    <h1> Support Us </h1>
-                </center>
+                <div class="container">
+                    <center>
+                    <h1 style="color: darkorange;"> Support Us </h1>
+                    </center>
+                <img src="assets/img/BencanaTracker.png" alt="Deskripsi Gambar" class="img-fluid" style="max-height:50px; max-width: 50px;">
+            </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">Bantu Pengembangan Aplikasi:</label>
                         <p>Rekening BRI:</p>
-                        <p>048292302291</p>
+                        <p class="card2">048292302291</p>
                         <p>Rekening BNI:</p>
-                        <p>048532302291</p>
+                        <p class="card2">048532302291</p>
                     </div>
                     
             </div>

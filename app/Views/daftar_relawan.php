@@ -14,18 +14,17 @@
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
         integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
         crossorigin=""></script>
-        <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" defer></script>
-        <script>
-        window.OneSignal = window.OneSignal || [];
-        OneSignal.push(function() {
-            OneSignal.init({
-            appId: "9c243ca7-57c4-4d7c-9915-888c2167975e",
-            });
-        });
-    </script>    
+
     <style>
     .container-fluid {
         max-width: 100%;
+    }
+
+    #gmapBlock {
+        width: 80%;
+        height: 80%;
+        margin-left: 40px;
+        margin-top: 30px;
     }
 
     .sidebar {
@@ -48,11 +47,46 @@
         color: #00B4D8;
     }
 
+    .content {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px;
+        background-color: #E5E5E5;
+        background-size: cover;
+        background-position: center;
+        font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-weight: 500;
+        overflow: auto;
+    }
+
+    h1 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
+    }
 
     .text-primary {
         --bs-primary-rgb: 189, 93, 56;
         --bs-text-opacity: 1;
         color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
+    }
+
+    .img-profile {
+        border: 10px solid white;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+    }
+
+    .h2w {
+        color: white;
+    }
+
+    .h2o {
+        color: #FF5757;
     }
 
     .laporButton {
@@ -77,48 +111,30 @@
         width: 80%;
         margin: 0 auto;
         background-color: #FF5757;
-    }
-
-    h1 {
-        text-transform: uppercase;
 
     }
 
-    .h2w {
-        color: white;
+    table {
+        background-color: #1546BA;
+        border-radius: 10px;
+        margin-top: 10px;
+        padding-bottom: 5px;
     }
 
-    .h2o {
-        color: #FF5757;
-    }
-
-    .content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        padding: 20px;
-        background-image: url('<?= base_url(); ?>assets/img/bglanding.jpeg');
-        background-color: #E5E5E5;
-        background-size: cover;
-        background-position: center;
-        font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        font-weight: 500;
-        color: white;
-    }
-
-    .card {
-        display: flex;
-        align-items: center;
-        margin: auto;
+    .table-wrapper {
+        overflow-x: auto;
+        max-height: 100%;
         width: 100%;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        padding: 20px;
-        background-color: rgba(21, 70, 186, 0.8);
-        position: relative;
-        text-align: center;
+    }
+
+    table th,
+    td {
+        color: white;
+    }
+
+    .into-content {
+        display: flex;
+        justify-content: space-between;
     }
     </style>
 </head>
@@ -148,12 +164,6 @@
                                     class="bi bi-list-check"></i> Daftar Peristiwa</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>"><i
                                     class="bi bi-people"></i> Daftar Pengguna</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pelaporan'); ?>"><i
-                                    class="bi bi-flag"></i> Daftar Pelaporan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_relawan'); ?>"><i
-                                    class="bi bi-people-fill"></i> Daftar Relawan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pembelian'); ?>"><i
-                                    class="bi bi-bar-chart"></i> Daftar Pembelian</a></li>
                         <?php } else {?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('/'); ?>"><i
                                     class="bi bi-house-fill"></i> Beranda</a></li>
@@ -185,15 +195,44 @@
             </div>
             <!-- Bagian konten -->
             <div class="col-md-10 content">
-                <div class="card">
-                    <h1>Selamat Datang di BencanaTracker</h1>
-                    BencanaTracker adalah website yang dirancang untuk melacak dan melaporkan bencana yang terjadi.
-                    Melalui platform ini, pengguna dapat membuat laporan tentang bencana yang terjadi dekat mereka,
-                    mencari relawan untuk membantu dalam penanganan bencana, dan berbagai hal lainnya.
-                    Untuk melaporkan bencana, Anda dapat menggunakan tombol "LAPORKAN BENCANA" yang terdapat pada
-                    sidebar
-                    sebelah kiri. Selain itu, Anda juga dapat menggunakan fitur-fitur lain yang tersedia pada sidebar
-                    untuk menjelajahi website ini.
+                <h1>Daftar Relawan</h1>
+                <?php if (validation_list_errors()) : ?>
+                <div class="alert alert-danger" style="width: fit-content;">
+                    <p><?= validation_list_errors(); ?></p>
+                </div>
+                <?php endif; ?>
+
+                <!-- Formulir edit data. -->
+                <div class="into-content">
+                    <div class="col-6">
+                        <form action="<?= base_url('daftar_relawan') ?>" method="post" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Relawan:</label>
+                                <input type="text" class="form-control" id="nama" name="nama">
+                            </div>
+                            <div class="mb-3">
+                                <label for="jenis_bencana" class="form-label">Bencana yang ditangani:</label>
+                                <input type="text" class="form-control" id="jenis_bencana" name="jenis_bencana">
+                            </div>
+                            <div class="mb-3">
+                                <label for="detail" class="form-label">Upload Foto Gambar Relawan:</label>
+                                <input type="file" class="form-control" id="gambar_relawan" name="gambar_relawan">
+                            </div>
+                            <div class="mb-3">
+                                <label for="detail" class="form-label">Detail:</label>
+                                <textarea id="detail" name="detail" rows="4" cols="40" class="form-control"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="no_hp" class="form-label">Nomor HP:</label>
+                                <input type="text" class="form-control" id="no_hp" name="no_hp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="text" class="form-control" id="email" name="email">
+                            </div>
+                            <button type="submit" class="w-100 btn btn-primary">Daftar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

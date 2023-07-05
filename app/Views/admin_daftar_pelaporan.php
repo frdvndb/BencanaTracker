@@ -206,6 +206,10 @@
                                     class="bi bi-people"></i> Daftar Pengguna</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pelaporan'); ?>"><i
                                     class="bi bi-flag"></i> Daftar Pelaporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_relawan'); ?>"><i
+                                    class="bi bi-people-fill"></i> Daftar Relawan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pembelian'); ?>"><i
+                                    class="bi bi-bar-chart"></i> Daftar Pembelian</a></li>
                         <?php } else {?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('/'); ?>"><i
                                     class="bi bi-house-fill"></i> Beranda</a></li>
@@ -218,6 +222,8 @@
                                     class="bi bi-clock-history"></i> Histori Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>"><i
                                     class="bi bi-cash-stack"></i> Donasi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pembelian'); ?>"><i
+                                    class="bi bi-bar-chart"></i> Daftar Pembelian</a></li>
                         <?php } ?>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>"><i
@@ -283,9 +289,11 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item"
-                                                href="<?= base_url('laporan/' . $data['id_laporan']) ?>">Lihat Laporan Bencana</a>
+                                                href="<?= base_url('laporan/' . $data['id_laporan']) ?>">Lihat Laporan
+                                                Bencana</a>
                                             <a class="dropdown-item"
-                                                href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>">Edit Laporan Bencana</a>
+                                                href="<?= base_url('edit_laporan_bencana/'.$data['id_laporan']) ?>">Edit
+                                                Laporan Bencana</a>
                                             <form
                                                 action="<?= base_url('/hapus_laporan_bencana/'.$data['id_laporan']) ?>"
                                                 method="post" onsubmit="return confirm('Yakin Hapus?')">
@@ -312,7 +320,20 @@
     </div>
     <script>
     $(document).ready(function() {
+        // Initialize the dropdown
         $('.dropdown-toggle').dropdown();
+
+        // Close dropdown when clicking outside
+        $(document).on('click', function(event) {
+            var target = $(event.target);
+            if (!target.closest('.dropdown').length && !target.hasClass('dropdown-toggle')) {
+                $('.dropdown-toggle').each(function() {
+                    if ($(this).siblings('.dropdown-menu').hasClass('show')) {
+                        $(this).dropdown('toggle');
+                    }
+                });
+            }
+        });
     });
     </script>
 
