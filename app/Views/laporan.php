@@ -198,7 +198,7 @@
     a[disabled] {
         pointer-events: none;
         cursor: default;
-        color: gray;
+        color: #FF5757;
         text-decoration: none;
     }
     </style>
@@ -271,7 +271,7 @@
                         <button class="upvote-button">
                             <a href="<?= base_url('laporan/upvote/'.$laporan['id']); ?>"
                                 <?= isset($dataVote['aksi']) && $dataVote['aksi']  == 'upvote' || $username == null ? 'disabled' : '' ?>>
-                                <i class="fas fa-chevron-up"></i>
+                                <i class="bi bi-hand-thumbs-up-fill"></i>
                             </a>
                             <span class="button-count"><?= $laporan['jumlah_upvote']?></span>
                         </button>
@@ -279,7 +279,7 @@
                         <button class="downvote-button">
                             <a href="<?= base_url('laporan/downvote/'.$laporan['id']); ?>"
                                 <?= isset($dataVote['aksi']) && $dataVote['aksi'] == 'downvote' || $username == null ? 'disabled' : '' ?>>
-                                <i class="fas fa-chevron-down"></i>
+                                <i class="bi bi-hand-thumbs-down-fill"></i>
                             </a>
                             <span class="button-count"><?= $laporan['jumlah_downvote']?></span>
                         </button>
