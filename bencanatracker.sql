@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2023 at 08:56 PM
+-- Generation Time: Jul 08, 2023 at 09:43 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -148,7 +148,8 @@ INSERT INTO `komentar` (`id`, `id_laporan`, `id_user`, `komentar`, `tanggal`) VA
 (1, 117, 17, 'Inilah hidup', '2023-07-08 18:04:29'),
 (2, 117, 17, 'Saya gila!', '2023-07-08 18:04:44'),
 (3, 117, 17, 'Says it rain!', '2023-07-09 02:10:14'),
-(4, 117, 17, 'WITA WITA', '2023-07-09 02:10:19');
+(4, 117, 17, 'WITA WITA', '2023-07-09 02:10:19'),
+(5, 153, 17, 'Test Komentar', '2023-07-09 03:01:12');
 
 -- --------------------------------------------------------
 
@@ -411,6 +412,19 @@ INSERT INTO `onesignal_player` (`id`, `id_user`, `id_player`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pembelian_premium`
+--
+
+CREATE TABLE `pembelian_premium` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) UNSIGNED NOT NULL,
+  `jumlah_bulan` int(11) NOT NULL,
+  `bukti_pembayaran` longblob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `relawan`
 --
 
@@ -456,7 +470,7 @@ CREATE TABLE `user` (
   `nomor_hp` varchar(20) NOT NULL,
   `is_admin` tinyint(1) DEFAULT NULL,
   `radius_notif` int(11) DEFAULT NULL,
-  `tanggal_premiun` date DEFAULT NULL,
+  `tanggal_premium` date DEFAULT NULL,
   `email_subscribe` tinyint(1) DEFAULT NULL,
   `push_subscribe` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -465,10 +479,10 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `password`, `garis_lintang`, `garis_bujur`, `nomor_hp`, `is_admin`, `radius_notif`, `tanggal_premiun`, `email_subscribe`, `push_subscribe`) VALUES
-(16, 'Andra', '2110817310013@mhs.ulm.ac.id', '$2y$10$3r912LkDAUP7mfo68QuET.EIaTZ9z.0B5LiIv1kaPuuwUTWXewT6q', '-3.2966447822410356', '114.58639984254941', '', NULL, NULL, NULL, NULL, NULL),
-(17, 'Farid', '2110817210015@mhs.ulm.ac.id', '$2y$10$jcPR1S.R9ZQhj82q1bDndORXGRyIJigcrkIF0YyBp6THoR0RJ8hX2', '-3.2974797862224987', '114.5869391244196', '', NULL, NULL, NULL, NULL, NULL),
-(19, 'Ajai', '2110817310019@mhs.ulm.ac.id', '$2y$10$toibHDZDXn6IofnYJsEbmeYYYUO6UZ1ErBXIVI2zMdihECC5xa/mC', '-3.2979424042412644', '114.58933889865877', '', NULL, 2, NULL, 1, 1),
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `garis_lintang`, `garis_bujur`, `nomor_hp`, `is_admin`, `radius_notif`, `tanggal_premium`, `email_subscribe`, `push_subscribe`) VALUES
+(16, 'Andra', '2110817310013@mhs.ulm.ac.id', '$2y$10$3r912LkDAUP7mfo68QuET.EIaTZ9z.0B5LiIv1kaPuuwUTWXewT6q', '-3.2966447822410356', '114.58639984254941', '', NULL, NULL, '2023-07-31', NULL, NULL),
+(17, 'Farid', '2110817210015@mhs.ulm.ac.id', '$2y$10$jcPR1S.R9ZQhj82q1bDndORXGRyIJigcrkIF0YyBp6THoR0RJ8hX2', '-3.2974797862224987', '114.5869391244196', '', NULL, 0, '2023-07-31', NULL, NULL),
+(19, 'Ajai', '2110817310019@mhs.ulm.ac.id', '$2y$10$toibHDZDXn6IofnYJsEbmeYYYUO6UZ1ErBXIVI2zMdihECC5xa/mC', '-3.2979424042412644', '114.58933889865877', '', NULL, 2, '2023-07-31', 1, 1),
 (20, 'Farid', 'farid@gmail.com', '$2y$10$JzGN3SK3AJMZTDwH14W39OFF3j1Hrv/KH0Po8SQU2uR6dceZOVEM6', '-2.413180011773759', '120.0629872083664', '', 1, NULL, NULL, NULL, NULL),
 (21, 'NMS', 'nms@nms.net', '$2y$10$M/.N468tCPLIXPmlP6Biv.7i5Dt2qC/wM0/8TSVM9Jd5bmKdcAuIK', '-3.2851627996824906', '114.59622572176161', '+6282351018889', NULL, NULL, NULL, NULL, NULL),
 (22, 'Andra2', 'muhammadandrafadhillah@gmail.com', '$2y$10$55/PAVa5LF1jACNkwGZ85ugH.71WQnNaEpHqfQhqY.fNaaER35yOO', '-5.156195363906182', '119.39505926180337', '0878', NULL, 5, NULL, 1, 1),
@@ -576,6 +590,13 @@ ALTER TABLE `onesignal_player`
   ADD KEY `id_user` (`id_user`);
 
 --
+-- Indexes for table `pembelian_premium`
+--
+ALTER TABLE `pembelian_premium`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`);
+
+--
 -- Indexes for table `relawan`
 --
 ALTER TABLE `relawan`
@@ -621,7 +642,7 @@ ALTER TABLE `histori_laporan`
 -- AUTO_INCREMENT for table `komentar`
 --
 ALTER TABLE `komentar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `laporan_bencana`
@@ -652,6 +673,12 @@ ALTER TABLE `notifikasi_laporan`
 --
 ALTER TABLE `onesignal_player`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
+-- AUTO_INCREMENT for table `pembelian_premium`
+--
+ALTER TABLE `pembelian_premium`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `relawan`
@@ -702,6 +729,12 @@ ALTER TABLE `notifikasi_laporan`
 --
 ALTER TABLE `onesignal_player`
   ADD CONSTRAINT `onesignal_player_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pembelian_premium`
+--
+ALTER TABLE `pembelian_premium`
+  ADD CONSTRAINT `pembelian_premium_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `vote`

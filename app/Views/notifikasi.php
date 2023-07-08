@@ -292,10 +292,24 @@
                         </div>
                             <div class="radiusContainer">
                                 <label for="radiusInput" style="margin-top: 10px;">Radius Notifikasi (km)</label>
-                                <div class="input-group mb-3">
+                                <?php 
+                                if (isset($tanggalPremium) && $tanggalPremium != NULL){
+                                    $tanggalNotifikasi = $tanggalPremium['tanggal_premium'];
+                                } else {
+                                    $tanggalNotifikasi = '2020-07-10';
+                                }
+                                $tanggalNotifikasiTes = '2020-07-10';
+                                if (strtotime($tanggalNotifikasi) > time()) { ?>
+                                <div class="input-group mb-3"> 
                                     <input type="number" class="form-control" id="radiusInput" placeholder="<?= $radiusNotif['radius_notif'] ? $radiusNotif['radius_notif'] : 5 ?>">
                                     <button class="btn btn-primary" id="radiusButton">Ubah Radius (Premium)</button>
                                 </div>
+                                <?php } else { ?>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" id="radiusInput" placeholder="<?= $radiusNotif['radius_notif'] ? $radiusNotif['radius_notif'] : 5 ?>">
+                                    <a href="<?= base_url('/belip') ?>" class="btn btn-primary">Ubah Radius. (Premium)</a>
+                                </div>
+                                    <?php } ?>
                             </div>
                         </div>
                     </div>

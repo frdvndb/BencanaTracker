@@ -21,6 +21,7 @@ class NotifikasiLaporanController extends BaseController
         $emailSub = $userModel->select('email_subscribe')->where('id', $id)->first();
         $pushSub = $userModel->select('push_subscribe')->where('id', $id)->first();
         $radiusNotif = $userModel->select('radius_notif')->where('id', $id)->first();
+        $tanggalPremium = $userModel->select('tanggal_premium')->where('id', $id)->first();
 
         if ($radiusNotif == null) {
             $radiusNotif = 5;
@@ -38,6 +39,7 @@ class NotifikasiLaporanController extends BaseController
             "data" => $data,
             "emailSub" => $emailSub,
             "pushSub" => $pushSub,
+            'tanggalPremium' => $tanggalPremium,
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
@@ -45,6 +47,8 @@ class NotifikasiLaporanController extends BaseController
 
     public function beliPremium()
     {
+        // session()->setFlashdata('success', 'Tunggu Diverifikasi Admin! Kemungkinkan 1-10 hari!.');
+        session()->setFlashdata('failed', 'Beli premium untuk membantu pengembang!');
         return view('beli_premium',[
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')

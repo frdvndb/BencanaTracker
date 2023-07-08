@@ -278,5 +278,30 @@
         </div>
     </div>
 </body>
+<!-- Include library SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<!-- Cek flash data 'success' -->
+<?php if (session()->getFlashdata('success')): ?>
+    <script>
+        // Tampilkan pesan popup menggunakan SweetAlert
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '<?= session()->getFlashdata('success') ?>'
+        });
+    </script>
+<?php endif; ?>
+
+<!-- Cek flash data 'failed' -->
+<?php if (session()->getFlashdata('failed')): ?>
+    <script>
+        // Tampilkan pesan popup menggunakan SweetAlert
+        Swal.fire({
+            icon: 'failed',
+            title: 'Ini Fitur Premium!',
+            text: '<?= session()->getFlashdata('failed') ?>'
+        });
+    </script>
+<?php endif; ?>
 </html>
