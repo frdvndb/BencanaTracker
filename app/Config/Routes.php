@@ -86,6 +86,7 @@ $routes->get('/admin_daftar_lb', 'AdminController::daftarLaporanBencana');
 $routes->get('/admin_daftar_user', 'AdminController::daftarUser');
 $routes->get('/admin_daftar_pelaporan', 'AdminController::daftarPelaporanLaporan');
 $routes->get('/admin_daftar_relawan', 'AdminController::daftarRelawan');
+$routes->get('/admin_daftar_pembelian', 'AdminController::daftarPembelian');
 $routes->get('/edit_laporan_bencana/(:num)', 'AdminController::editViewLaporanBencana/$1');
 $routes->post('/edit_laporan_bencana/(:num)', 'AdminController::editUpdateLaporanBencana/$1');
 $routes->get('/edit_user/(:num)', 'AdminController::editViewUser/$1');
@@ -100,6 +101,10 @@ $routes->post('/verifikasi_relawan/(:num)', 'AdminController::verifikasiRelawan/
 $routes->post('/verifikasi_laporan_bencana/(:num)', 'AdminController::verifikasiLaporanBencana/$1');
 $routes->get('laporan/upvote/(:num)', 'VoteController::upVote/$1');
 $routes->get('laporan/downvote/(:num)', 'VoteController::downVote/$1');
+
+$routes->get('/verifikasi_pembelian/(:num)', 'AdminController::viewVerifikasiPembelian/$1');
+$routes->post('/verifikasi_pembelian/(:num)', 'AdminController::submitVerifikasiPembelian/$1');
+$routes->delete('/hapus_pembelian/(:num)', 'AdminController::deletePembelian/$1');
 
 /*
  * --------------------------------------------------------------------

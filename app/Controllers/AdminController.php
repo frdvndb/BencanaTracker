@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\BeliPremiumModel;
 use App\Models\LaporanBencanaModel;
 use App\Models\LaporkanLaporanModel;
 use App\Models\RelawanModel;
@@ -108,6 +109,30 @@ class AdminController extends BaseController
         }
         return view("admin_daftar_relawan", [
             'data' => $model->paginate(10),
+            'pager' => $model->pager,
+            'currentPage' => $currentPage,
+            'query' => $query,
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]);
+    }
+
+    public function daftarPembelian()
+    {
+        $currentPage = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $query = $this->request->getVar('query');
+        $model = new BeliPremiumModel();
+        if ($query) {
+            $model->groupStart()
+                ->orLike('pembelian_premium.id_user', $query)
+                ->orLike('pembelian_premium.jumlah_bulan', $query)
+                ->orLike('user.tanggal_premium', $query)
+                ->groupEnd();
+        }
+        return view("admin_daftar_pembelian", [
+            'data' => $model->select('pembelian_premium.*, user.*')
+            ->join('user', 'pembelian_premium.id_user = user.id', 'left')
+            ->paginate(10),
             'pager' => $model->pager,
             'currentPage' => $currentPage,
             'query' => $query,
