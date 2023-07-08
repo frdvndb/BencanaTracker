@@ -231,7 +231,7 @@
                 </ul>
             </div>
             <div class="col-md-10">
-                <form action="buat_laporan" method="POST" enctype="multipart/form-data">
+                
                     <?php if ($username == null) { ?>
                     <div class="card">
                         <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat
@@ -257,14 +257,14 @@
                         </div>
                         <!-- Form Support Us -->
                         <div class="mt-3">
-                            <form action="belip" method="POST">
+                            <form action="belip" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label for="beli_premium" class="form-label">Jumlah Bulan</label>
-                                    <input type="text" class="form-control" id="beli_premium" placeholder="Jumlah Bulan"
-                                        name="beli_premium" required>
+                                    <label for="jumlah_bulan" class="form-label">Jumlah Bulan</label>
+                                    <input type="text" class="form-control" id="jumlah_bulan" placeholder="Jumlah Bulan"
+                                        name="jumlah_bulan" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="gambar_peristiwa">Upload Bukti Pembayaran:</label>
+                                    <label for="bukti_pembayaran">Upload Bukti Pembayaran:</label>
                                     <input type="file" id="bukti_pembayaran" name="bukti_pembayaran"
                                         class="form-control">
                                 </div><br>
@@ -273,25 +273,13 @@
                         </div>
                     </div>
                     <?php } ?>
-                </form>
+                
             </div>
         </div>
     </div>
 </body>
 <!-- Include library SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Cek flash data 'success' -->
-<?php if (session()->getFlashdata('success')): ?>
-    <script>
-        // Tampilkan pesan popup menggunakan SweetAlert
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: '<?= session()->getFlashdata('success') ?>'
-        });
-    </script>
-<?php endif; ?>
 
 <!-- Cek flash data 'failed' -->
 <?php if (session()->getFlashdata('failed')): ?>

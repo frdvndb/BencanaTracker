@@ -75,6 +75,7 @@ $routes->post('/komentar/(:num)', 'KomentarController::buatKomentar/$1');
 
 $routes->get('/notifikasi', 'NotifikasiLaporanController::index');
 $routes->get('/belip', 'NotifikasiLaporanController::beliPremium');
+$routes->post('/belip', 'NotifikasiLaporanController::submitBeliPremium');
 $routes->post('/update_lokasi_user', 'NotifikasiLaporanController::updateLokasiUser');
 $routes->post('/update_status_langganan', 'NotifikasiLaporanController::updateStatusLangganan');
 $routes->post('/update_radius', 'NotifikasiLaporanController::updateRadius');

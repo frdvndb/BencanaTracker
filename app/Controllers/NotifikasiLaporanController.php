@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\BeliPremiumModel;
 use App\Models\NotifikasiLaporanModel;
 use App\Models\UserModel;
 
@@ -54,6 +55,21 @@ class NotifikasiLaporanController extends BaseController
             "isAdmin" => session()->get('isAdmin')
         ]);
     }
+
+    public function submitBeliPremium()
+    {
+        $buktiPembayaran = $this->request->getFile('bukti_pembayaran');
+        $fileData = file_get_contents($buktiPembayaran->getTempName());
+        $model = new BeliPremiumModel();
+        $model->insert([
+            'id_user' => session()->get('id'),
+            'jumlah_bulan' => $this->request->getPost('jumlah_bulan'),
+            'bukti_pembayaran' => $fileData,
+        ]);
+        session()->setFlashdata('successBeli', 'Tunggu Diverifikasi Admin! Kemungkinkan 1-7 hari!');
+        return redirect()->to(base_url('notifikasi'));
+    }
+
     public function updateLokasiUser()
     {
         $model = new UserModel();
