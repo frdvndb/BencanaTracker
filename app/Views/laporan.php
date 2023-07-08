@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>BencanaTracker</title>    
+    <title>BencanaTracker</title>
     <meta name="description" content="The tiny framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -193,7 +193,13 @@
     .scroll-container {
         max-height: 600px;
         overflow-y: auto;
-    }
+    }a[disabled] {
+    pointer-events: none;
+    cursor: default;
+    color: gray;
+    text-decoration: none;
+}
+
     </style>
 </head>
 
@@ -219,7 +225,7 @@
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>"><i
                                     class="bi bi-clock-history"></i> Histori Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>"><i
-                        class="bi bi-cash-stack"></i> Support Us</a></li>
+                                    class="bi bi-cash-stack"></i> Support Us</a></li>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>"><i
                                     class="bi bi-box-arrow-right"></i> Logout</a></li>
@@ -255,15 +261,22 @@
                     <p style="margin-bottom: 50px;"><?= $laporan['detail'] ?></p>
 
                     <div class="bottom-left-buttons">
-                        <button class="upvote-button">
+                    
+                    <button class="upvote-button">
+                    <a href="<?= base_url('laporan/upvote/'.$laporan['id']); ?>" <?= isset($dataVote['aksi']) && $dataVote['aksi']  == 'upvote' ? 'disabled' : '' ?> >
                             <i class="fas fa-chevron-up"></i>
-                            <span class="button-count">10</span>
-                        </button>
-                        <button class="downvote-button">
+                        </a>
+                        <span class="button-count"><?= $laporan['jumlah_upvote']?></span>
+                    </button>
+
+                    <button class="downvote-button" >
+                        <a href="<?= base_url('laporan/downvote/'.$laporan['id']); ?>" <?= isset($dataVote['aksi']) && $dataVote['aksi'] == 'downvote' ? 'disabled' : '' ?>>
                             <i class="fas fa-chevron-down"></i>
-                            <span class="button-count">5</span>
-                        </button>
+                        </a>
+                        <span class="button-count"><?= $laporan['jumlah_downvote']?></span>
+                    </button>
                     </div>
+
                     <div class="bottom-right-buttons">
                         <button class="report-button">
                             <a href="<?= base_url('/laporkan_laporan/'.$laporan['id']) ?>">
@@ -286,13 +299,14 @@
 
 <!-- Cek flash data 'success' -->
 <?php if (session()->getFlashdata('success')): ?>
-    <script>
-        // Tampilkan pesan popup menggunakan SweetAlert
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: '<?= session()->getFlashdata('success') ?>'
-        });
-    </script>
+<script>
+// Tampilkan pesan popup menggunakan SweetAlert
+Swal.fire({
+    icon: 'success',
+    title: 'Berhasil',
+    text: '<?= session()->getFlashdata('success') ?>'
+});
+</script>
 <?php endif; ?>
+
 </html>

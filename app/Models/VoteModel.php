@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class LaporanBencanaModel extends Model
+class VoteModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'laporan_bencana';
+    protected $table            = 'vote';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['garis_lintang','garis_bujur','nama_lokasi','peristiwa','gambar_peristiwa','detail','jumlah_upvote','jumlah_downvote'];
+    protected $allowedFields    = ['id_laporan', 'id_user', 'aksi'];
 
     // Dates
     protected $useTimestamps = false;

@@ -95,6 +95,10 @@ $routes->delete('/hapus_user/(:num)', 'AdminController::deleteUser/$1');
 $routes->delete('/hapus_laporan_pelaporan/(:num)', 'AdminController::deletePelaporanLaporan/$1');
 $routes->delete('/hapus_relawan/(:num)', 'AdminController::deleteRelawan/$1');
 $routes->post('/verifikasi_relawan/(:num)', 'AdminController::verifikasiRelawan/$1');
+
+$routes->get('laporan/upvote/(:num)', 'VoteController::upVote/$1');
+$routes->get('laporan/downvote/(:num)', 'VoteController::downVote/$1');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

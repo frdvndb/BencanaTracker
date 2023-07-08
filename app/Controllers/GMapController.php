@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\LaporanBencanaModel;
 use App\Controllers\BaseController;
 use App\Models\OneSignalPlayerModel;
+use App\Models\VoteModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CURLRequest;
 
@@ -119,8 +120,17 @@ class GMapController extends BaseController
 
     public function laporan($id)
     {
+
+
         $model = new LaporanBencanaModel();
         $laporan = $model->find($id);
+
+        $sessionNow = session()->get('id');
+        $modelVote = new VoteModel();
+        $vote = $modelVote->where('id_laporan', $id)
+        ->where('id_user',$sessionNow)
+        ->first();
+
 
         $gambarBase64 = base64_encode($laporan['gambar_peristiwa']);
         $gambarSrc = 'data:image/jpeg;base64,' . $gambarBase64;
@@ -176,6 +186,7 @@ class GMapController extends BaseController
             "laporan" => $laporan,
             "gambarSrc" => $gambarSrc,
             "lokasi" => $lokasi,
+            'dataVote' => $vote,
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
