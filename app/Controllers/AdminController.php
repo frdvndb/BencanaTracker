@@ -156,6 +156,22 @@ class AdminController extends BaseController
         return redirect()->to(base_url('admin_daftar_relawan'));
     }
 
+    public function verifikasiLaporanBencana($id){
+        $model = new LaporanBencanaModel();
+        $laporan = $model->find($id);
+        if ($laporan['trusted'] == 0){
+            $data = [
+                "trusted" => 1,
+            ];
+        } else {
+            $data = [
+                "trusted" => 0,
+            ];
+        }
+        $model->update($id, $data);
+        return redirect()->to(base_url('admin_daftar_lb'));
+    }
+
     public function editUpdateLaporanBencana($id){
 
         // Validasi aturan buku.

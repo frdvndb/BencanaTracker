@@ -193,13 +193,14 @@
     .scroll-container {
         max-height: 600px;
         overflow-y: auto;
-    }a[disabled] {
-    pointer-events: none;
-    cursor: default;
-    color: gray;
-    text-decoration: none;
-}
+    }
 
+    a[disabled] {
+        pointer-events: none;
+        cursor: default;
+        color: gray;
+        text-decoration: none;
+    }
     </style>
 </head>
 
@@ -261,20 +262,27 @@
                     <p style="margin-bottom: 50px;"><?= $laporan['detail'] ?></p>
 
                     <div class="bottom-left-buttons">
-                    
-                    <button class="upvote-button">
-                    <a href="<?= base_url('laporan/upvote/'.$laporan['id']); ?>" <?= isset($dataVote['aksi']) && $dataVote['aksi']  == 'upvote' ? 'disabled' : '' ?> >
-                            <i class="fas fa-chevron-up"></i>
-                        </a>
-                        <span class="button-count"><?= $laporan['jumlah_upvote']?></span>
-                    </button>
+                        <?php if (isset($laporan['trusted']) && $laporan['trusted'] == 1): ?>
+                        <div style="background-color: #1546BA;">
+                            <b style="color: white;">LAPORAN INI TERPERCAYA</b>
+                        </div>
+                        <?php endif; ?>
+                        
+                        <button class="upvote-button">
+                            <a href="<?= base_url('laporan/upvote/'.$laporan['id']); ?>"
+                                <?= isset($dataVote['aksi']) && $dataVote['aksi']  == 'upvote' || $username == null ? 'disabled' : '' ?>>
+                                <i class="fas fa-chevron-up"></i>
+                            </a>
+                            <span class="button-count"><?= $laporan['jumlah_upvote']?></span>
+                        </button>
 
-                    <button class="downvote-button" >
-                        <a href="<?= base_url('laporan/downvote/'.$laporan['id']); ?>" <?= isset($dataVote['aksi']) && $dataVote['aksi'] == 'downvote' ? 'disabled' : '' ?>>
-                            <i class="fas fa-chevron-down"></i>
-                        </a>
-                        <span class="button-count"><?= $laporan['jumlah_downvote']?></span>
-                    </button>
+                        <button class="downvote-button">
+                            <a href="<?= base_url('laporan/downvote/'.$laporan['id']); ?>"
+                                <?= isset($dataVote['aksi']) && $dataVote['aksi'] == 'downvote' || $username == null ? 'disabled' : '' ?>>
+                                <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <span class="button-count"><?= $laporan['jumlah_downvote']?></span>
+                        </button>
                     </div>
 
                     <div class="bottom-right-buttons">
