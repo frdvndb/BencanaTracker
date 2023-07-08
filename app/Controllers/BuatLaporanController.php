@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\HistoriLaporanModel;
 use App\Models\LaporanBencanaModel;
 use App\Models\NotifikasiLaporanModel;
+use App\Models\OneSignalPlayerModel;
 use App\Models\UserModel;
 
 class BuatLaporanController extends BaseController
@@ -21,8 +22,8 @@ class BuatLaporanController extends BaseController
 
     public function buat()
     {
-    $gambar_peristiwa = $this->request->getFile('gambar_peristiwa');
-    $fileData = file_get_contents($gambar_peristiwa->getTempName());
+        $gambar_peristiwa = $this->request->getFile('gambar_peristiwa');
+        $fileData = file_get_contents($gambar_peristiwa->getTempName());
 
         $model = new LaporanBencanaModel();
         $detail = $this->request->getPost('detail');
@@ -44,6 +45,7 @@ class BuatLaporanController extends BaseController
             "id_user" => $sessionNow,
             "id_laporan" => $idlaporanNow
         ]);
+
         $modelNotifikasi = new NotifikasiLaporanModel();
 
         $modelUser = new UserModel();
@@ -63,48 +65,82 @@ class BuatLaporanController extends BaseController
         }
 
         foreach ($data as $baris) {
+            $radiusNotif = 0;
+            if ($baris['radius_notif'] == null) {
+                $radiusNotif = 5;
+            } else {
+                $radiusNotif = $baris['radius_notif'];
+            }
             $garis_lintang_temp = (double) $baris['garis_lintang'];
             $garis_bujur_temp = (double)  $baris['garis_bujur'];
             $jarakLaporanKeUser = calculateDistance($garis_lintang_temp, $garis_bujur_temp, (double) $this->request->getPost('garis_lintang'), (double) $this->request->getPost('garis_bujur'));
-            if ($jarakLaporanKeUser <= 5 && $baris['id'] != $sessionNow) {
+            if ($jarakLaporanKeUser <= $radiusNotif && $baris['id'] != $sessionNow) {
                 $modelNotifikasi->insert([
                     "id_user" => $baris['id'],
                     "id_laporan" => $idlaporanNow
                 ]);        
-
-                $email = \Config\Services::email();
-                $alamat_penerima = $baris['email'];
-                $email->setTo($alamat_penerima);
-                $alamat_pengirim = 'bencanatracker@gmail.com';
-                $email->setFrom($alamat_pengirim);
-                $subject = 'Bencana Baru';
-                $email->setSubject($subject);
-                $pesan = 'Seseorang melaporkan bencana: ' . $this->request->getPost('peristiwa') . '<br/>' . $detailDenganBR . '<br/>' . '<a href="' . str_replace('\\', '/', base_url('laporan/')) . $model->getInsertID() . '">Lihat laporan</a>';
-                $email->setMessage($pesan);
-                $email->send();
+                if ($baris['push_subscribe'] == 1) {
+                    // Mengirim notifikasi OneSignal
+                    $playerIds = $this->getPlayerIdsByUserId($baris['id']); // Mendapatkan player IDs berdasarkan user ID
+                    if (!empty($playerIds)) {
+                        $this->sendOneSignalNotification($playerIds, 'Laporan Baru', 'Seseorang melaporkan bencana: ' . $this->request->getPost('peristiwa') . "\r\n" . $detailDenganBR, base_url('laporan/') . $model->getInsertID());
+                    }
+                }
+                if ($baris['email_subscribe'] == 1) {
+                    $email = \Config\Services::email();
+                    $alamat_penerima = $baris['email'];
+                    $email->setTo($alamat_penerima);
+                    $alamat_pengirim = 'bencanatracker@gmail.com';
+                    $email->setFrom($alamat_pengirim);
+                    $subject = 'Bencana Baru';
+                    $email->setSubject($subject);
+                    $pesan = 'Seseorang melaporkan bencana: ' . $this->request->getPost('peristiwa') . '<br/>' . $detailDenganBR . '<br/>' . '<a href="' . str_replace('\\', '/', base_url('laporan/')) . $model->getInsertID() . '">Lihat laporan</a>';
+                    $email->setMessage($pesan);
+                    $email->send();
+                }    
             }
         }
-        session()->setFlashdata('success', 'Berhasil Melaporkan Bencana.');
-        $message = "Laporan baru, deskripsi: \n" . $detailDenganBR;
-        // $user_id = $this->input->post("user_id");
+        session()->setFlashdata('success', 'Berhasil Melaporkan Bencana.');        
+        return redirect()->to(base_url('/map'));
+    }
+
+    protected function getPlayerIdsByUserId($userId)
+    {
+        $model = new OneSignalPlayerModel();
+        $builder = $model->where('id_user', $userId)->select('id_player')->findAll();
+
+        $playerIds = [];
+        foreach ($builder as $row) {
+            $playerIds[] = $row['id_player'];
+        }
+
+        return $playerIds;
+    }
+
+    protected function sendOneSignalNotification($playerIds, $title, $message, $url)
+    {
         $content = array(
-            "en" => "$message"
+            "en" => $message
         );
 
         $fields = array(
             'app_id' => "9c243ca7-57c4-4d7c-9915-888c2167975e",
-            'included_segments' => array("All"),
-            'contents' => $content
+            'include_player_ids' => $playerIds,
+            'headings' => array(
+                'en' => $title
+            ),
+            'contents' => $content,
+            'url' => $url
         );
 
         $fields = json_encode($fields);
-        print("\nJSON sent:\n");
-        print($fields);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
-            'Authorization: Basic MmRiYzliOTEtMWNlMi00MDc4LThlNjAtMTVjNTA5OGMxMzkw'));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json; charset=utf-8',
+            'Authorization: Basic MmRiYzliOTEtMWNlMi00MDc4LThlNjAtMTVjNTA5OGMxMzkw'
+        ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
@@ -113,9 +149,5 @@ class BuatLaporanController extends BaseController
 
         $response = curl_exec($ch);
         curl_close($ch);
-        // return $response;
-        
-        return redirect()->to(base_url('/map'));
     }
-
 }

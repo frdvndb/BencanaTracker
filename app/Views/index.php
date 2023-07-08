@@ -115,6 +115,14 @@
     .leaflet-popup-content {
         text-transform: none;
     }
+
+    #attribution {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        font-size: 6px;
+        color: #666;
+    }
     </style>
 </head>
 
@@ -166,7 +174,7 @@
 
                     // set map tiles source
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                        attribution: '<div id="attribution">Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                         maxZoom: 18
                     }).addTo(map);
 
@@ -190,18 +198,50 @@
                     }
                 });
 
-
                     // retrieve marker data from the database
                     var locationMarkers = JSON.parse(`<?php echo ($locationMarkers); ?>`);
                     var locInfo = JSON.parse(`<?php echo ($locInfo); ?>`);
                     var maxId = JSON.parse(`<?php echo ($maxId); ?>`);
+
                     // loop through the marker data and add markers to the map
                     for (var i = 0; i < locationMarkers.length; i++) {
-                        var marker = L.marker([locationMarkers[i][1], locationMarkers[i][2]])
+                        if (locationMarkers[i][0] === 'Banjir') {
+                            customIcon = L.icon({
+                                iconUrl: "<?= base_url('../assets/img/marker_banjir.png') ?>",
+                                iconSize: [32, 32],
+                                iconAnchor: [15, 30],
+                            });
+                        } else if (locationMarkers[i][0] === 'Gempa Bumi') {
+                            customIcon = L.icon({
+                                iconUrl: "<?= base_url('../assets/img/marker_gempa.png') ?>",
+                                iconSize: [32, 32],
+                                iconAnchor: [15, 30],
+                            });
+                        } else if (locationMarkers[i][0] === 'Kecelakaan') {
+                            customIcon = L.icon({
+                                iconUrl: "<?= base_url('../assets/img/marker_kecelakaan.png') ?>",
+                                iconSize: [32, 32],
+                                iconAnchor: [15, 30],
+                            });
+                        } else if (locationMarkers[i][0] === 'Tanah Longsor') {
+                            customIcon = L.icon({
+                                iconUrl: "<?= base_url('../assets/img/marker_longsor.png') ?>",
+                                iconSize: [32, 32],
+                                iconAnchor: [15, 30],
+                            });
+                        } else {
+                            customIcon = L.icon({
+                                iconUrl: "<?= base_url('../assets/img/placeholder.png') ?>",
+                                iconSize: [32, 32],
+                                iconAnchor: [15, 30],
+                            });
+                        }
+
+                        var marker = L.marker([locationMarkers[i][1], locationMarkers[i][2]], { icon: customIcon })
                             .addTo(map)
                             .bindPopup(locInfo[i][0] + '<br><a href="<?= base_url("laporan/") ?>' + locationMarkers[i][3] + '" class="btn btn-primary" style="color: #fff;">Lihat detail laporan</a>');
-                    }     
-                    
+                    } 
+
                     function getLatestReports() {  
                             // Kirim permintaan ke server untuk mendapatkan data laporan terbaru
                             $.ajax({
@@ -209,14 +249,44 @@
                                 method: 'GET',
                                 dataType: 'json',
                                 success: function (response) {
-                                    // alert('1');
 
                                     var dataMarker = JSON.parse(response.locationMarkers);
                                     var dataLocInfo = JSON.parse(response.locInfo);
                                     maxId = JSON.parse(response.maxId);
 
                                     for (var i = 0; i < dataMarker.length; i++) {
-                                        var marker = L.marker([dataMarker[i][1], dataMarker[i][2]])
+                                        if (dataMarker[i][0] === 'Banjir') {
+                                            customIcon = L.icon({
+                                                iconUrl: "<?= base_url('../assets/img/marker_banjir.png') ?>",
+                                                iconSize: [32, 32],
+                                                iconAnchor: [15, 30],
+                                            });
+                                        } else if (dataMarker[i][0] === 'Gempa Bumi') {
+                                            customIcon = L.icon({
+                                                iconUrl: "<?= base_url('../assets/img/marker_gempa.png') ?>",
+                                                iconSize: [32, 32],
+                                                iconAnchor: [15, 30],
+                                            });
+                                        } else if (dataMarker[i][0] === 'Kecelakaan') {
+                                            customIcon = L.icon({
+                                                iconUrl: "<?= base_url('../assets/img/marker_kecelakaan.png') ?>",
+                                                iconSize: [32, 32],
+                                                iconAnchor: [15, 30],
+                                            });
+                                        } else if (dataMarker[i][0] === 'Tanah Longsor') {
+                                            customIcon = L.icon({
+                                                iconUrl: "<?= base_url('../assets/img/marker_longsor.png') ?>",
+                                                iconSize: [32, 32],
+                                                iconAnchor: [15, 30],
+                                            });
+                                        } else {
+                                            customIcon = L.icon({
+                                                iconUrl: "<?= base_url('../assets/img/placeholder.png') ?>",
+                                                iconSize: [32, 32],
+                                                iconAnchor: [15, 30],
+                                            });
+                                        }
+                                        var marker = L.marker([dataMarker[i][1], dataMarker[i][2]], { icon: customIcon })
                                             .addTo(map)
                                             .bindPopup(dataLocInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + dataMarker[i][3] + '">Detail Bencana</a>');
                                     }     

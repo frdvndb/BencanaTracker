@@ -36,7 +36,9 @@ class RegisterController extends BaseController
             "password" => password_hash($password, PASSWORD_DEFAULT),
             'garis_lintang' => $garis_lintang,
             'garis_bujur' => $garis_bujur,
-            'nomor_hp' => $nomor_hp
+            'nomor_hp' => $nomor_hp,
+            'email_subscribe' => 1,
+            'push_subscribe' => 1
         ]);
         session()->setFlashdata('success', 'Berhasil Membuat Akun.');
         return redirect()->to(base_url('/login'));
