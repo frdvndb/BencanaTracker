@@ -292,7 +292,7 @@
                             </a>
                         </button>
                         <button class="comment-button">
-                            <a href="<?= base_url('komentar'); ?>">
+                            <a href="<?= base_url('/komentar/'.$laporan['id']) ?>">
                                 <i class="fas fa-comment"></i>
                             </a>
                         </button>

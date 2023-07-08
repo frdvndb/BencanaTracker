@@ -283,25 +283,27 @@
             <div class="col-md-10 card">
                 <div class="comments-section">
                     <h3 style="text-align: center; color: white;">Komentar</h3>
-                    <?php for ($i = 0; $i < 3; $i++) { ?>
+                    <?php foreach ($dataKomentar as $dk) {  ?>
                         <div class="comment">
                             <div class="user-profile">
                                 <img src="<?= base_url('../assets/img/background.jpg') ?>" alt="User Profile Picture">
                                 <div class="user-details" style="margin-left: 10px;">
-                                    <h5 class="h2o" style="margin-bottom: 0;">Andra</h5>
-                                    <p style="color: white; margin-top: 5px;">Sebagai warga sekitar, saya bisa mengkonfirmasi bahwa bencana ini benar adanya</p>
+                                    <h5 class="h2o" style="margin-bottom: 0;"><?= $dk['username'] ?></h5>
+                                    <p style="color: white; margin-top: 5px;"><?= $dk['komentar'] ?></p>
                                 </div>
                             </div>
                             <div class="comment-actions">
-                                <button class="like-button"><i class="fas fa-thumbs-up"></i></button>
-                                <span class="like-count">300</span>
+                                <button class="like-button"><i class="far fa-calendar-alt"></i></button>
+                                <span class="like-count"><?= $dk['tanggal'] ?></span>
                             </div>
                         </div>
                     <?php } ?>
+                    <form action="<?= base_url('komentar/'.$dataLaporan['id']) ?>" method="POST">
                     <div class="add-comment">
-                        <textarea class="comment-input" placeholder="Tulis komentar..." style="color: white;"></textarea>
+                        <textarea class="comment-input" name="komentar" placeholder="Tulis komentar..." style="color: black;"></textarea>
                         <button class="post-button background-proses">Post</button>
                     </div>
+                    </form>
                 </div>
             </div>
             <?php } ?>

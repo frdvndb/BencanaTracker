@@ -39,8 +39,6 @@ $routes->get('/map', 'GMapController::showMap');
 
 $routes->get('/latest/(:num)', 'GMapController::getLatestReports/$1');
 
-$routes->get('/komentar', 'GMapController::komentar');
-
 $routes->get('/laporan/(:num)', 'GMapController::laporan/$1');
 
 $routes->post('/simpan_player_id', 'GMapController::simpanPlayerID');
@@ -71,6 +69,9 @@ $routes->post('/buat_laporan', 'BuatLaporanController::buat');
 
 $routes->get('/laporkan_laporan/(:num)', 'LaporkanLaporanController::laporkan_laporan/$1');
 $routes->post('/laporkan_laporan/(:num)', 'LaporkanLaporanController::submitPelaporanLaporan/$1');
+$routes->get('/komentar/(:num)', 'KomentarController::komentar/$1');
+$routes->post('/komentar/(:num)', 'KomentarController::buatKomentar/$1');
+
 
 $routes->get('/notifikasi', 'NotifikasiLaporanController::index');
 $routes->get('/belip', 'NotifikasiLaporanController::beliPremium');
