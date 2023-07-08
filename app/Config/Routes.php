@@ -48,7 +48,7 @@ $routes->get('/pencarianrelawan', 'PencarianRelawanController::index');
 $routes->get('/cariRelawan', 'PencarianRelawanController::pencarianRelawan');
 $routes->get('/daftar_relawan', 'PencarianRelawanController::daftarMenjadiRelawanView');
 $routes->post('/daftar_relawan', 'PencarianRelawanController::daftarMenjadiRelawanAdd');
-
+$routes->get('/beli_premium', 'LoginController::index');
 $routes->get('/relawan/(:num)', 'PencarianRelawanController::detail_relawan/$1');
 
 $routes->get('/login', 'LoginController::index');
@@ -70,6 +70,7 @@ $routes->get('/laporkan_laporan/(:num)', 'LaporkanLaporanController::laporkan_la
 $routes->post('/laporkan_laporan/(:num)', 'LaporkanLaporanController::submitPelaporanLaporan/$1');
 
 $routes->get('/notifikasi', 'NotifikasiLaporanController::index');
+$routes->get('/belip', 'NotifikasiLaporanController::beliPremium');
 
 $routes->get('/histori_laporan', 'HistoriLaporanController::index');
 
