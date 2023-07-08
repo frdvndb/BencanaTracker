@@ -42,6 +42,14 @@ class NotifikasiLaporanController extends BaseController
             "isAdmin" => session()->get('isAdmin')
         ]);
     }
+
+    public function beliPremium()
+    {
+        return view('beli_premium',[
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]);
+    }
     public function updateLokasiUser()
     {
         $model = new UserModel();

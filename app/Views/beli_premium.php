@@ -7,16 +7,16 @@
     <meta name="description" content="The tiny framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
     .card {
         margin: auto;
-        width: 30%;
+        width: 50%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         padding: 20px;
+        margin-top: 70px;
         background-color: #1546BA;
     }
 
@@ -39,7 +39,6 @@
         font-size: 1.2rem;
         height: 100vh;
         position: relative;
-
     }
 
     .sidebar a {
@@ -81,6 +80,7 @@
 
     h1 {
         color: white;
+        margin-left: 50px;
     }
 
     .text-primary {
@@ -89,20 +89,17 @@
         color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
     }
 
-    .img-profile {
-        border: 10px solid white;
-        border-radius: 50%;
-        width: 150px;
-        height: 150px;
-    }
-
     .h2w {
         color: white;
     }
 
-    .h2o,
+    .h2o {
+        color: #FF5757;
+    }
+
     label {
-        color: white;
+        color: darkorange;
+        font-weight: bold;
     }
 
     .laporButton {
@@ -111,6 +108,10 @@
         font-weight: bold;
         width: 100%;
         margin-top: 40px;
+    }
+
+    .field {
+        background-color: black;
     }
 
     .bottom-sidebar {
@@ -127,30 +128,70 @@
         width: 80%;
         margin: 0 auto;
         background-color: #FF5757;
-
     }
 
     .background-proses {
         background-color: #00cc99;
     }
 
+    .custom-radio input[type="radio"] {
+        display: none;
+    }
+
+    .card2 {
+        align-items: center;
+        width: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        padding: 5px;
+        background-color: darkorange;
+        font-size: 15px;
+        position: relative;
+    }
+
+    .custom-radio input[type="radio"]+label {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 0.375rem 0.75rem;
+        cursor: pointer;
+
+        background-color: white;
+    }
+
+    .custom-radio input[type="radio"]:checked+label {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+
     body {
         background-color: #E5E5E5;
+    }
+
+    .mt-3 p {
+        color: white;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .container img {
+        border-radius: 50%;
+        margin-right: 10px;
+        max-height: 50px;
+        max-width: 50px;
+    }
+
+    .background-proses {
+        background-color: #00cc99;
     }
     </style>
 </head>
 
 <body>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var clickedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
-
-        // Pre-fill the input fields with the clicked location data
-        document.getElementById('garis_lintang').value = clickedLocation.latitude;
-        document.getElementById('garis_bujur').value = clickedLocation.longitude;
-        document.getElementById('peristiwa').value = clickedLocation.locationName;
-    });
-    </script>
     <div class="container-fluid">
         <div class="row">
             <!-- Bagian sidebar -->
@@ -171,8 +212,8 @@
                                     class="bi bi-people-fill"></i> Cari Relawan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>"><i
                                     class="bi bi-clock-history"></i> Histori Laporan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>"><i
-                        class="bi bi-cash-stack"></i> Support Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('beli_premium'); ?>"><i
+                                    class="bi bi-cash-stack"></i> Support Us</a></li>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>"><i
                                     class="bi bi-box-arrow-right"></i> Logout</a></li>
@@ -189,98 +230,53 @@
                     </div>
                 </ul>
             </div>
-            <?php if ($username == null) { ?>
-            <div class="col-md-10 card" style=" width:75%;">
-                <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat menggunakan fitur ini!</h2>
-            </div>
-            <?php } else {?>
-            <div class="col-md-10 card">
-                <center>
-                    <h1> Buat Laporan </h1>
-                </center>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <div class="col-md-10">
                 <form action="buat_laporan" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="peristiwa">Bencana yang terjadi:</label>
-                        <select id="peristiwa" name="peristiwa" onchange="checkPeristiwaLainnya(this)"
-                            class="form-control">
-                            <option value="pilih" selected disabled>Pilih Bencana</option>
-                            <option value="Banjir">Banjir</option>
-                            <option value="Gempa Bumi">Gempa Bumi</option>
-                            <option value="Kecelakaan">Kecelakaan</option>
-                            <option value="Tanah Longsor">Tanah Longsor</option>
-                            <option value="peristiwa_lainnya">Lainnya</option>
-                        </select>
+                    <?php if ($username == null) { ?>
+                    <div class="card">
+                        <h2 style="color:white; text-align:center;">Login Atau Register terlebih dahulu untuk dapat
+                            menggunakan fitur ini!</h2>
                     </div>
-                    <div class="form-group" style="padding-top: 5px;">
-                        <input type="text" id="peristiwa_lainnya" name="peristiwa_lainnya" style="display: none;"
-                            placeholder="Masukkan Bencana Yang Terjadi" class="form-control">
-                    </div><br>
-                    <div class="form-group">
-                        <label for="nama_lokasi">Lokasi:</label>
-                        <input type="text" id="nama_lokasi" name="nama_lokasi" class="form-control">
-                    </div><br>
-                    <div class="form-group">
-                        <label for="garis_lintang">Garis Lintang:</label>
-                        <input type="text" id="garis_lintang" name="garis_lintang" class="form-control">
-                    </div><br>
-                    <div class="form-group">
-                        <label for="garis_bujur">Garis Bujur:</label>
-                        <input type="text" id="garis_bujur" name="garis_bujur" class="form-control">
-                    </div><br>
-                    <div class="form-group">
-                        <label for="detail">Detail:</label>
-                        <textarea id="detail" name="detail" rows="4" cols="40" class="form-control"></textarea>
-                    </div><br>
-                    <div class="form-group">
-                        <label for="gambar_peristiwa">Upload Gambar:</label>
-                        <input type="file" id="gambar_peristiwa" name="gambar_peristiwa" class="form-control">
-                    </div><br>
-                    <div class="text-center">
-                        <input type="submit" value="Submit" class="btn btn-primary background-proses"
-                            style="width: 100%; max-width: 100%;">
+                    <?php } else { ?>
+                    <div class="card">
+                        <div class="container">
+                            <center>
+                                <h1 style="color: darkorange;">Pembelian Premium</h1>
+                            </center>
+                            <img src="assets/img/BencanaTracker.png" alt="Deskripsi Gambar" class="img-fluid"
+                                style="max-height:50px; max-width: 50px;">
+                        </div>
+                        <div class="mt-3">
+                            <p>1 Bulan = Rp30.000,00</p>
+                            <p>Premium akan dimulai ketika Admin telah menyetujui pembelian.</p>
+                            <p>Lakukan pembayaran kepada rekening berikut:</p>
+                            <p>Rekening BRI:</p>
+                            <p class="card2">048292302291</p>
+                            <p>Rekening BNI:</p>
+                            <p class="card2">048532302291</p>
+                        </div>
+                        <!-- Form Support Us -->
+                        <div class="mt-3">
+                            <form action="belip" method="POST">
+                                <div class="mb-3">
+                                    <label for="beli_premium" class="form-label">Jumlah Bulan</label>
+                                    <input type="text" class="form-control" id="beli_premium" placeholder="Jumlah Bulan"
+                                        name="beli_premium" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gambar_peristiwa">Upload Bukti Pembayaran:</label>
+                                    <input type="file" id="bukti_pembayaran" name="bukti_pembayaran"
+                                        class="form-control">
+                                </div><br>
+                                <button type="submit" class="btn btn-primary w-100 background-proses">Beli</button>
+                            </form>
+                        </div>
                     </div>
+                    <?php } ?>
                 </form>
-                <?php } ?>
             </div>
         </div>
     </div>
 </body>
 
 </html>
-
-<script>
-function checkPeristiwaLainnya(selectElement) {
-    var peristiwaLainnya = document.getElementById("peristiwa_lainnya");
-    if (selectElement.value === "peristiwa_lainnya") {
-        peristiwaLainnya.style.display = "block";
-        peristiwaLainnya.required = true;
-        peristiwaLainnya.name = "peristiwa";
-    } else {
-        peristiwaLainnya.style.display = "none";
-        peristiwaLainnya.required = false;
-        peristiwaLainnya.name = "peristiwa_lainnya"; 
-    }
-}
-
-document.getElementById("location_name").addEventListener("change", function() {
-    var selectedOption = this.options[this.selectedIndex];
-    var peristiwaLainnya = document.getElementById("peristiwa_lainnya");
-    if (selectedOption.value === "peristiwa_lainnya") {
-        peristiwaLainnya.value = ""; 
-        peristiwaLainnya.style.display = "block";
-        peristiwaLainnya.required = true;
-        peristiwaLainnya.name = "peristiwa"; 
-    } else {
-        peristiwaLainnya.style.display = "none";
-        peristiwaLainnya.required = false;
-        peristiwaLainnya.name = "peristiwa_lainnya";
-    }
-});
-</script>
-
-<script>
-$(document).ready(function() {
-    $('.searchable-select').select2();
-});
-</script>
