@@ -246,7 +246,7 @@
                 <h1>Daftar Laporan Pelaporan</h1>
                 <form action="<?= base_url('admin_daftar_pelaporan') ?>" method="GET" class="d-flex">
                     <div class="input-group" style="width: 300px;">
-                        <input name="query" type="text" class="form-control" placeholder="Cari pelaporan...">
+                        <input name="query" type="text" class="form-control" placeholder="Cari pelaporan..." value="<?= $query ?>">
                         <button type="submit" class="btn btn-success">Cari</button>
                     </div>
                 </form>

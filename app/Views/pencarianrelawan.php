@@ -158,8 +158,48 @@
     body {
         background-color: #E5E5E5;
     }
+
     .d-flex .btn {
         margin-left: 5px;
+    }
+    .pagination-links {
+        display: flex;
+        justify-content: left;
+        margin-left: 10px;
+        margin-top: 20px;
+        height: 20px;
+    }
+
+    .pagination-links .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+    }
+
+    .pagination-links .pagination .active {
+        background-color: #FF5757;
+        color: white;
+    }
+
+    .pagination-links .pagination li {
+        margin-right: 5px;
+    }
+
+    .pagination-links .pagination a {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: white;
+        color: #FF5757;
+        border: none;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .pagination-links .pagination a:hover {
+        background-color: #FF5757;
+        color: white;
     }
     </style>
 
@@ -208,9 +248,9 @@
             <div class="col-md-10 card">
                 <h2> Pencarian Relawan </h2>
                 <div class="d-flex">
-                    <form action="<?= base_url('cariRelawan') ?>" method="GET" class="input-group"
+                    <form action="<?= base_url('pencarianrelawan') ?>" method="GET" class="input-group"
                         style="width: 300px;">
-                        <input name="query" type="text" class="form-control" placeholder="Nama Relawan">
+                        <input name="query" type="text" class="form-control" placeholder="Nama Relawan" value="<?= $query ?>">
                         <button type="submit" class="btn btn-success">Cari</button>
                     </form>
                     <a class="btn btn-warning" href="<?= base_url('daftar_relawan') ?>">Menjadi Relawan</a>
@@ -233,6 +273,11 @@
                 </div>
                 <?php
             } ?>
+                <div class="ml-auto">
+                    <div class="pagination-links">
+                        <?= $pager->links() ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -242,13 +287,14 @@
 
 <!-- Cek flash data 'success' -->
 <?php if (session()->getFlashdata('success')): ?>
-    <script>
-        // Tampilkan pesan popup menggunakan SweetAlert
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: '<?= session()->getFlashdata('success') ?>'
-        });
-    </script>
+<script>
+// Tampilkan pesan popup menggunakan SweetAlert
+Swal.fire({
+    icon: 'success',
+    title: 'Berhasil',
+    text: '<?= session()->getFlashdata('success') ?>'
+});
+</script>
 <?php endif; ?>
+
 </html>

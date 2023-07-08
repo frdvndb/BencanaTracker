@@ -244,7 +244,7 @@
                 <h1>Daftar Relawan</h1>
                 <form action="<?= base_url('admin_daftar_relawan') ?>" method="GET" class="d-flex">
                     <div class="input-group" style="width: 300px;">
-                        <input name="query" type="text" class="form-control" placeholder="Cari Bencana">
+                        <input name="query" type="text" class="form-control" placeholder="Cari Bencana" value="<?= $query ?>">
                         <button type="submit" class="btn btn-success">Cari</button>
                     </div>
                 </form>

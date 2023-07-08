@@ -242,7 +242,8 @@
                 <h1>Daftar Laporan Bencana</h1>
                 <form action="<?= base_url('admin_daftar_lb') ?>" method="GET" class="d-flex">
                     <div class="input-group" style="width: 300px;">
-                        <input name="query" type="text" class="form-control" placeholder="Cari Bencana" value="<?= $query ?>">
+                        <input name="query" type="text" class="form-control" placeholder="Cari Bencana"
+                            value="<?= $query ?>">
                         <button type="submit" class="btn btn-success">Cari</button>
                     </div>
                 </form>
@@ -296,10 +297,10 @@
 
                 </div>
                 <div class="ml-auto">
-                        <div class="pagination-links">
-                            <?= $pager->links() ?>
-                        </div>
+                    <div class="pagination-links">
+                        <?= $pager->links() ?>
                     </div>
+                </div>
             </div>
         </div>
     </div>
