@@ -13,7 +13,7 @@ class LaporanBencanaModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['garis_lintang','garis_bujur','nama_lokasi','peristiwa','gambar_peristiwa','detail','jumlah_upvote','jumlah_downvote', 'trusted'];
+    protected $allowedFields    = ['garis_lintang','garis_bujur','nama_lokasi','peristiwa','gambar_peristiwa','detail','jumlah_upvote','jumlah_downvote', 'trusted', 'tanggal'];
 
     // Dates
     protected $useTimestamps = false;

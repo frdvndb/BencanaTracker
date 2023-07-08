@@ -22,6 +22,7 @@ class BuatLaporanController extends BaseController
 
     public function buat()
     {
+        date_default_timezone_set('Asia/Makassar');
         $gambar_peristiwa = $this->request->getFile('gambar_peristiwa');
         $fileData = file_get_contents($gambar_peristiwa->getTempName());
 
@@ -37,6 +38,7 @@ class BuatLaporanController extends BaseController
             'peristiwa' => $this->request->getPost('peristiwa'),
             'gambar_peristiwa' => $fileData,
             'detail' => $detailDenganBR,
+            'tanggal'=> date('Y-m-d H:i:s')
         ]);
         $sessionNow = session()->get('id');
         $idlaporanNow = $model->insertID();

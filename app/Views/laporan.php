@@ -246,7 +246,7 @@
 
             <div class="col-md-10 card">
                 <div class="scroll-container">
-                    <p style="font-size: smaller;">Dilaporkan oleh Andra pada 8 Juli 2023 pukul 13:47 WITA</p>
+                    <p style="font-size: smaller;">Dilaporkan oleh <?= $dataUser['username'] ?> pada <?= $laporan['tanggal'] ?></p>
                     <img src="<?= $gambarSrc ?>" alt="Gambar Peristiwa" class="img-fluid" style="max-height: 300px;">
                     <h5>Peristiwa:</h5>
                     <p><?= $laporan['peristiwa'] ?></p>

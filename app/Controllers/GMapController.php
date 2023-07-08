@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Models\LaporanBencanaModel;
 use App\Controllers\BaseController;
+use App\Models\HistoriLaporanModel;
 use App\Models\OneSignalPlayerModel;
+use App\Models\UserModel;
 use App\Models\VoteModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CURLRequest;
@@ -131,7 +133,13 @@ class GMapController extends BaseController
         ->where('id_user',$sessionNow)
         ->first();
 
-
+        
+        $modelHistori = new HistoriLaporanModel();
+        $user = $modelHistori->select('histori_laporan.*, user.*')
+            ->join('user', 'user.id = histori_laporan.id_user')
+            ->where('histori_laporan.id_laporan', $id)
+            ->first();
+    
         $gambarBase64 = base64_encode($laporan['gambar_peristiwa']);
         $gambarSrc = 'data:image/jpeg;base64,' . $gambarBase64;
 
@@ -187,6 +195,7 @@ class GMapController extends BaseController
             "gambarSrc" => $gambarSrc,
             "lokasi" => $lokasi,
             'dataVote' => $vote,
+            'dataUser' => $user,
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
