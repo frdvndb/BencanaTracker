@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class OneSignalPlayerModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'user';
+    protected $table            = 'onesignal_player';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username', 'email', 'password', 'garis_lintang', 'garis_bujur','nomor_hp', 'email_subscribe', 'push_subscribe', 'radius_notif', 'tanggal_premium'];
+    protected $allowedFields    = ['id_user', 'id_player'];
 
     // Dates
     protected $useTimestamps = false;

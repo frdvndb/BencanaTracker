@@ -39,6 +39,12 @@ $routes->get('/map', 'GMapController::showMap');
 
 $routes->get('/latest/(:num)', 'GMapController::getLatestReports/$1');
 
+$routes->get('/komentar', 'GMapController::komentar');
+
+$routes->get('/laporan/(:num)', 'GMapController::laporan/$1');
+
+$routes->post('/simpan_player_id', 'GMapController::simpanPlayerID');
+
 // $routes->get('/donasi', 'GMapController::donasi');
 $routes->get('/donasi', 'DonasiController::index');
 $routes->post('/donasi', 'DonasiController::buatDonasi');
@@ -61,16 +67,16 @@ $routes->post('/register', 'RegisterController::buat');
 $routes->get('/buat_laporan', 'BuatLaporanController::index');
 $routes->post('/buat_laporan', 'BuatLaporanController::buat');
 
-$routes->get('/laporan/(:num)', 'GMapController::laporan/$1');
 // $routes->get('/laporan', 'GMapController::laporan');
-
-$routes->get('/komentar', 'GMapController::komentar');
 
 $routes->get('/laporkan_laporan/(:num)', 'LaporkanLaporanController::laporkan_laporan/$1');
 $routes->post('/laporkan_laporan/(:num)', 'LaporkanLaporanController::submitPelaporanLaporan/$1');
 
 $routes->get('/notifikasi', 'NotifikasiLaporanController::index');
 $routes->get('/belip', 'NotifikasiLaporanController::beliPremium');
+$routes->post('/update_lokasi_user', 'NotifikasiLaporanController::updateLokasiUser');
+$routes->post('/update_status_langganan', 'NotifikasiLaporanController::updateStatusLangganan');
+$routes->post('/update_radius', 'NotifikasiLaporanController::updateRadius');
 
 $routes->get('/histori_laporan', 'HistoriLaporanController::index');
 

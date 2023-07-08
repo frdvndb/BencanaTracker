@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\LaporanBencanaModel;
 use App\Controllers\BaseController;
+use App\Models\OneSignalPlayerModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CURLRequest;
 
@@ -12,6 +13,7 @@ class GMapController extends BaseController
     public function landingPage(){
         return view('landing',[
             "username" => session()->get('username'),
+            "userID" => session()->get('id'),
             "isAdmin" => session()->get('isAdmin')
         ]);
     }
@@ -210,4 +212,35 @@ class GMapController extends BaseController
         ]);
     }
 
+    public function simpanPlayerID()
+    {
+        $playerId = $this->request->getPost('playerId'); // Dapatkan player ID dari permintaan POST
+        $userId = $this->request->getPost('userID'); // Dapatkan user ID dari permintaan POST
+    
+        $model = new OneSignalPlayerModel();
+    
+        // Hapus semua baris dengan player ID yang sama, tetapi id user-nya bukan $userId
+        $model->where('id_player', $playerId)->whereNotIn('id_user', [$userId])->delete();
+
+        // Cek apakah sudah ada baris dengan player ID dan user ID yang sama
+        $existingRow = $model->where('id_player', $playerId)->where('id_user', $userId)->first();
+
+        if (!$existingRow) {
+            // Jika tidak ada baris yang ada, simpan player ID ke database
+            $data = [
+                'id_player' => $playerId,
+                'id_user' => $userId
+            ];
+            $model->insert($data);
+        }        
+    
+        // Check if the user already has 10 player IDs in the database
+        $playerIdsCount = $model->where('id_user', $userId)->countAllResults();
+        if ($playerIdsCount > 10) {
+            // If there are already 10 player IDs, delete the row with the lowest ID for the user
+            $lowestIdPlayer = $model->where('id_user', $userId)->orderBy('id', 'ASC')->first();
+            $model->delete($lowestIdPlayer['id']);
+        }    
+    }
+    
 }
