@@ -240,15 +240,10 @@
             <!-- Bagian konten -->
             <div class="col-md-10 content">
                 <h1>Daftar Laporan Bencana</h1>
-                <form action="<?= base_url('cariRelawan') ?>" method="GET" class="d-flex">
+                <form action="<?= base_url('admin_daftar_lb') ?>" method="GET" class="d-flex">
                     <div class="input-group" style="width: 300px;">
-                        <input name="query" type="text" class="form-control" placeholder="Cari Bencana">
+                        <input name="query" type="text" class="form-control" placeholder="Cari Bencana" value="<?= $query ?>">
                         <button type="submit" class="btn btn-success">Cari</button>
-                    </div>
-                    <div class="ml-auto">
-                        <div class="pagination-links">
-                            <?= $pager->links() ?>
-                        </div>
                     </div>
                 </form>
 
@@ -269,7 +264,7 @@
                             <!-- Perulangan foreach()
                     untuk memanggil memanggil
                     semua data yang diperlukan. -->
-                            <?php $i = 0; ?>
+                            <?php $i = 0 + (10 * ($currentPage - 1)); ?>
                             <?php foreach ($data as $data) : ?>
                             <tr>
                                 <td><?= $i+=1; ?></td>
@@ -298,7 +293,13 @@
                             <?php endforeach ?>
                         </tbody>
                     </table>
+
                 </div>
+                <div class="ml-auto">
+                        <div class="pagination-links">
+                            <?= $pager->links() ?>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
