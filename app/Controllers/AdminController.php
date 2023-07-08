@@ -14,22 +14,55 @@ class AdminController extends BaseController
     public function daftarLaporanBencana()
     {
         $model = new LaporanBencanaModel();
-        return view("admin_daftar_lb", [
+    
+        $currentPage = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $query = $this->request->getVar('query');
+    
+        if ($query) {
+            $model->groupStart()
+                ->orLike('histori_laporan.id_user', $query)
+                ->orLike('histori_laporan.id_laporan', $query)
+                ->orLike('laporan_bencana.peristiwa', $query)
+                ->orLike('laporan_bencana.nama_lokasi', $query)
+                ->groupEnd();
+        }
+    
+        $data = [
             'data' => $model->select('laporan_bencana.*, histori_laporan.*')
-            ->join('histori_laporan', 'laporan_bencana.id = histori_laporan.id_laporan', 'left')
-            ->paginate(10),
+                            ->join('histori_laporan', 'laporan_bencana.id = histori_laporan.id_laporan', 'left')
+                            ->paginate(10),
             'pager' => $model->pager,
-            "username" => session()->get('username'),
-            "isAdmin" => session()->get('isAdmin')
-        ]);
+            'currentPage' => $currentPage,
+            'query' => $query,
+            'username' => session()->get('username'),
+            'isAdmin' => session()->get('isAdmin')
+        ];
+    
+        return view("admin_daftar_lb", $data);
     }
+    
 
     public function daftarUser()
     {
+        $currentPage = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $query = $this->request->getVar('query');
         $model = new UserModel();
+
+        if ($query) {
+            $model->groupStart()
+                ->orLike('user.username', $query)
+                ->orLike('user.email', $query)
+                ->orLike('user.nomor_hp', $query)
+                ->orLike('user.garis_lintang', $query)
+                ->orLike('user.garis_bujur', $query)
+                ->groupEnd();
+        }
+
         return view("admin_daftar_user", [
             'data' => $model->paginate(10),
             'pager' => $model->pager,
+            'currentPage' => $currentPage,
+            'query' => $query,
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
@@ -37,10 +70,24 @@ class AdminController extends BaseController
 
     public function daftarPelaporanLaporan()
     {
+        $currentPage = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $query = $this->request->getVar('query');
+
         $model = new LaporkanLaporanModel();
+
+        if ($query) {
+            $model->groupStart()
+                ->orLike('laporan_pelaporan.id_pelapor_bencana', $query)
+                ->orLike('laporan_pelaporan.id_pelapor_laporan', $query)
+                ->orLike('laporan_pelaporan.alasan', $query)
+                ->groupEnd();
+        }
+
         return view("admin_daftar_pelaporan", [
             'data' => $model->paginate(10),
             'pager' => $model->pager,
+            'currentPage' => $currentPage,
+            'query' => $query,
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
@@ -48,10 +95,22 @@ class AdminController extends BaseController
 
     public function daftarRelawan()
     {
+        $currentPage = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $query = $this->request->getVar('query');
         $model = new RelawanModel();
+        if ($query) {
+            $model->groupStart()
+                ->orLike('relawan.nama', $query)
+                ->orLike('relawan.jenis_bencana', $query)
+                ->orLike('relawan.email', $query)
+                ->orLike('relawan.no_hp', $query)
+                ->groupEnd();
+        }
         return view("admin_daftar_relawan", [
             'data' => $model->paginate(10),
             'pager' => $model->pager,
+            'currentPage' => $currentPage,
+            'query' => $query,
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
@@ -151,6 +210,7 @@ class AdminController extends BaseController
         $data = [
             "username" => $this->request->getPost('username'),
             "email" => $this->request->getPost('email'),
+            "nomor_hp" => $this->request->getPost('nomor_hp'),
             "garis_lintang" => $this->request->getPost('garis_lintang'),
             "garis_bujur" => $this->request->getPost('garis_bujur')
         ];
@@ -211,5 +271,4 @@ class AdminController extends BaseController
             "isAdmin" => session()->get('isAdmin')
         ]);
     }
-
 }

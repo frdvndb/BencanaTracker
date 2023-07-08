@@ -108,7 +108,7 @@
 
     .h2o,
     h5 {
-        color: #FF5757;
+        color: white;
     }
 
     h5 {

@@ -223,6 +223,11 @@
                                     value="<?= $data['email'] ?>">
                             </div>
                             <div class="mb-3">
+                                <label for="email" class="form-label">Nomor HP</label>
+                                <input type="text" class="form-control" id="nomor_hp" name="nomor_hp"
+                                    value="<?= $data['nomor_hp'] ?>">
+                            </div>
+                            <div class="mb-3">
                                 <label for="garis_lintang" class="form-label">Garis Lintang</label>
                                 <input type="text" class="form-control" id="garis_lintang" name="garis_lintang"
                                     value="<?= $data['garis_lintang'] ?>">

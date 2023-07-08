@@ -101,7 +101,7 @@
 
     .h2o,
     label {
-        color: #FF5757;
+        color: white;
     }
 
     .laporButton {

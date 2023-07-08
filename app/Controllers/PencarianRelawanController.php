@@ -10,10 +10,25 @@ class PencarianRelawanController extends BaseController
     protected $helpers = ['form'];
     public function index()
     {
+        $currentPage = $this->request->getVar('page') ? $this->request->getVar('page') : 1;
+        $query = $this->request->getVar('query');
+        
         $model = new RelawanModel();
-        $data = $model->where('diverifikasi', 1)->findAll();
+
+        if ($query) {
+            $model->groupStart()
+                ->orLike('relawan.nama', $query)
+                ->orLike('relawan.jenis_bencana', $query)
+                ->orLike('relawan.email', $query)
+                ->orLike('relawan.no_hp', $query)
+                ->groupEnd();
+        }
         return view('pencarianrelawan', [
-            "data" => $data,
+            "data" => $model->where('diverifikasi', 1)
+            ->paginate(4),
+            'pager' => $model->pager,
+            'currentPage' => $currentPage,
+            'query' => $query,
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
