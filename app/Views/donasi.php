@@ -208,7 +208,7 @@
                                     class="bi bi-people-fill"></i> Cari Relawan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>"><i
                                     class="bi bi-clock-history"></i> Histori Laporan</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>"><i
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('belip'); ?>"><i
                         class="bi bi-cash-stack"></i> Support Us</a></li>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>"><i
