@@ -189,6 +189,11 @@
         color: white;
         text-decoration: none;
     }
+
+    .scroll-container {
+        max-height: 600px;
+        overflow-y: auto;
+    }
     </style>
 </head>
 
@@ -197,7 +202,7 @@
         <div class="row">
             <!-- Bagian sidebar -->
             <div class="col-md-2 sidebar">
-                <h2><span class="h2w">Bencana</span><span class="h2o">Tracker</span></h2>
+                <h2><span class="h2w">Bencana</span><span style="color: #FF5757;">Tracker</span></h2>
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
                         <a class="btn btn-primary laporButton" style="color: #FF5757;"
@@ -233,42 +238,44 @@
             </div>
 
             <div class="col-md-10 card">
+                <div class="scroll-container">
+                    <p style="font-size: smaller;">Dilaporkan oleh Andra pada 8 Juli 2023 pukul 13:47 WITA</p>
+                    <img src="<?= $gambarSrc ?>" alt="Gambar Peristiwa" class="img-fluid" style="max-height: 300px;">
+                    <h5>Peristiwa:</h5>
+                    <p><?= $laporan['peristiwa'] ?></p>
+                    <h5>Lokasi yang terdeteksi:</h5>
+                    <p><?php if (isset($lokasi->display_name)) {
+                        echo $lokasi->display_name;
+                    } else {
+                        echo "Lokasi tidak tersedia";
+                    } ?></p>
+                    <h5>Lokasi dari pengguna:</h5>
+                    <p><?= $laporan['nama_lokasi'] ?></p>
+                    <h5>Detail:</h5>
+                    <p style="margin-bottom: 50px;"><?= $laporan['detail'] ?></p>
 
-                <img src="<?= $gambarSrc ?>" alt="Gambar Peristiwa" class="img-fluid" style="max-height: 300px;">
-                <h5>Peristiwa:</h5>
-                <p><?= $laporan['peristiwa'] ?></p>
-                <h5>Lokasi yang terdeteksi:</h5>
-                <p><?php if (isset($lokasi->display_name)) {
-                    echo $lokasi->display_name;
-                } else {
-                    echo "Lokasi tidak tersedia";
-                } ?></p>
-                <h5>Lokasi dari pengguna:</h5>
-                <p><?= $laporan['nama_lokasi'] ?></p>
-                <h5>Detail:</h5>
-                <p style="margin-bottom: 50px;"><?= $laporan['detail'] ?></p>
-
-                <div class="bottom-left-buttons">
-                    <button class="upvote-button">
-                        <i class="fas fa-chevron-up"></i>
-                        <span class="button-count">10</span>
-                    </button>
-                    <button class="downvote-button">
-                        <i class="fas fa-chevron-down"></i>
-                        <span class="button-count">5</span>
-                    </button>
-                </div>
-                <div class="bottom-right-buttons">
-                    <button class="report-button">
-                        <a href="<?= base_url('/laporkan_laporan/'.$laporan['id']) ?>">
-                            <i class="fas fa-exclamation-circle"></i>
-                        </a>
-                    </button>
-                    <button class="comment-button">
-                        <a href="<?= base_url('komentar'); ?>">
-                            <i class="fas fa-comment"></i>
-                        </a>
-                    </button>
+                    <div class="bottom-left-buttons">
+                        <button class="upvote-button">
+                            <i class="fas fa-chevron-up"></i>
+                            <span class="button-count">10</span>
+                        </button>
+                        <button class="downvote-button">
+                            <i class="fas fa-chevron-down"></i>
+                            <span class="button-count">5</span>
+                        </button>
+                    </div>
+                    <div class="bottom-right-buttons">
+                        <button class="report-button">
+                            <a href="<?= base_url('/laporkan_laporan/'.$laporan['id']) ?>">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </a>
+                        </button>
+                        <button class="comment-button">
+                            <a href="<?= base_url('komentar'); ?>">
+                                <i class="fas fa-comment"></i>
+                            </a>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
