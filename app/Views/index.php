@@ -123,6 +123,13 @@
         font-size: 6px;
         color: #666;
     }
+
+    #getLocationButton {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        z-index: 1000;
+    }
     </style>
 </head>
 
@@ -168,6 +175,9 @@
             <!-- Bagian konten -->
             <div class="col-md-10 content">
                 <div id="gmapBlock"></div>
+                <button id="getLocationButton" class="btn btn-primary">
+                    <i class="bi bi-geo-alt-fill"></i> Lokasi Saya
+                </button>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <script>
                     var map = L.map('gmapBlock').setView([-3.89, 115.28], 4);
@@ -241,6 +251,28 @@
                             .addTo(map)
                             .bindPopup(locInfo[i][0] + '<br><a href="<?= base_url("laporan/") ?>' + locationMarkers[i][3] + '" class="btn btn-primary" style="color: #fff;">Lihat detail laporan</a>');
                     } 
+
+                    var getLocationButton = document.getElementById('getLocationButton');
+                    getLocationButton.addEventListener('click', getUserLocation);
+
+                    // Get user's current location
+                    function getUserLocation() {
+                        if ("geolocation" in navigator) {
+                            navigator.geolocation.getCurrentPosition(function(position) {
+                                var latitude = position.coords.latitude;
+                                var longitude = position.coords.longitude;
+
+                                L.marker([latitude, longitude]).addTo(map);
+                                // animate zoom to user location
+                                map.flyTo([latitude, longitude], 13, {
+                                    animate: true,
+                                    duration: 3 // durasi animasi dalam detik
+                                });
+                            });
+                        } else {
+                            console.log('Geolocation is not supported by this browser.');
+                        }
+                    }
 
                     function getLatestReports() {  
                             // Kirim permintaan ke server untuk mendapatkan data laporan terbaru

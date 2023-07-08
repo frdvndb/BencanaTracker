@@ -6,8 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet"
         type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
@@ -18,6 +16,7 @@
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
         integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
         crossorigin=""></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
     body {
         background-color: #1546BA;
@@ -44,6 +43,13 @@
 
     .h2o {
         color: #FF5757;
+    }
+
+    #getLocationButton {
+        position: absolute;
+        top: 70px;
+        right: 140px;
+        z-index: 1000;
     }
     </style>
 </head>
@@ -92,36 +98,71 @@
             </div>
             <div class="col-md-6">
                 <div id="gmapBlock"></div>
+                <button id="getLocationButton" class="btn btn-primary">
+                    <i class="bi bi-geo-alt-fill"></i> Lokasi Saya
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-    var map = L.map('gmapBlock').setView([-3.89, 115.28], 4);
-    var marker;
+        var map = L.map('gmapBlock').setView([-3.89, 115.28], 4);
+        var marker;
 
-    // set map tiles source
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-        maxZoom: 18
-    }).addTo(map);
+        // set map tiles source
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 18
+        }).addTo(map);
 
-    map.on('click', function(event) {
-        var clickedLocation = event.latlng;
+        map.on('click', function(event) {
+            var clickedLocation = event.latlng;
 
-        // Remove existing marker
-        if (marker) {
-            map.removeLayer(marker);
+            // Remove existing marker
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker(clickedLocation).addTo(map);
+
+            var latitudeInput = document.getElementById('latitudeInput');
+            var longitudeInput = document.getElementById('longitudeInput');
+
+            latitudeInput.value = clickedLocation.lat;
+            longitudeInput.value = clickedLocation.lng;
+        });
+
+        var getLocationButton = document.getElementById('getLocationButton');
+        getLocationButton.addEventListener('click', getUserLocation);
+
+        // Get user's current location
+        function getUserLocation() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    var latitudeInput = document.getElementById('latitudeInput');
+                    var longitudeInput = document.getElementById('longitudeInput');
+
+                    latitudeInput.value = latitude;
+                    longitudeInput.value = longitude;
+
+
+                    marker = L.marker([latitude, longitude]).addTo(map);
+                    // animate zoom to user location
+                    map.flyTo([latitude, longitude], 13, {
+                        animate: true,
+                        duration: 3 // durasi animasi dalam detik
+                    });
+                });
+            } else {
+                console.log('Geolocation is not supported by this browser.');
+            }
         }
-
-        marker = L.marker(clickedLocation).addTo(map);
-
-        var latitudeInput = document.getElementById('latitudeInput');
-        var longitudeInput = document.getElementById('longitudeInput');
-
-        latitudeInput.value = clickedLocation.lat;
-        longitudeInput.value = clickedLocation.lng;
-    });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">

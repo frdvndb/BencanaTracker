@@ -185,6 +185,13 @@
             height: 300px;
             margin-top: 10px;
         }
+
+        #getLocationButton {
+            position: absolute;
+            top: 85px;
+            right: 30px;
+            z-index: 1000;
+        }
     </style>
 </head>
 
@@ -270,6 +277,9 @@
                     </div>
                     <div class="col-md-6" id="mapContainer">
                         <div id="gmapBlock"></div>
+                        <button id="getLocationButton" class="btn btn-primary">
+                            <i class="bi bi-geo-alt-fill"></i> Lokasi Saya
+                        </button>
                         <p>Klik pada peta untuk mengganti lokasi Anda. Klik salah satu notifikasi untuk menampilkan lokasi laporannya.</p>
                         <div id="subscriptionContainer">
                         <div class="form-check">
@@ -324,6 +334,33 @@
                         animate: true,
                         duration: 3 // durasi animasi dalam detik
                     });
+
+                    var getLocationButton = document.getElementById('getLocationButton');
+                    getLocationButton.addEventListener('click', getUserLocation);
+
+                    // Get user's current location
+                    function getUserLocation() {
+                        if ("geolocation" in navigator) {
+                            navigator.geolocation.getCurrentPosition(function(position) {
+                                var latitude = position.coords.latitude;
+                                var longitude = position.coords.longitude;
+
+                                var circleUserLocation = L.circle([latitude, longitude], {
+                                    color: 'red',
+                                    fillColor: 'red',
+                                    fillOpacity: 1,
+                                    radius: 1
+                                }).addTo(map);
+                                // animate zoom to user location
+                                map.flyTo([latitude, longitude], 13, {
+                                    animate: true,
+                                    duration: 3 // durasi animasi dalam detik
+                                });
+                            });
+                        } else {
+                            console.log('Geolocation is not supported by this browser.');
+                        }
+                    }
 
                     // event handler for clicking on the map to update the user location
                     map.on('click', function(event) {
@@ -446,13 +483,13 @@
                                     pushCheckbox.checked = false;
                                 } else {
                                     alert('Silahkan mengizinkan notifikasi untuk perangkat ini. Jika permintaan izin tidak muncul, Anda dapat mengizinkannya di \"Site Permission\" untuk BencanaTracker di setelan browser.')
+                                    // Prompt for OneSignal permission
+                                    OneSignal.push(function() {
+                                        OneSignal.showNativePrompt();
+                                    });
+                                    handleSubscriptionChange('push', isChecked);
                                 }
                             }]);
-                            // Prompt for OneSignal permission
-                            OneSignal.push(function() {
-                                OneSignal.showNativePrompt();
-                            });
-                            handleSubscriptionChange('push', isChecked);
                         } else {
                             handleSubscriptionChange('push', isChecked);
                         }
