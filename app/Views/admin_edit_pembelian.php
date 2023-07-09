@@ -131,7 +131,14 @@
     td {
         color: white;
     }
+    .gambar-peristiwa img {
+        
+        height: 80%;
+    }
 
+    .form-gambar {
+        margin-top: 20px;
+    }
     .into-content {
         display: flex;
         justify-content: space-between;
@@ -201,43 +208,41 @@
             </div>
             <!-- Bagian konten -->
             <div class="col-md-10 content">
-                <h1>Daftar Pengguna</h1>
-                <?php if (validation_list_errors()) : ?>
-                <div class="alert alert-danger" style="width: fit-content;">
-                    <p><?= validation_list_errors(); ?></p>
-                </div>
-                <?php endif; ?>
+                <h1>Verifikasi Pembelian</h1>
 
                 <!-- Formulir edit data. -->
                 <div class="into-content">
                     <div class="col-6">
-                        <form action="<?= base_url('verifikasi_pembelian/'.$data['id']) ?>" method="post">
+                        <form action="<?= base_url('verifikasi_pembelian/'.$data['id_user']) ?>" method="post">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="username" name="username"
-                                    value="<?= $data['username'] ?>">
+                                    value="<?= $data['username'] ?>" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="id_user" class="form-label">ID User</label>
                                 <input type="text" class="form-control" id="id_user" name="id_user"
-                                    value="<?= $data['id_user'] ?>">
+                                    value="<?= $data['id_user'] ?>" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="jumlah_bulan" class="form-label">Jumlah Bulan</label>
                                 <input type="text" class="form-control" id="jumlah_bulan" name="jumlah_bulan"
-                                    value="<?= $data['jumlah_bulan'] ?>">
+                                    value="<?= $data['jumlah_bulan'] ?>" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="tanggal_premium" class="form-label">Tanggal Premium</label>
-                                <input type="text" class="form-control" id="tanggal_premium" name="tanggal_premium"
+                                <input type="date" class="form-control" id="tanggal_premium" name="tanggal_premium"
                                     value="<?= $data['tanggal_premium'] ?>">
                             </div>
-                            <button type="submit" class="w-100 btn btn-primary">Edit</button>
+                            <button type="submit" class="w-100 btn btn-primary">Verifikasi</button>
                         </form>
 
                     </div>
-                    <div class="col-md-6">
-                        <div id="gmapBlock"></div>
+                    <div class="form-gambar">
+                        <div class="gambar-peristiwa">
+                            <p>Bukti Pembayaran:</p>
+                            <img src="data:image/jpeg;base64,<?= base64_encode($data['bukti_pembayaran']); ?>" />
+                        </div>
                     </div>
                 </div>
             </div>

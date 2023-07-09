@@ -256,6 +256,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>ID Pengguna</th>
+                                <th>Username</th>
                                 <th>Jumlah Bulan</th>
                                 <th>Bukti Pembayaran</th>
                                 <th>Premium?</th>
@@ -271,11 +272,12 @@
                             <tr>
                                 <td><?= $i+=1; ?></td>
                                 <td><?= $data['id_user'] ?></td>
+                                <td><?= $data['username'] ?></td>
                                 <td><?= $data['jumlah_bulan'] ?></td>
                                 <td><img src="data:image/jpeg;base64,<?= base64_encode($data['bukti_pembayaran']); ?>">
                                 </td>
                                 <td><?php
-                                if (!isset($data['tanggal_premium']) && $data['tanggal_premium'] == NULL){
+                                if (!isset($data['tanggal_premium']) && $data['tanggal_premium'] == NULL || $data['tanggal_premium'] == '0000-00-00'){
                                     echo "Tidak";
                                 }else{
                                     echo $data['tanggal_premium'];
@@ -292,6 +294,13 @@
                                             <a class="dropdown-item"
                                                 href="<?= base_url('verifikasi_pembelian/'.$data['id']) ?>"
                                                 class="btn btn-warning">Verifikasi</a>
+                                            <?php 
+                                            if (isset($data['tanggal_premium']) && $data['tanggal_premium'] !== NULL && $data['tanggal_premium'] !== '0000-00-00'){ ?>
+                                            <a class="dropdown-item"
+                                                href="<?= base_url('batalkan_verifikasi_pembelian/'.$data['id_user']) ?>"
+                                                class="btn btn-warning">Batalkan Verifikasi</a>
+                                            <?php }
+                                            ?>
                                             <form action="<?=  base_url('/hapus_pembelian/'.$data['id']) ?>"
                                                 method="post" onsubmit="return confirm('Yakin Hapus?')">
                                                 <input type="hidden" name="_method" value="DELETE">

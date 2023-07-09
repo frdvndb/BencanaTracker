@@ -130,7 +130,7 @@ class AdminController extends BaseController
                 ->groupEnd();
         }
         return view("admin_daftar_pembelian", [
-            'data' => $model->select('pembelian_premium.*, user.*')
+            'data' => $model->select('pembelian_premium.*, user.tanggal_premium, user.username')
             ->join('user', 'pembelian_premium.id_user = user.id', 'left')
             ->paginate(10),
             'pager' => $model->pager,
@@ -141,6 +141,11 @@ class AdminController extends BaseController
         ]);
     }
 
+    public function deletePembelian($id){
+        $model = new BeliPremiumModel();
+        $model->delete($id);
+        return redirect()->to(base_url('admin_daftar_pembelian'));
+    }
     public function deleteLaporanBencana($id){
         $model = new LaporanBencanaModel();
         $model->delete($id);
@@ -308,6 +313,40 @@ class AdminController extends BaseController
         $model = new RelawanModel();
         return view('admin_edit_relawan', [
             "data" => $model->find($id),
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]);
+    }
+
+    public function submitVerifikasiPembelian($id){
+
+        $model = new UserModel();
+        $data = [
+            "tanggal_premium" => $this->request->getPost('tanggal_premium'),
+        ];
+
+        $model->update($id, $data);
+        return redirect()->to(base_url('admin_daftar_pembelian'));
+    }
+
+    public function batalkanVerifikasiPembelian($id){
+
+        $model = new UserModel();
+        $data = [
+            "tanggal_premium" => '0000-00-00',
+        ];
+
+        $model->update($id, $data);
+        return redirect()->to(base_url('admin_daftar_pembelian'));
+    }
+    
+    public function viewVerifikasiPembelian($id){
+        $model = new BeliPremiumModel();
+        return view('admin_edit_pembelian', [
+            'data' => $model->select('pembelian_premium.*, user.tanggal_premium, user.username')
+            ->join('user', 'pembelian_premium.id_user = user.id', 'left')
+            ->where('pembelian_premium.id', $id)
+            ->first(),
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
