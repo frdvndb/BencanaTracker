@@ -104,6 +104,7 @@ $routes->get('laporan/downvote/(:num)', 'VoteController::downVote/$1');
 
 $routes->get('/verifikasi_pembelian/(:num)', 'AdminController::viewVerifikasiPembelian/$1');
 $routes->post('/verifikasi_pembelian/(:num)', 'AdminController::submitVerifikasiPembelian/$1');
+$routes->get('/batalkan_verifikasi_pembelian/(:num)', 'AdminController::batalkanVerifikasiPembelian/$1');
 $routes->delete('/hapus_pembelian/(:num)', 'AdminController::deletePembelian/$1');
 
 /*
