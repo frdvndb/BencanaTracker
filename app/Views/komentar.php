@@ -163,9 +163,27 @@
     overflow-y: auto;
     max-height: 400px;
     word-break: break-word;
+    margin-bottom: 5px;
 }
 
-/* Hapus properti overflow-x: hidden; */
+.comments-section::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+}
+
+.comments-section::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+}
+
+.comments-section::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.comments-section::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
 
 
     .comment .user-details {
