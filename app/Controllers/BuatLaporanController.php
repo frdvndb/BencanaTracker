@@ -114,7 +114,7 @@ class BuatLaporanController extends BaseController
 
         foreach ($data as $baris) {
             $radiusNotif = 0;
-            if ($baris['radius_notif'] == null) {
+            if ($baris['radius_notif'] == null && $baris['radius_notif'] == 0) {
                 $radiusNotif = 5;
             } else {
                 $radiusNotif = $baris['radius_notif'];
