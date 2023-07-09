@@ -262,7 +262,7 @@
                     <div class="col-md-6">
                         <div class="scroll-container">
                             <?php if (empty($data)) { ?>
-                                <p>Belum ada notifikasi</p>
+                                <p style="color: white;">Belum ada notifikasi</p>
                             <?php } else { ?>
                                 <?php foreach ($data as $item) { ?>
                                     <div id="notifCard<?= $item['id_laporan']; ?>" class="card2">
