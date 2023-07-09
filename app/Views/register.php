@@ -17,6 +17,8 @@
         integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
         crossorigin=""></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <style>
     body {
         background-color: #1546BA;
@@ -47,8 +49,8 @@
 
     #getLocationButton {
         position: absolute;
-        top: 70px;
-        right: 140px;
+        bottom: 70px;
+        right: 560px;
         z-index: 1000;
     }
     </style>
@@ -114,6 +116,44 @@
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
             maxZoom: 18
         }).addTo(map);
+
+        // Memuat plugin Leaflet Control Geocoder
+        L.Control.geocoder({
+            defaultMarkGeocode: false,
+            collapsed: false, // Menampilkan panel pencarian secara terbuka
+            placeholder: "Cari lokasi...", // Menyesuaikan placeholder dengan teks yang diinginkan
+            errorMessage: "Lokasi tidak ditemukan.", // Menyesuaikan pesan error dengan teks yang diinginkan
+            showResultIcons: true, // Menampilkan ikon pada hasil pencarian
+            geocoder: L.Control.Geocoder.nominatim(), // Menggunakan geocoder dari Nominatim
+            // Mengatur aksi setelah pencarian berhasil
+            geocoder: new L.Control.Geocoder.nominatim({
+                geocodingQueryParams: { // Menyesuaikan parameter pencarian
+                    countrycodes: 'ID', // Mengatur pencarian hanya di Indonesia
+                    limit: 5 // Mengatur jumlah hasil pencarian yang ditampilkan
+                }
+            }),
+            // Aksi setelah pencarian berhasil
+            collapsed: false
+        }).on('markgeocode', function (e) {
+            var location = e.geocode.center;
+
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker(location).addTo(map);
+            var address = e.geocode.name;
+
+            var latitudeInput = document.getElementById('latitudeInput');
+            var longitudeInput = document.getElementById('longitudeInput');
+            latitudeInput.value = location.lat;
+            longitudeInput.value = location.lng;
+
+            // Menambahkan popup pada marker dengan informasi lokasi
+            marker.bindPopup(address).openPopup();
+            map.flyTo(e.geocode.center, 15); // Menggerakkan peta ke lokasi yang ditemukan
+        }).addTo(map);
+
 
         map.on('click', function(event) {
             var clickedLocation = event.latlng;

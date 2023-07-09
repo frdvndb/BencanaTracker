@@ -10,6 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <style>
     .container-fluid {
         max-width: 100%;
@@ -130,8 +132,8 @@
 
     #getLocationButton {
         position: absolute;
-        top: 30px;
-        right: 30px;
+        bottom: 30px;
+        left: 260px;
         z-index: 1000;
     }
     </style>
@@ -192,25 +194,52 @@
                         maxZoom: 18
                     }).addTo(map);
 
+                    // Memuat plugin Leaflet Control Geocoder
+                    L.Control.geocoder({
+                        defaultMarkGeocode: false,
+                        collapsed: false, // Menampilkan panel pencarian secara terbuka
+                        placeholder: "Cari lokasi...", // Menyesuaikan placeholder dengan teks yang diinginkan
+                        errorMessage: "Lokasi tidak ditemukan.", // Menyesuaikan pesan error dengan teks yang diinginkan
+                        showResultIcons: true, // Menampilkan ikon pada hasil pencarian
+                        geocoder: L.Control.Geocoder.nominatim(), // Menggunakan geocoder dari Nominatim
+                        // Mengatur aksi setelah pencarian berhasil
+                        geocoder: new L.Control.Geocoder.nominatim({
+                            geocodingQueryParams: { // Menyesuaikan parameter pencarian
+                                countrycodes: 'ID', // Mengatur pencarian hanya di Indonesia
+                                limit: 5 // Mengatur jumlah hasil pencarian yang ditampilkan
+                            }
+                        }),
+                        // Aksi setelah pencarian berhasil
+                        collapsed: false
+                    }).on('markgeocode', function (e) {
+                        var location = e.geocode.center;
+                        var marker = L.marker(location).addTo(map);
+                        var address = e.geocode.name;
+
+                        // Menambahkan popup pada marker dengan informasi lokasi
+                        marker.bindPopup(address).openPopup();
+                        map.flyTo(e.geocode.center, 15); // Menggerakkan peta ke lokasi yang ditemukan
+                    }).addTo(map);
+
                     map.on('click', function(event) {
-                    var clickedLocation = event.latlng;
-                    var marker = L.marker(clickedLocation).addTo(map);
+                        var clickedLocation = event.latlng;
+                        var marker = L.marker(clickedLocation).addTo(map);
 
-                    var locationName = "";
-                    var latitude = clickedLocation.lat;
-                    var longitude = clickedLocation.lng;
+                        var locationName = "";
+                        var latitude = clickedLocation.lat;
+                        var longitude = clickedLocation.lng;
 
-                    if (latitude !== null && latitude !== "") {
-                        localStorage.setItem('clickedLocation', JSON.stringify({
-                            latitude: latitude,
-                            longitude: longitude,
-                            locationName: locationName
-                        }));
-                        window.location.href = '<?= base_url("buat_laporan") ?>';
-                    } else {
-                        marker.remove();
-                    }
-                });
+                        if (latitude !== null && latitude !== "") {
+                            localStorage.setItem('clickedLocation', JSON.stringify({
+                                latitude: latitude,
+                                longitude: longitude,
+                                locationName: locationName
+                            }));
+                            window.location.href = '<?= base_url("buat_laporan") ?>';
+                        } else {
+                            marker.remove();
+                        }
+                    });
 
                     // retrieve marker data from the database
                     var locationMarkers = JSON.parse(`<?php echo ($locationMarkers); ?>`);

@@ -24,6 +24,8 @@
             });
         });
     </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <style>
         .card {
             margin: auto;
@@ -195,8 +197,8 @@
 
         #getLocationButton {
             position: absolute;
-            top: 85px;
-            right: 30px;
+            top: 330px;
+            right: 360px;
             z-index: 1000;
         }
     </style>
@@ -323,10 +325,6 @@
                     </div>
                 </div>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
-                    integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-                    crossorigin=""></script>
-
                 <script>
                     // Menentukan pergeseran vertikal untuk popup
                     var popupOffset = L.point(0, -20);
@@ -340,6 +338,35 @@
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                         maxZoom: 18
+                    }).addTo(map);
+
+                    // Memuat plugin Leaflet Control Geocoder
+                    L.Control.geocoder({
+                        defaultMarkGeocode: false,
+                        collapsed: true, // Mengatur panel pencarian tertutup saat halaman dimuat
+                        placeholder: "Cari lokasi...",
+                        errorMessage: "Lokasi tidak ditemukan.",
+                        showResultIcons: true,
+                        geocoder: new L.Control.Geocoder.nominatim({
+                            geocodingQueryParams: {
+                                countrycodes: null,
+                                limit: 5
+                            }
+                        })
+                    }).on('markgeocode', function (e) {
+                        customIcon = L.icon({
+                            iconUrl: "<?= base_url('../assets/img/marker_gempa.png') ?>",
+                            iconSize: [32, 32],
+                            iconAnchor: [15, 30],
+                        });
+
+                        var location = e.geocode.center;
+                        var markerLokasiPencarian = L.marker(location).addTo(map);
+                        var address = e.geocode.name;
+
+                        // Menambahkan popup pada marker dengan informasi lokasi
+                        markerLokasiPencarian.bindPopup(address).openPopup();
+                        map.flyTo(e.geocode.center, 15);
                     }).addTo(map);
 
                     // add marker for user location
@@ -651,7 +678,7 @@
         </div>
     </div>
     </body>
-    <!-- Include library SweetAlert -->
+<!-- Include library SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Cek flash data 'success' -->
