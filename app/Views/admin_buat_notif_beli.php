@@ -200,7 +200,7 @@
             <?php } else {?>
             <div class="col-md-10 card">
                 <center>
-                    <h2 style="color: white;">Notifikasi Email Pengguna: <?= $data['username'] ?> </h2>
+                    <h2 style="color: white;">Notifikasi Email Pengguna: <?= $data['username'] . ', ' . $data['email'] ?> </h2>
                 </center>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <form action="<?= base_url('buat_notif_pembelian/'.$data['id']) ?>" method="POST">
