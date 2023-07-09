@@ -266,7 +266,7 @@
                             <?php } else { ?>
                                 <?php foreach ($data as $item) { ?>
                                     <div id="notifCard<?= $item['id_laporan']; ?>" class="card2">
-                                        <p class="tanggal">Dilaporkan pada: <?= $item['tanggal']; ?></p>
+                                        <p class="tanggal">Dilaporkan pada: <?= $item['tanggal']; ?> WITA &nbsp;&nbsp;&nbsp;</p>
                                         <div class="image-wrapper">
                                             <img src="data:image/jpeg;base64,<?= base64_encode($item['gambar_peristiwa']); ?>"
                                                 class="rounded-circle">
