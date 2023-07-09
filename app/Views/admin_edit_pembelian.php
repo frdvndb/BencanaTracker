@@ -14,16 +14,17 @@
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
         integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
         crossorigin=""></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
     .container-fluid {
         max-width: 100%;
     }
 
     #gmapBlock {
-        width: 100%;
-        height: 100%;
+        width: 80%;
+        height: 80%;
+        margin-left: 40px;
+        margin-top: 30px;
     }
 
     .sidebar {
@@ -54,10 +55,8 @@
         background-color: #E5E5E5;
         background-size: cover;
         background-position: center;
-        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
         font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         font-weight: 500;
-        color: #343a40;
         overflow: auto;
     }
 
@@ -133,48 +132,9 @@
         color: white;
     }
 
-    table img {
-        height: 30px;
-        width: 60px;
-    }
-
-    .pagination-links {
+    .into-content {
         display: flex;
-        justify-content: left;
-        margin-left: 10px;
-        height: 20px;
-    }
-
-    .pagination-links .pagination {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        padding: 0;
-    }
-
-    .pagination-links .pagination .active {
-        background-color: #FF5757;
-        color: white;
-    }
-
-    .pagination-links .pagination li {
-        margin-right: 5px;
-    }
-
-    .pagination-links .pagination a {
-        display: inline-block;
-        padding: 5px 10px;
-        background-color: white;
-        color: #FF5757;
-        border: none;
-        text-decoration: none;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .pagination-links .pagination a:hover {
-        background-color: #FF5757;
-        color: white;
+        justify-content: space-between;
     }
     </style>
 </head>
@@ -241,97 +201,47 @@
             </div>
             <!-- Bagian konten -->
             <div class="col-md-10 content">
-                <h1>Daftar Laporan Bencana</h1>
-                <form action="<?= base_url('admin_daftar_lb') ?>" method="GET" class="d-flex">
-                    <div class="input-group" style="width: 300px;">
-                        <input name="query" type="text" class="form-control" placeholder="Cari Bencana"
-                            value="<?= $query ?>">
-                        <button type="submit" class="btn btn-success">Cari</button>
-                    </div>
-                </form>
-
-                <div class="table-wrapper">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>ID Pengguna</th>
-                                <th>Jumlah Bulan</th>
-                                <th>Bukti Pembayaran</th>
-                                <th>Premium?</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Perulangan foreach()
-                    untuk memanggil memanggil
-                    semua data yang diperlukan. -->
-                            <?php $i = 0 + (10 * ($currentPage - 1)); ?>
-                            <?php foreach ($data as $data) : ?>
-                            <tr>
-                                <td><?= $i+=1; ?></td>
-                                <td><?= $data['id_user'] ?></td>
-                                <td><?= $data['jumlah_bulan'] ?></td>
-                                <td><img src="data:image/jpeg;base64,<?= base64_encode($data['bukti_pembayaran']); ?>">
-                                </td>
-                                <td><?php
-                                if (!isset($data['tanggal_premium']) && $data['tanggal_premium'] == NULL){
-                                    echo "Tidak";
-                                }else{
-                                    echo $data['tanggal_premium'];
-                                }
-                                 ?></td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Aksi
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item"
-                                                href="<?= base_url('verifikasi_pembelian/'.$data['id']) ?>"
-                                                class="btn btn-warning">Verifikasi</a>
-                                            <form action="<?=  base_url('/hapus_pembelian/'.$data['id']) ?>"
-                                                method="post" onsubmit="return confirm('Yakin Hapus?')">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <button class="dropdown-item" type="submit">Hapus</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php endforeach ?>
-                        </tbody>
-                    </table>
-
+                <h1>Daftar Pengguna</h1>
+                <?php if (validation_list_errors()) : ?>
+                <div class="alert alert-danger" style="width: fit-content;">
+                    <p><?= validation_list_errors(); ?></p>
                 </div>
-                <div class="ml-auto">
-                    <div class="pagination-links">
-                        <?= $pager->links() ?>
+                <?php endif; ?>
+
+                <!-- Formulir edit data. -->
+                <div class="into-content">
+                    <div class="col-6">
+                        <form action="<?= base_url('verifikasi_pembelian/'.$data['id']) ?>" method="post">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    value="<?= $data['username'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_user" class="form-label">ID User</label>
+                                <input type="text" class="form-control" id="id_user" name="id_user"
+                                    value="<?= $data['id_user'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="jumlah_bulan" class="form-label">Jumlah Bulan</label>
+                                <input type="text" class="form-control" id="jumlah_bulan" name="jumlah_bulan"
+                                    value="<?= $data['jumlah_bulan'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="tanggal_premium" class="form-label">Tanggal Premium</label>
+                                <input type="text" class="form-control" id="tanggal_premium" name="tanggal_premium"
+                                    value="<?= $data['tanggal_premium'] ?>">
+                            </div>
+                            <button type="submit" class="w-100 btn btn-primary">Edit</button>
+                        </form>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div id="gmapBlock"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-    $(document).ready(function() {
-        // Initialize the dropdown
-        $('.dropdown-toggle').dropdown();
-
-        // Close dropdown when clicking outside
-        $(document).on('click', function(event) {
-            var target = $(event.target);
-            if (!target.closest('.dropdown').length && !target.hasClass('dropdown-toggle')) {
-                $('.dropdown-toggle').each(function() {
-                    if ($(this).siblings('.dropdown-menu').hasClass('show')) {
-                        $(this).dropdown('toggle');
-                    }
-                });
-            }
-        });
-    });
-    </script>
 </body>
 
 </html>
