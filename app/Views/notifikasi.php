@@ -607,41 +607,48 @@
                     $('#radiusButton').on('click', function() {
                         event.preventDefault(); // Menghentikan aksi default tombol
                         var radius = $('#radiusInput').val();
+                        if (radius <= 0) {
+                            alert('Radius harus lebih dari 0!')
+                        } else {
+                            // Update radius in the database
+                            $.ajax({
+                                url: '<?= base_url("update_radius"); ?>',
+                                method: 'POST',
+                                data: {
+                                    radius: radius
+                                },
+                                beforeSend: function() {
+                                    // Tampilkan elemen loading
+                                    $('#loading').show();
+                                },
+                                success: function(response) {
+                                    lingkaran = radius;
 
-                        // Update radius in the database
-                        $.ajax({
-                            url: '<?= base_url("update_radius"); ?>',
-                            method: 'POST',
-                            data: {
-                                radius: radius
-                            },
-                            beforeSend: function() {
-                                // Tampilkan elemen loading
-                                $('#loading').show();
-                            },
-                            success: function(response) {
-                                lingkaran = radius;
+                                    // Sembunyikan elemen loading
+                                    $('#loading').hide();
 
-                                // Sembunyikan elemen loading
-                                $('#loading').hide();
+                                    if (radius == '') {
+                                        radius = 5;
+                                    }
 
-                                // Update circle radius on the map
-                                circle.setRadius(radius * 1000);
+                                    // Update circle radius on the map
+                                    circle.setRadius(radius * 1000);
 
-                                // Tampilkan pesan popup menggunakan SweetAlert
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil',
-                                    text: 'Berhasil Mengubah Radius Notifikasi.'
-                                });
-                            },
-                            error: function() {
-                                // Sembunyikan elemen loading
-                                $('#loading').hide();
+                                    // Tampilkan pesan popup menggunakan SweetAlert
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: 'Berhasil Mengubah Radius Notifikasi.'
+                                    });
+                                },
+                                error: function() {
+                                    // Sembunyikan elemen loading
+                                    $('#loading').hide();
 
-                                alert('Error updating radius!');
-                            }
-                        });
+                                    alert('Error updating radius!');
+                                }
+                            });
+                        }
                     });
                     var notificationMarker; // Variabel untuk menyimpan marker notifikasi
 
