@@ -175,7 +175,7 @@
 
     .user-profile {
         display: flex;
-        align-items: center;
+        align-items: top;
     }
 
     .user-profile img {
