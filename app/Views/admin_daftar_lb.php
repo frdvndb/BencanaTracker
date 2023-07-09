@@ -255,10 +255,10 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>ID Laporan</th>
-                                <th>ID Pengguna</th>
+                                <th>ID Pelapor</th>
                                 <th>Peristiwa</th>
-                                <th>Lokasi</th>
+                                <th>Lokasi Dari Pengguna</th>
+                                <th>Lokasi Terdeteksi</th>
                                 <th>Gambar</th>
                                 <th>Verifikasi</th>
                                 <th>Aksi</th>
@@ -272,10 +272,10 @@
                             <?php foreach ($data as $data) : ?>
                             <tr>
                                 <td><?= $i+=1; ?></td>
-                                <td><?= $data['id_laporan'] ?></td>
                                 <td><?= $data['id_user'] ?></td>
                                 <td><?= $data['peristiwa'] ?></td>
                                 <td><?= $data['nama_lokasi'] ?></td>
+                                <td><?= $data['lokasi_terdeteksi'] ?></td>
                                 <td><img src="data:image/jpeg;base64,<?= base64_encode($data['gambar_peristiwa']); ?>">
                                 </td>
                                 <td><?php $data['trusted']; 

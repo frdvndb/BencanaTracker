@@ -257,9 +257,12 @@
                                 <th>No.</th>
                                 <th>ID Pengguna</th>
                                 <th>Username</th>
+                                <th>Email</th>
                                 <th>Jumlah Bulan</th>
                                 <th>Bukti Pembayaran</th>
+                                <th>Tanggal Pembelian</th>
                                 <th>Premium?</th>
+                                <th>Notifikasi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -273,14 +276,23 @@
                                 <td><?= $i+=1; ?></td>
                                 <td><?= $data['id_user'] ?></td>
                                 <td><?= $data['username'] ?></td>
+                                <td><?= $data['email'] ?></td>
                                 <td><?= $data['jumlah_bulan'] ?></td>
                                 <td><img src="data:image/jpeg;base64,<?= base64_encode($data['bukti_pembayaran']); ?>">
                                 </td>
+                                <td><?= $data['waktu_pembelian'] ?></td>
                                 <td><?php
                                 if (!isset($data['tanggal_premium']) && $data['tanggal_premium'] == NULL || $data['tanggal_premium'] == '0000-00-00'){
                                     echo "Tidak";
                                 }else{
                                     echo $data['tanggal_premium'];
+                                }
+                                 ?></td>
+                                <td><?php 
+                                if ($data['notifikasi'] == 0){
+                                    echo "Tidak";
+                                }else{
+                                    echo 'Sudah';
                                 }
                                  ?></td>
                                 <td>
@@ -301,6 +313,9 @@
                                                 class="btn btn-warning">Batalkan Verifikasi</a>
                                             <?php }
                                             ?>
+                                            <a class="dropdown-item"
+                                                href="<?= base_url('buat_notif_pembelian/'.$data['id']) ?>"
+                                                class="btn btn-warning">Notifikasi ke User</a>
                                             <form action="<?=  base_url('/hapus_pembelian/'.$data['id']) ?>"
                                                 method="post" onsubmit="return confirm('Yakin Hapus?')">
                                                 <input type="hidden" name="_method" value="DELETE">

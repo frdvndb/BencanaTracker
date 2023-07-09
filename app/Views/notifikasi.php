@@ -264,11 +264,11 @@
                     <div class="col-md-6">
                         <div class="scroll-container">
                             <?php if (empty($data)) { ?>
-                                <p>Belum ada notifikasi</p>
+                                <p style="color: white;">Belum ada notifikasi</p>
                             <?php } else { ?>
                                 <?php foreach ($data as $item) { ?>
                                     <div id="notifCard<?= $item['id_laporan']; ?>" class="card2">
-                                        <p class="tanggal">Dilaporkan pada: <?= $item['tanggal']; ?></p>
+                                        <p class="tanggal">Dilaporkan pada: <?= $item['tanggal']; ?> WITA &nbsp;&nbsp;&nbsp;</p>
                                         <div class="image-wrapper">
                                             <img src="data:image/jpeg;base64,<?= base64_encode($item['gambar_peristiwa']); ?>"
                                                 class="rounded-circle">
@@ -290,7 +290,7 @@
                         <button id="getLocationButton" class="btn btn-primary">
                             <i class="bi bi-geo-alt-fill"></i> Lokasi Saya
                         </button>
-                        <p>Klik pada peta untuk mengganti lokasi Anda. Klik salah satu notifikasi untuk menampilkan lokasi laporannya.</p>
+                        <p style="color: white;">Klik pada peta untuk mengganti lokasi Anda. Klik salah satu notifikasi untuk menampilkan lokasi laporannya.</p>
                         <div id="subscriptionContainer">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="emailSwitch" name="emailSubscribe" <?= $emailSub['email_subscribe'] ? 'checked' : ''; ?>>
@@ -317,7 +317,7 @@
                                 <?php } else { ?>
                                 <div class="input-group mb-3">
                                     <input type="number" class="form-control" id="radiusInput" placeholder="<?= $radiusNotif['radius_notif'] ? $radiusNotif['radius_notif'] : 5 ?>">
-                                    <a href="<?= base_url('/belip') ?>" class="btn btn-primary">Ubah Radius. (Premium)</a>
+                                    <a href="<?= base_url('/belip') ?>" class="btn btn-primary">Ubah Radius (Premium)</a>
                                 </div>
                                     <?php } ?>
                             </div>

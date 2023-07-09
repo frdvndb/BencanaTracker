@@ -130,7 +130,7 @@ class AdminController extends BaseController
                 ->groupEnd();
         }
         return view("admin_daftar_pembelian", [
-            'data' => $model->select('pembelian_premium.*, user.tanggal_premium, user.username')
+            'data' => $model->select('pembelian_premium.*, user.tanggal_premium, user.username, user.email')
             ->join('user', 'pembelian_premium.id_user = user.id', 'left')
             ->paginate(10),
             'pager' => $model->pager,
@@ -350,5 +350,43 @@ class AdminController extends BaseController
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);
+    }
+
+    public function notifikasiPembelian($id){
+        $model = new BeliPremiumModel();
+        $data =  $model->select('pembelian_premium.*, user.tanggal_premium, user.username, user.email')
+        ->join('user', 'pembelian_premium.id_user = user.id', 'left')
+        ->where('pembelian_premium.id', $id)
+        ->first();
+
+        $data['notifikasi'] = 1;
+
+        $detail = $this->request->getPost('alasan');
+        $detailDenganBR = str_replace("\r\n", "<br>", $detail);
+        $detailDenganBR = str_replace("\"", "'", $detailDenganBR);
+        $email = \Config\Services::email();
+        $alamat_penerima = $data['email'];
+        $email->setTo($alamat_penerima);
+        $alamat_pengirim = 'bencanatracker@gmail.com';
+        $email->setFrom($alamat_pengirim);
+        $subject = 'Bencana Baru';
+        $email->setSubject($subject);
+        $pesan = '<br/>' . $detailDenganBR  . '<br/>';
+        $email->setMessage($pesan);
+        $email->send();
+        $model->update($id, $data);
+        return redirect()->to(base_url('admin_daftar_pembelian'));
+    }
+
+    public function viewNotifikasiPembelian($id){
+        $model = new BeliPremiumModel();
+        return view('admin_buat_notif_beli', [
+            "data" => $model->select('pembelian_premium.*, user.tanggal_premium, user.username, user.email')
+            ->join('user', 'pembelian_premium.id_user = user.id', 'left')
+            ->where('pembelian_premium.id', $id)
+            ->first(),
+            "username" => session()->get('username'),
+            "isAdmin" => session()->get('isAdmin')
+        ]); 
     }
 }

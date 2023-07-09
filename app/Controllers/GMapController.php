@@ -58,7 +58,7 @@ class GMapController extends BaseController
                 $value->id
             ];
             $locInfo[] = [
-                "<div class='info_content'> <h4>". (strlen($value->peristiwa) > 25 ? substr($value->peristiwa, 0, 25).'...' : $value->peristiwa) ."</h4> <p>". (strlen($value->detail) > 40 ? substr($value->detail, 0, 40).'...' : $value->detail) ."</p> <h6> Lokasi yang terdeteksi: </h6> <p>" . (strlen($value->lokasi_terdeteksi) > 100 ? substr($value->lokasi_terdeteksi, 0, 100).'...' : $value->lokasi_terdeteksi) . "</p> <h6> Lokasi menurut pelapor: </h6> <p>" . (strlen($value->nama_lokasi) > 40 ? substr($value->nama_lokasi, 0, 40).'...' : $value->nama_lokasi) . "</p> <h6> Laporan dibuat pada: </h6> <p>" . $value->tanggal . "</p> </div>"
+                "<div class='info_content'> <h4>". (strlen($value->peristiwa) > 25 ? substr($value->peristiwa, 0, 25).'...' : $value->peristiwa) ."</h4> <p>". (strlen($value->detail) > 40 ? substr($value->detail, 0, 40).'...' : $value->detail) ."</p> <h6> Lokasi yang terdeteksi: </h6> <p>" . (strlen($value->lokasi_terdeteksi) > 100 ? substr($value->lokasi_terdeteksi, 0, 100).'...' : $value->lokasi_terdeteksi) . "</p> <h6> Lokasi menurut pelapor: </h6> <p>" . (strlen($value->nama_lokasi) > 40 ? substr($value->nama_lokasi, 0, 40).'...' : $value->nama_lokasi) . "</p> <h6> Laporan dibuat pada: </h6> <p>" . $value->tanggal . " WITA </p> </div>"
             ];
         }
 

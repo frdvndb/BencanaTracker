@@ -106,6 +106,8 @@ $routes->get('/verifikasi_pembelian/(:num)', 'AdminController::viewVerifikasiPem
 $routes->post('/verifikasi_pembelian/(:num)', 'AdminController::submitVerifikasiPembelian/$1');
 $routes->get('/batalkan_verifikasi_pembelian/(:num)', 'AdminController::batalkanVerifikasiPembelian/$1');
 $routes->delete('/hapus_pembelian/(:num)', 'AdminController::deletePembelian/$1');
+$routes->get('/buat_notif_pembelian/(:num)', 'AdminController::viewNotifikasiPembelian/$1');
+$routes->post('/buat_notif_pembelian/(:num)', 'AdminController::notifikasiPembelian/$1');
 
 /*
  * --------------------------------------------------------------------

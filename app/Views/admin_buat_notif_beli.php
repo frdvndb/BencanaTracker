@@ -7,21 +7,25 @@
     <meta name="description" content="The tiny framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
     .card {
         margin: auto;
-        width: 75%;
+        width: 30%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         border-radius: 5px;
         padding: 20px;
         background-color: #1546BA;
-        margin-top: 3%;
-
     }
 
     .container-fluid {
         max-width: 100%;
+    }
+
+    #gmapBlock {
+        width: 100%;
+        height: 100%;
     }
 
     .sidebar {
@@ -63,13 +67,18 @@
         color: #343a40;
     }
 
-    img {
-        width: 50px;
-        height: 50px;
+    .background-input {
+        background-color: #1546BA;
+        color: white;
     }
 
+    button {
+        background-color: #1546BA;
+        color: white;
+        border-color: white;
+    }
 
-    h2 {
+    h1 {
         color: white;
     }
 
@@ -92,7 +101,7 @@
 
     .h2o,
     label {
-        color: #FF5757;
+        color: white;
     }
 
     .laporButton {
@@ -120,60 +129,31 @@
 
     }
 
-    .card2 {
-        display: flex;
-        align-items: center;
-        margin: auto;
-        width: 100%;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        padding: 20px;
-        margin-top: 10px;
-        background-color: white;
-        font-size: 25px;
-        position: relative;
-    }
-
-    .card2 img {
-        width: 80px;
-        height: 80px;
-        margin-right: 20px;
-    }
-
-    .card2 .info-wrapper {
-        display: flex;
-        flex-direction: column;
-        margin-top: -5px;
-    }
-
-    .card2 label {
-        margin-bottom: -5px;
-    }
-
-    .scroll-container {
-        max-height: 600px;
-        overflow-y: auto;
-    }
-
-    .detail-button {
-        position: absolute;
-        right: 15px;
+    .background-proses {
+        background-color: #00cc99;
     }
 
     body {
         background-color: #E5E5E5;
     }
 
-    .card2 .tanggal {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        font-size: 12px;
+    h1 {
+        padding-bottom: 20px;
     }
     </style>
 </head>
 
 <body>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var clickedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
+
+        // Pre-fill the input fields with the clicked location data
+        document.getElementById('latitude').value = clickedLocation.latitude;
+        document.getElementById('longitude').value = clickedLocation.longitude;
+        document.getElementById('locationName').value = clickedLocation.locationName;
+    });
+    </script>
     <div class="container-fluid">
         <div class="row">
             <!-- Bagian sidebar -->
@@ -219,31 +199,22 @@
             </div>
             <?php } else {?>
             <div class="col-md-10 card">
-                <h2> Histori Laporan </h2>
+                <center>
+                    <h2 style="color: white;">Notifikasi Email Pengguna: <?= $data['username'] . ', ' . $data['email'] ?> </h2>
+                </center>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <div class="scroll-container">
-                    <?php
-            foreach ($data as $histori) { 
-                ?>
-                    <div class="card2">
-                        <p class="tanggal">Dilaporkan pada: <?= $histori['tanggal']; ?> WITA &nbsp;&nbsp;&nbsp;</p>
-                        <div class="image-wrapper">
-                            <img src="data:image/jpeg;base64,<?= base64_encode($histori['gambar_peristiwa']); ?>"
-                                class="rounded-circle">
-                        </div>
-                        <div class="info-wrapper">
-                            <span class="nama"><?= $histori['peristiwa']; ?></span>
-                        </div>
-                        <div class="detail-button">
-                            <a href="<?= base_url('laporan/' . $histori['id_laporan']); ?>"
-                                class="btn-detail btn btn-success">Detail</a>
-                        </div>
+                <form action="<?= base_url('buat_notif_pembelian/'.$data['id']) ?>" method="POST">
+                    <div class="form-group">
+                        <label for="alasan">Isi Notifikasi:</label>
+                        <textarea id="alasan" name="alasan" rows="4" cols="40" class="form-control"></textarea>
+                    </div><br>
+                    <div class="text-center">
+                        <input type="submit" value="Kirim" name="submit" class="btn btn-primary background-proses"
+                            style="width: 100%; max-width: 100%;">
                     </div>
-                    <?php
-            } ?>
-                </div>
-                <?php } ?>
+                </form>
             </div>
+            <?php } ?>
         </div>
     </div>
 </body>
