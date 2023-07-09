@@ -201,6 +201,24 @@
             right: 360px;
             z-index: 1000;
         }
+
+        .scroll-container::-webkit-scrollbar {
+        width: 8px;
+        background-color: transparent;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .scroll-container::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
     </style>
 </head>
 

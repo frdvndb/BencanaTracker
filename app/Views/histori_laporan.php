@@ -132,6 +132,7 @@
         background-color: white;
         font-size: 25px;
         position: relative;
+        
     }
 
     .card2 img {
@@ -170,6 +171,24 @@
         right: 0;
         font-size: 12px;
     }
+
+    .scroll-container::-webkit-scrollbar {
+        width: 8px;
+        background-color: transparent;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 4px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .scroll-container::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
     </style>
 </head>
 
@@ -195,7 +214,7 @@
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('histori_laporan'); ?>"><i
                                     class="bi bi-clock-history"></i> Histori Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>"><i
-                        class="bi bi-cash-stack"></i> Support Us</a></li>
+                                    class="bi bi-cash-stack"></i> Support Us</a></li>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>"><i
                                     class="bi bi-box-arrow-right"></i> Logout</a></li>
