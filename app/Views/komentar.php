@@ -20,15 +20,11 @@
         position: relative;
         top: 50%;
         background-color: #1546BA;
+
     }
 
     .container-fluid {
         max-width: 100%;
-    }
-
-    #gmapBlock {
-        width: 100%;
-        height: 100%;
     }
 
     .sidebar {
@@ -148,12 +144,21 @@
         background-color: #E5E5E5;
     }
 
-    /* Add this to your existing CSS styles */
-
     .comments-section {
         margin-top: 20px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: 400px;
+        word-wrap: break-word;
     }
 
+    .comment .user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: white;
+    word-break: break-word;
+}
     .comments-section h3 {
         font-size: 20px;
         font-weight: bold;
@@ -165,6 +170,7 @@
         align-items: center;
         margin-bottom: 10px;
         justify-content: flex-start;
+        flex-wrap: wrap;
     }
 
     .user-profile {
@@ -305,26 +311,24 @@
                         <div class="user-profile">
                             <img src="<?= base_url('../assets/img/background.jpg') ?>" alt="User Profile Picture">
                             <div class="user-details" style="margin-left: 10px;">
-                                <h5 class="h2o" style="margin-bottom: 0;"><?= $dk['username'] ?></h5>
+                                <h5 class="h2o" style="margin-bottom: 0;"><?= $dk['username'] ?> <span
+                                        class="like-count"><?= $dk['tanggal'] ?></span></h5>
                                 <p style="color: white; margin-top: 5px;"><?= $dk['komentar'] ?></p>
                             </div>
-                        </div>
-                        <div class="comment-actions">
-                            <button class="like-button"><i class="far fa-calendar-alt"></i></button>
-                            <span class="like-count"><?= $dk['tanggal'] ?></span>
                         </div>
                     </div>
                     <?php } 
                      } 
             }?>
-                    <form action="<?= base_url('komentar/'.$dataLaporan['id']) ?>" method="POST">
-                        <div class="add-comment">
-                            <textarea class="comment-input" name="komentar" placeholder="Tulis komentar..."
-                                style="color: black;"></textarea>
-                            <button class="post-button background-proses">Post</button>
-                        </div>
-                    </form>
+
                 </div>
+                <form action="<?= base_url('komentar/'.$dataLaporan['id']) ?>" method="POST">
+                    <div class="add-comment">
+                        <textarea class="comment-input" name="komentar" placeholder="Tulis komentar..."
+                            style="color: black;"></textarea>
+                        <button class="w-100 post-button background-proses">Post</button>
+                    </div>
+                </form>
             </div>
 
         </div>
