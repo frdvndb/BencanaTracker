@@ -39,7 +39,12 @@ class GMapController extends BaseController
         //     $queryBuilder->insert($data);
         // }
 
-        $query = $queryBuilder->select('*')->get();
+        date_default_timezone_set('Asia/Makassar');
+
+        // Mengambil waktu 1 minggu yang lalu
+        $oneWeekAgo = date('Y-m-d', strtotime('-1 week'));
+
+        $query = $queryBuilder->select('*')->where('tanggal >=', $oneWeekAgo)->get();
         $records = $query->getResult();
 
         $locationMarkers = [];
@@ -53,7 +58,7 @@ class GMapController extends BaseController
                 $value->id
             ];
             $locInfo[] = [
-                "<div class='info_content'> <h4>". (strlen($value->peristiwa) > 25 ? substr($value->peristiwa, 0, 25).'...' : $value->peristiwa) ."</h4> <p>". (strlen($value->detail) > 40 ? substr($value->detail, 0, 40).'...' : $value->detail) ."</p> </div>"
+                "<div class='info_content'> <h4>". (strlen($value->peristiwa) > 25 ? substr($value->peristiwa, 0, 25).'...' : $value->peristiwa) ."</h4> <p>". (strlen($value->detail) > 40 ? substr($value->detail, 0, 40).'...' : $value->detail) ."</p> <h6> Lokasi yang terdeteksi: </h6> <p>" . (strlen($value->lokasi_terdeteksi) > 100 ? substr($value->lokasi_terdeteksi, 0, 100).'...' : $value->lokasi_terdeteksi) . "</p> <h6> Lokasi menurut pelapor: </h6> <p>" . (strlen($value->nama_lokasi) > 40 ? substr($value->nama_lokasi, 0, 40).'...' : $value->nama_lokasi) . "</p> <h6> Laporan dibuat pada: </h6> <p>" . $value->tanggal . "</p> </div>"
             ];
         }
 
@@ -89,7 +94,7 @@ class GMapController extends BaseController
                 $value->id
             ];
             $locInfo[] = [
-                "<div class='info_content'> <h4>". (strlen($value->peristiwa) > 25 ? substr($value->peristiwa, 0, 25).'...' : $value->peristiwa) ."</h4> <p>". (strlen($value->detail) > 40 ? substr($value->detail, 0, 40).'...' : $value->detail) ."</p> </div>"
+                "<div class='info_content'> <h4>". (strlen($value->peristiwa) > 25 ? substr($value->peristiwa, 0, 25).'...' : $value->peristiwa) ."</h4> <p>". (strlen($value->detail) > 40 ? substr($value->detail, 0, 40).'...' : $value->detail) ."</p> <h6> Lokasi yang terdeteksi: </h6> <p>" . (strlen($value->lokasi_terdeteksi) > 100 ? substr($value->lokasi_terdeteksi, 0, 100).'...' : $value->lokasi_terdeteksi) . "</p> <h6> Lokasi menurut pelapor: </h6> <p>" . (strlen($value->nama_lokasi) > 40 ? substr($value->nama_lokasi, 0, 40).'...' : $value->nama_lokasi) . "</p> <h6> Laporan dibuat pada: </h6> <p>" . $value->tanggal . "</p> </div>"
             ];
         }
 
@@ -123,7 +128,6 @@ class GMapController extends BaseController
     public function laporan($id)
     {
 
-
         $model = new LaporanBencanaModel();
         $laporan = $model->find($id);
 
@@ -133,7 +137,6 @@ class GMapController extends BaseController
         ->where('id_user',$sessionNow)
         ->first();
 
-        
         $modelHistori = new HistoriLaporanModel();
         $user = $modelHistori->select('histori_laporan.*, user.*')
             ->join('user', 'user.id = histori_laporan.id_user')
@@ -143,57 +146,9 @@ class GMapController extends BaseController
         $gambarBase64 = base64_encode($laporan['gambar_peristiwa']);
         $gambarSrc = 'data:image/jpeg;base64,' . $gambarBase64;
 
-        //$url = "https://nominatim.openstreetmap.org/reverse?format=json&lat={$laporan['garis_lintang']}&lon={$laporan['garis_bujur']}";
-
-        $lat = -6.1754;  // contoh koordinat garis lintang
-        $lon = 106.8272;  // contoh koordinat garis bujur
-
-        $url = "https://nominatim.openstreetmap.org/reverse?format=json&lat={$laporan['garis_lintang']}&lon={$laporan['garis_bujur']}";
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_REFERER, $url);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36");
-
-        $response = curl_exec($ch);
-
-        curl_close($ch);
-
-        // return json_decode($response, true);
-
-        // $client = new \CodeIgniter\HTTP\CURLRequest(
-        //     new \Config\App(),
-        //     new \CodeIgniter\HTTP\URI(),
-        //     new \CodeIgniter\HTTP\Response(new \Config\App()),
-        // );
-        
-        // $headers = [
-        //     'Referer: http://localhost', // Ganti dengan Referer yang valid
-        //     'User-Agent: MyApplication/1.0', // Ganti dengan User-Agent yang valid
-        // ];
-        
-        // $response = $client->request('GET', $url, [], $headers);
-        // if ($response->getStatusCode() === 200) {
-        //     $data = json_decode($response->getBody(), true);
-        //     $nama_lokasi = $data['display_name'];
-        //     echo "Nama Lokasi: " . $nama_lokasi;
-        // } else {
-        //     echo "Permintaan gagal.";
-        // }
-        
-        // $url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=52.5487429714954&lon=-1.81602098644987&zoom=18&addressdetails=1'; // URL eksternal yang ingin Anda ambil kontennya
-        // // Mendapatkan isi konten dari URL eksternal
-        // $content = file_get_contents(urlencode($url));
-
-        $lokasi = json_decode($response);
-        
         return view('laporan', [
             "laporan" => $laporan,
             "gambarSrc" => $gambarSrc,
-            "lokasi" => $lokasi,
             'dataVote' => $vote,
             'dataUser' => $user,
             "username" => session()->get('username'),

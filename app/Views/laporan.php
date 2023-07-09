@@ -251,12 +251,12 @@
                     <h5>Peristiwa:</h5>
                     <p><?= $laporan['peristiwa'] ?></p>
                     <h5>Lokasi yang terdeteksi:</h5>
-                    <p><?php if (isset($lokasi->display_name)) {
-                        echo $lokasi->display_name;
+                    <p><?php if ($laporan['lokasi_terdeteksi'] != '') {
+                        echo $laporan['lokasi_terdeteksi'];
                     } else {
                         echo "Lokasi tidak tersedia";
                     } ?></p>
-                    <h5>Lokasi dari pengguna:</h5>
+                    <h5>Lokasi menurut pelapor:</h5>
                     <p><?= $laporan['nama_lokasi'] ?></p>
                     <h5>Detail:</h5>
                     <p style="margin-bottom: 50px;"><?= $laporan['detail'] ?></p>

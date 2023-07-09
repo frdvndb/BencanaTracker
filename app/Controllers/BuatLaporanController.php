@@ -30,16 +30,62 @@ class BuatLaporanController extends BaseController
         $detail = $this->request->getPost('detail');
         $detailDenganBR = str_replace("\r\n", "<br>", $detail);
         $detailDenganBR = str_replace("\"", "'", $detailDenganBR);
+
+        $url = "https://nominatim.openstreetmap.org/reverse?format=json&lat=".$this->request->getPost('garis_lintang')."&lon=".$this->request->getPost('garis_bujur');
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_REFERER, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36");
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        // return json_decode($response, true);
+
+        // $client = new \CodeIgniter\HTTP\CURLRequest(
+        //     new \Config\App(),
+        //     new \CodeIgniter\HTTP\URI(),
+        //     new \CodeIgniter\HTTP\Response(new \Config\App()),
+        // );
+        
+        // $headers = [
+        //     'Referer: http://localhost', // Ganti dengan Referer yang valid
+        //     'User-Agent: MyApplication/1.0', // Ganti dengan User-Agent yang valid
+        // ];
+        
+        // $response = $client->request('GET', $url, [], $headers);
+        // if ($response->getStatusCode() === 200) {
+        //     $data = json_decode($response->getBody(), true);
+        //     $nama_lokasi = $data['display_name'];
+        //     echo "Nama Lokasi: " . $nama_lokasi;
+        // } else {
+        //     echo "Permintaan gagal.";
+        // }
+        
+        // $url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=52.5487429714954&lon=-1.81602098644987&zoom=18&addressdetails=1'; // URL eksternal yang ingin Anda ambil kontennya
+        // // Mendapatkan isi konten dari URL eksternal
+        // $content = file_get_contents(urlencode($url));
+
+        $lokasi = json_decode($response);
+        $lokasi = $lokasi->display_name;
         
         $model->insert([
             'garis_lintang' => $this->request->getPost('garis_lintang'),
             'garis_bujur' => $this->request->getPost('garis_bujur'),
             'nama_lokasi' => $this->request->getPost('nama_lokasi'),
+            'lokasi_terdeteksi' => $lokasi,
             'peristiwa' => $this->request->getPost('peristiwa'),
             'gambar_peristiwa' => $fileData,
             'detail' => $detailDenganBR,
             'tanggal'=> date('Y-m-d H:i:s')
         ]);
+
+
         $sessionNow = session()->get('id');
         $idlaporanNow = $model->insertID();
         $modelHistori = new HistoriLaporanModel();

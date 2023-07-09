@@ -163,6 +163,13 @@
     body {
         background-color: #E5E5E5;
     }
+
+    .card2 .tanggal {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: 12px;
+    }
     </style>
 </head>
 
@@ -219,6 +226,7 @@
             foreach ($data as $histori) { 
                 ?>
                     <div class="card2">
+                        <p class="tanggal">Dilaporkan pada: <?= $histori['tanggal']; ?></p>
                         <div class="image-wrapper">
                             <img src="data:image/jpeg;base64,<?= base64_encode($histori['gambar_peristiwa']); ?>"
                                 class="rounded-circle">

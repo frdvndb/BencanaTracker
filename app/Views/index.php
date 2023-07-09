@@ -66,6 +66,10 @@
         font-size: calc(1.725rem + 5.7vw);
     }
 
+    h6 {
+        font-weight: bold;
+    }
+
     .text-primary {
         --bs-primary-rgb: 189, 93, 56;
         --bs-text-opacity: 1;
