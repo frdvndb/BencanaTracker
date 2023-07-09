@@ -328,6 +328,8 @@
                     crossorigin=""></script>
 
                 <script>
+                    // Menentukan pergeseran vertikal untuk popup
+                    var popupOffset = L.point(0, -20);
                     var lingkaran = <?= $radiusNotif['radius_notif'] ? $radiusNotif['radius_notif'] : 5 ?>
                     // retrieve user location from the database
                     var userLocation = <?php echo json_encode($lokasiUser); ?>;
@@ -341,7 +343,7 @@
                     }).addTo(map);
 
                     // add marker for user location
-                    var marker = L.marker([userLocation.garis_lintang, userLocation.garis_bujur]).addTo(map);
+                    var marker = L.marker([userLocation.garis_lintang, userLocation.garis_bujur]).bindPopup('Lokasi Anda yang tersimpan').addTo(map);
 
                     // create a circle with 5 kilometer radius around the marker
                     var circle = L.circle([userLocation.garis_lintang, userLocation.garis_bujur], {
@@ -367,14 +369,15 @@
                                 var latitude = position.coords.latitude;
                                 var longitude = position.coords.longitude;
 
-                                var circleUserLocation = L.circle([latitude, longitude], {
-                                    color: 'red',
-                                    fillColor: 'red',
-                                    fillOpacity: 1,
-                                    radius: 1
-                                }).addTo(map);
+                                customIcon = L.icon({
+                                    iconUrl: "<?= base_url('../assets/img/marker_gempa.png') ?>",
+                                    iconSize: [32, 32],
+                                    iconAnchor: [15, 30],
+                                });
+
+                                var markerLokasiSaatIn = L.marker([latitude, longitude], { icon: customIcon }).bindPopup('Lokasi Anda saat ini', { offset: popupOffset }).addTo(map);
                                 // animate zoom to user location
-                                map.flyTo([latitude, longitude], 13, {
+                                map.flyTo([latitude, longitude], 15, {
                                     animate: true,
                                     duration: 3 // durasi animasi dalam detik
                                 });
@@ -411,7 +414,7 @@
                                 map.removeLayer(circle);
 
                                 // add new marker for updated location
-                                marker = L.marker(clickedLocation).addTo(map);
+                                marker = L.marker(clickedLocation).bindPopup('Lokasi Anda yang tersimpan').addTo(map);
 
                                 // create a new circle with 5 kilometer radius around the marker
                                 circle = L.circle(clickedLocation, {
@@ -615,7 +618,7 @@
                     });
                     var notificationMarker; // Variabel untuk menyimpan marker notifikasi
 
-                    customIcon = L.icon({
+                    customIconLaporan = L.icon({
                         iconUrl: "<?= base_url('../assets/img/placeholder.png') ?>",
                         iconSize: [32, 32],
                         iconAnchor: [15, 30],
@@ -625,6 +628,7 @@
                     $('#notifCard<?= $item['id_laporan']; ?>').click(function() {
                         var lat = <?= $item['garis_lintang']; ?>;
                         var lng = <?= $item['garis_bujur']; ?>;
+                        var peristiwa = '<?= $item['peristiwa']; ?>';
 
                         // Hapus marker notifikasi sebelumnya (jika ada)
                         if (notificationMarker) {
@@ -632,7 +636,7 @@
                         }
 
                         // Add new marker for selected location
-                        notificationMarker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+                        notificationMarker = L.marker([lat, lng], { icon: customIconLaporan }).bindPopup(peristiwa, { offset: popupOffset }).addTo(map);
 
                         // Animate flyTo to the selected marker location
                         map.flyTo([lat, lng], 12, {

@@ -185,7 +185,7 @@
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <script>
                     var map = L.map('gmapBlock').setView([-3.89, 115.28], 4);
-
+                    var popupOffset = L.point(0, -20);
                     // set map tiles source
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '<div id="attribution">Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
@@ -253,7 +253,7 @@
 
                         var marker = L.marker([locationMarkers[i][1], locationMarkers[i][2]], { icon: customIcon })
                             .addTo(map)
-                            .bindPopup(locInfo[i][0] + '<br><a href="<?= base_url("laporan/") ?>' + locationMarkers[i][3] + '" class="btn btn-primary" style="color: #fff;">Lihat detail laporan</a>');
+                            .bindPopup(locInfo[i][0] + '<br><a href="<?= base_url("laporan/") ?>' + locationMarkers[i][3] + '" class="btn btn-primary" style="color: #fff;">Lihat detail laporan</a>', { offset: popupOffset });
                     } 
 
                     var getLocationButton = document.getElementById('getLocationButton');
@@ -266,7 +266,7 @@
                                 var latitude = position.coords.latitude;
                                 var longitude = position.coords.longitude;
 
-                                L.marker([latitude, longitude]).addTo(map);
+                                L.marker([latitude, longitude]).bindPopup('Lokasi Anda').addTo(map);
                                 // animate zoom to user location
                                 map.flyTo([latitude, longitude], 13, {
                                     animate: true,
@@ -324,7 +324,7 @@
                                         }
                                         var marker = L.marker([dataMarker[i][1], dataMarker[i][2]], { icon: customIcon })
                                             .addTo(map)
-                                            .bindPopup(dataLocInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + dataMarker[i][3] + '">Detail Bencana</a>');
+                                            .bindPopup(dataLocInfo[i][0] + '<a href="<?= base_url("laporan/") ?>' + dataMarker[i][3] + '">Detail Bencana</a>', { offset: popupOffset });
                                     }     
 
                                 },
