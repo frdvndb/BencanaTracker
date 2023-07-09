@@ -315,7 +315,7 @@
                                 <?php } else { ?>
                                 <div class="input-group mb-3">
                                     <input type="number" class="form-control" id="radiusInput" placeholder="<?= $radiusNotif['radius_notif'] ? $radiusNotif['radius_notif'] : 5 ?>">
-                                    <a href="<?= base_url('/belip') ?>" class="btn btn-primary">Ubah Radius. (Premium)</a>
+                                    <a href="<?= base_url('/belip') ?>" class="btn btn-primary">Ubah Radius (Premium)</a>
                                 </div>
                                     <?php } ?>
                             </div>

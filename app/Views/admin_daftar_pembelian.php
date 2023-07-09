@@ -260,6 +260,7 @@
                                 <th>Email</th>
                                 <th>Jumlah Bulan</th>
                                 <th>Bukti Pembayaran</th>
+                                <th>Tanggal Pembelian</th>
                                 <th>Premium?</th>
                                 <th>Notifikasi</th>
                                 <th>Aksi</th>
@@ -279,6 +280,7 @@
                                 <td><?= $data['jumlah_bulan'] ?></td>
                                 <td><img src="data:image/jpeg;base64,<?= base64_encode($data['bukti_pembayaran']); ?>">
                                 </td>
+                                <td><?= $data['waktu_pembelian'] ?></td>
                                 <td><?php
                                 if (!isset($data['tanggal_premium']) && $data['tanggal_premium'] == NULL || $data['tanggal_premium'] == '0000-00-00'){
                                     echo "Tidak";

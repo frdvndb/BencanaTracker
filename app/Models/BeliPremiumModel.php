@@ -13,7 +13,7 @@ class BeliPremiumModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_user','jumlah_bulan','bukti_pembayaran','notifikasi'];
+    protected $allowedFields    = ['id_user','jumlah_bulan','bukti_pembayaran','notifikasi', 'waktu_pembelian'];
 
     // Dates
     protected $useTimestamps = false;

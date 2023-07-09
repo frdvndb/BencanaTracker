@@ -64,6 +64,7 @@ class NotifikasiLaporanController extends BaseController
 
     public function submitBeliPremium()
     {
+        date_default_timezone_set('Asia/Makassar');
         $buktiPembayaran = $this->request->getFile('bukti_pembayaran');
         $fileData = file_get_contents($buktiPembayaran->getTempName());
         $model = new BeliPremiumModel();
@@ -71,6 +72,7 @@ class NotifikasiLaporanController extends BaseController
             'id_user' => session()->get('id'),
             'jumlah_bulan' => $this->request->getPost('jumlah_bulan'),
             'bukti_pembayaran' => $fileData,
+            'waktu_pembelian'=> date('Y-m-d H:i:s')
         ]);
         session()->setFlashdata('successBeli', 'Tunggu Diverifikasi Admin! Kemungkinkan 1-7 hari!');
         return redirect()->to(base_url('notifikasi'));
