@@ -176,23 +176,23 @@
         background-color: #FF5757;
         color: white;
     }
-        .table-wrapper::-webkit-scrollbar {
-        width: 8px;
+    .table-wrapper::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 4px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
         background-color: transparent;
-        }
-
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 4px;
-        }
-
-        .table-wrapper::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-
-        .table-wrapper::-webkit-scrollbar-track {
-            background-color: transparent;
-        }
+    }
     </style>
 </head>
 
