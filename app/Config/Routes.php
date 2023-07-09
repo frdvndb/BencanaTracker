@@ -97,6 +97,7 @@ $routes->delete('/hapus_laporan_bencana/(:num)', 'AdminController::deleteLaporan
 $routes->delete('/hapus_user/(:num)', 'AdminController::deleteUser/$1');
 $routes->delete('/hapus_laporan_pelaporan/(:num)', 'AdminController::deletePelaporanLaporan/$1');
 $routes->delete('/hapus_relawan/(:num)', 'AdminController::deleteRelawan/$1');
+$routes->delete('/hapus_komentar/(:num)', 'AdminController::deleteKomentar/$1');
 $routes->post('/verifikasi_relawan/(:num)', 'AdminController::verifikasiRelawan/$1');
 $routes->post('/verifikasi_laporan_bencana/(:num)', 'AdminController::verifikasiLaporanBencana/$1');
 $routes->get('laporan/upvote/(:num)', 'VoteController::upVote/$1');

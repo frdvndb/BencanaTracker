@@ -14,7 +14,10 @@ class KomentarController extends BaseController
         $modelKomentar = new KomentarModel();
         return view('komentar', [
             "dataLaporan" => $modelLaporan->find($id),
-            "dataKomentar" => $modelKomentar->join('user', 'user.id = komentar.id_user')->where('komentar.id_laporan', $id)->findAll(),
+            "dataKomentar" => $modelKomentar->select('komentar.* , user.username')
+            ->join('user', 'komentar.id_user = user.id', 'left')
+            ->where('komentar.id_laporan', $id)
+            ->find(),
             "username" => session()->get('username'),
             "isAdmin" => session()->get('isAdmin')
         ]);

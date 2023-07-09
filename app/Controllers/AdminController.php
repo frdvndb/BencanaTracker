@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\BeliPremiumModel;
+use App\Models\KomentarModel;
 use App\Models\LaporanBencanaModel;
+use App\Models\LaporanModel;
 use App\Models\LaporkanLaporanModel;
 use App\Models\RelawanModel;
 use App\Models\UserModel;
@@ -168,6 +170,13 @@ class AdminController extends BaseController
         $model = new RelawanModel();
         $model->delete($id);
         return redirect()->to(base_url('admin_daftar_relawan'));
+    }
+    public function deleteKomentar($id){
+        $model = new KomentarModel();
+        $model2 = new LaporanBencanaModel();
+        // $data = $model2->join('user', 'user.id = komentar.id_user')->where('komentar.id_laporan', $id)->findAll();
+        $model->delete($id);
+        return redirect()->back();
     }
 
     public function verifikasiRelawan($id){

@@ -153,12 +153,13 @@
     }
 
     .comment .user-details {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    color: white;
-    word-break: break-word;
-}
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        color: white;
+        word-break: break-word;
+    }
+
     .comments-section h3 {
         font-size: 20px;
         font-weight: bold;
@@ -175,7 +176,6 @@
 
     .user-profile {
         display: flex;
-        align-items: top;
     }
 
     .user-profile img {
@@ -183,7 +183,6 @@
         height: 50px;
         border-radius: 50%;
         margin-right: 10px;
-        
     }
 
     .user-details {
@@ -200,7 +199,7 @@
     }
 
 
-    .like-button {
+    /* .like-button {
         background-color: transparent;
         border: none;
         cursor: pointer;
@@ -208,7 +207,7 @@
 
     .like-button i {
         color: red;
-    }
+    } */
 
     .like-count {
         margin-left: 5px;
@@ -308,7 +307,16 @@
                             <img src="<?= base_url('../assets/img/BencanaTracker.png') ?>" alt="User Profile Picture">
                             <div class="user-details" style="margin-left: 10px;">
                                 <h5 class="h2o" style="margin-bottom: 0;"><?= $dk['username'] ?> <span
-                                        class="like-count"><i class="far fa-calendar-alt"></i> &nbsp; <?= $dk['tanggal'] ?></span></h5>
+                                        class="like-count"><i class="far fa-calendar-alt"></i> &nbsp;
+                                        <?= $dk['tanggal'] ?></span>
+                                        <?php if (!$isAdmin == null && $isAdmin == 1) { ?>
+                                    <form action="<?= base_url('/hapus_komentar/'.$dk['id']) ?>" method="post"
+                                        style="display: inline-block;" onsubmit="return confirm('Yakin Hapus?')">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="btn btn-danger" type="submit">Hapus</button>
+                                    </form>
+                                    <?php } ?>
+                                </h5>
                                 <p style="color: white; margin-top: 5px;"><?= $dk['komentar'] ?></p>
                             </div>
                         </div>
