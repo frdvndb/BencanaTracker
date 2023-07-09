@@ -288,7 +288,7 @@
                         <button id="getLocationButton" class="btn btn-primary">
                             <i class="bi bi-geo-alt-fill"></i> Lokasi Saya
                         </button>
-                        <p>Klik pada peta untuk mengganti lokasi Anda. Klik salah satu notifikasi untuk menampilkan lokasi laporannya.</p>
+                        <p style="color: white;">Klik pada peta untuk mengganti lokasi Anda. Klik salah satu notifikasi untuk menampilkan lokasi laporannya.</p>
                         <div id="subscriptionContainer">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="emailSwitch" name="emailSubscribe" <?= $emailSub['email_subscribe'] ? 'checked' : ''; ?>>
