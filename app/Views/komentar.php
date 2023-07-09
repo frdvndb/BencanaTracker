@@ -183,6 +183,7 @@
         height: 50px;
         border-radius: 50%;
         margin-right: 10px;
+        
     }
 
     .user-details {
@@ -304,7 +305,7 @@
                     foreach ($dataKomentar as $dk) {  ?>
                     <div class="comment">
                         <div class="user-profile">
-                            <img src="<?= base_url('../assets/img/background.jpg') ?>" alt="User Profile Picture">
+                            <img src="<?= base_url('../assets/img/BencanaTracker.png') ?>" alt="User Profile Picture">
                             <div class="user-details" style="margin-left: 10px;">
                                 <h5 class="h2o" style="margin-bottom: 0;"><?= $dk['username'] ?> <span
                                         class="like-count"><i class="far fa-calendar-alt"></i> &nbsp; <?= $dk['tanggal'] ?></span></h5>
