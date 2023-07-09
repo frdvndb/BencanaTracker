@@ -198,11 +198,6 @@
         margin-left: auto;
     }
 
-    .comment-actions .like-count {
-        font-size: 14px;
-        color: white;
-        margin-left: 5px;
-    }
 
     .like-button {
         background-color: transparent;
@@ -216,7 +211,7 @@
 
     .like-count {
         margin-left: 5px;
-        font-size: 14px;
+        font-size: 12px;
         color: white;
     }
 
@@ -312,7 +307,7 @@
                             <img src="<?= base_url('../assets/img/background.jpg') ?>" alt="User Profile Picture">
                             <div class="user-details" style="margin-left: 10px;">
                                 <h5 class="h2o" style="margin-bottom: 0;"><?= $dk['username'] ?> <span
-                                        class="like-count"><?= $dk['tanggal'] ?></span></h5>
+                                        class="like-count"><i class="far fa-calendar-alt"></i> &nbsp; <?= $dk['tanggal'] ?></span></h5>
                                 <p style="color: white; margin-top: 5px;"><?= $dk['komentar'] ?></p>
                             </div>
                         </div>
