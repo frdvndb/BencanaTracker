@@ -144,13 +144,29 @@
         background-color: #E5E5E5;
     }
 
-    .comments-section {
+    /* .comments-section {
         margin-top: 20px;
         overflow-x: hidden;
         overflow-y: auto;
         max-height: 400px;
-        word-wrap: break-word;
-    }
+    } */
+    .user-profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.comments-section {
+    margin-top: 20px;
+    overflow-y: auto;
+    max-height: 400px;
+    word-break: break-word;
+}
+
+/* Hapus properti overflow-x: hidden; */
+
 
     .comment .user-details {
         display: flex;
@@ -178,12 +194,12 @@
         display: flex;
     }
 
-    .user-profile img {
+    /* .user-profile img {
         width: 50px;
         height: 50px;
         border-radius: 50%;
         margin-right: 10px;
-    }
+    } */
 
     .user-details {
         display: flex;
