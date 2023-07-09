@@ -150,6 +150,13 @@
             cursor: pointer;
         }
 
+        .card2 .tanggal {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-size: 12px;
+        }
+
         .card2 img {
             width: 80px;
             height: 80px;
@@ -259,6 +266,7 @@
                             <?php } else { ?>
                                 <?php foreach ($data as $item) { ?>
                                     <div id="notifCard<?= $item['id_laporan']; ?>" class="card2">
+                                        <p class="tanggal">Dilaporkan pada: <?= $item['tanggal']; ?></p>
                                         <div class="image-wrapper">
                                             <img src="data:image/jpeg;base64,<?= base64_encode($item['gambar_peristiwa']); ?>"
                                                 class="rounded-circle">

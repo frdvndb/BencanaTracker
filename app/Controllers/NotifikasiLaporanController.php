@@ -28,11 +28,17 @@ class NotifikasiLaporanController extends BaseController
             $radiusNotif = 5;
         }
 
+        date_default_timezone_set('Asia/Makassar');
+
+        // Mengambil waktu 1 minggu yang lalu
+        $oneWeekAgo = date('Y-m-d', strtotime('-1 week'));
+
         $data = $model->select('notifikasi_laporan.*, laporan_bencana.*')
             ->join('laporan_bencana', 'laporan_bencana.id = notifikasi_laporan.id_laporan')
             ->where('notifikasi_laporan.id_user', $id)
-            ->findAll();
-    
+            ->where('laporan_bencana.tanggal >=', $oneWeekAgo) // Hanya ambil laporan yang dibuat 1 minggu yang lalu atau setelahnya
+            ->findAll();  
+              
         return view('notifikasi', [
             "lokasiUser" => $lokasiUser,
             "radiusNotif" => $radiusNotif,
