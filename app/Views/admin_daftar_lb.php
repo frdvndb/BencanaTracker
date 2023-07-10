@@ -276,6 +276,7 @@
                                 <th>Peristiwa</th>
                                 <th>Lokasi Dari Pengguna</th>
                                 <th>Lokasi Terdeteksi</th>
+                                <th>Tanggal Pelaporan</th>
                                 <th>Gambar</th>
                                 <th>Verifikasi</th>
                                 <th>Aksi</th>
@@ -293,6 +294,7 @@
                                 <td><?= $data['peristiwa'] ?></td>
                                 <td><?= $data['nama_lokasi'] ?></td>
                                 <td><?= $data['lokasi_terdeteksi'] ?></td>
+                                <td><?= $data['tanggal'] ?></td>
                                 <td><img src="data:image/jpeg;base64,<?= base64_encode($data['gambar_peristiwa']); ?>">
                                 </td>
                                 <td><?php $data['trusted']; 
