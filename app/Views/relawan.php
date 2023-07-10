@@ -101,7 +101,7 @@
 
     .h2o,
     h5 {
-        color: #FF5757;
+        color: white;
         font-weight: bold;
     }
 
@@ -174,6 +174,18 @@
                             href="<?= base_url('map'); ?>">LAPORKAN<br> BENCANA</a>
                     </li>
                     <div class="main-sidebar">
+                    <?php if (!$isAdmin == null && $isAdmin == 1) { ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_lb'); ?>"><i
+                                    class="bi bi-list-check"></i> Daftar Peristiwa</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_user'); ?>"><i
+                                    class="bi bi-people"></i> Daftar Pengguna</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pelaporan'); ?>"><i
+                                    class="bi bi-flag"></i> Daftar Pelaporan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_relawan'); ?>"><i
+                                    class="bi bi-people-fill"></i> Daftar Relawan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('admin_daftar_pembelian'); ?>"><i
+                                    class="bi bi-bar-chart"></i> Daftar Pembelian</a></li>
+                        <?php } else {?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('/'); ?>"><i
                                     class="bi bi-house-fill"></i> Beranda</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('notifikasi'); ?>"><i
@@ -185,6 +197,7 @@
                                     class="bi bi-clock-history"></i> Histori Laporan</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('donasi'); ?>"><i
                         class="bi bi-cash-stack"></i> Support Us</a></li>
+                        <?php } ?>
                         <?php if (!$username == null) { ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('logout'); ?>"><i
                                     class="bi bi-box-arrow-right"></i> Logout</a></li>

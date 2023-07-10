@@ -220,7 +220,7 @@
                         <form action="<?= base_url('edit_relawan/'.$data['id']) ?>" method="post"
                             enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label for="gambar_relawan">Foto Profil Relawan:</label>
+                                <label for="gambar_relawan" >Foto Profil Relawan:</label>
                                 <input type="file" id="gambar_relawan" name="gambar_relawan" class="form-control">
                             </div>
                             <div class="mb-3">
