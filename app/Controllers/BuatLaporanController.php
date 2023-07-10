@@ -172,7 +172,7 @@ class BuatLaporanController extends BaseController
         );
 
         $fields = array(
-            'app_id' => "9c243ca7-57c4-4d7c-9915-888c2167975e",
+            'app_id' => "b2a2b678-e517-474d-9e66-f23ab88930b2",
             'include_player_ids' => $playerIds,
             'headings' => array(
                 'en' => $title
@@ -187,7 +187,7 @@ class BuatLaporanController extends BaseController
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json; charset=utf-8',
-            'Authorization: Basic MmRiYzliOTEtMWNlMi00MDc4LThlNjAtMTVjNTA5OGMxMzkw'
+            'Authorization: Basic MGQyOGMxYmItNDA1OC00NWYyLThlYjUtMTVkYzA2MTI2NjZh'
         ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);

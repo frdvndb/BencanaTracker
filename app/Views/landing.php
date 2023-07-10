@@ -19,7 +19,7 @@
         window.OneSignal = window.OneSignal || [];
         OneSignal.push(function() {
             OneSignal.init({
-            appId: "9c243ca7-57c4-4d7c-9915-888c2167975e",
+            appId: "b2a2b678-e517-474d-9e66-f23ab88930b2",
             });
         });
 
