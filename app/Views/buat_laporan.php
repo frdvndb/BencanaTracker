@@ -145,7 +145,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         var clickedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
 
-        // Pre-fill the input fields with the clicked location data
+        //  Mengisi input dengan lokasi yang ditandai di map
         document.getElementById('garis_lintang').value = clickedLocation.latitude;
         document.getElementById('garis_bujur').value = clickedLocation.longitude;
         document.getElementById('peristiwa').value = clickedLocation.locationName;

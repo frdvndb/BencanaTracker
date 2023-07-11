@@ -276,6 +276,7 @@
                                 <th>ID Laporan</th>
                                 <th>ID Pelapor Bencana</th>
                                 <th>ID Pelapor Laporan</th>
+                                <th>Tanggal</th>
                                 <th>Alasan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -291,6 +292,7 @@
                                 <td><?= $data['id_laporan'] ?></td>
                                 <td><?= $data['id_pelapor_bencana'] ?></td>
                                 <td><?= $data['id_pelapor_laporan'] ?></td>
+                                <td><?= $data['tanggal_pelaporan_laporan'] ?></td>
                                 <td><?= $data['alasan'] ?></td>
                                 <td>
                                     <div class="dropdown">

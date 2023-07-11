@@ -241,12 +241,12 @@
                         }
                     });
 
-                    // retrieve marker data from the database
+                    // Mendapatkan data marker dari database
                     var locationMarkers = JSON.parse(`<?php echo ($locationMarkers); ?>`);
                     var locInfo = JSON.parse(`<?php echo ($locInfo); ?>`);
                     var maxId = JSON.parse(`<?php echo ($maxId); ?>`);
 
-                    // loop through the marker data and add markers to the map
+                    // Loop data marker dan menambah marker ke map
                     for (var i = 0; i < locationMarkers.length; i++) {
                         if (locationMarkers[i][0] === 'Banjir') {
                             customIcon = L.icon({
@@ -288,7 +288,7 @@
                     var getLocationButton = document.getElementById('getLocationButton');
                     getLocationButton.addEventListener('click', getUserLocation);
 
-                    // Get user's current location
+                    // Mendapatkan lokasi user saat ini
                     function getUserLocation() {
                         if ("geolocation" in navigator) {
                             navigator.geolocation.getCurrentPosition(function(position) {
@@ -296,10 +296,10 @@
                                 var longitude = position.coords.longitude;
 
                                 L.marker([latitude, longitude]).bindPopup('Lokasi Anda').addTo(map);
-                                // animate zoom to user location
+                                // Animasi zoom ke lokasi user
                                 map.flyTo([latitude, longitude], 13, {
                                     animate: true,
-                                    duration: 3 // durasi animasi dalam detik
+                                    duration: 3 // Durasi animasi dalam detik
                                 });
                             });
                         } else {
@@ -372,7 +372,7 @@
         </div>
     </div>
 </body>
-<!-- Include library SweetAlert -->
+<!-- library SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Cek flash data 'success' -->

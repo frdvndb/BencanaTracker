@@ -13,7 +13,7 @@ class LaporkanLaporanModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_laporan', 'id_pelapor_bencana', 'id_pelapor_laporan', 'alasan'];
+    protected $allowedFields    = ['id_laporan', 'id_pelapor_bencana', 'id_pelapor_laporan', 'tanggal_pelaporan_laporan','alasan'];
 
     // Dates
     protected $useTimestamps = false;

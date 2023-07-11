@@ -278,7 +278,7 @@
         </div>
     </div>
 </body>
-<!-- Include library SweetAlert -->
+<!-- library SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Cek flash data 'failed' -->

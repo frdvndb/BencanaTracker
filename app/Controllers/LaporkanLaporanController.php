@@ -21,6 +21,7 @@ class LaporkanLaporanController extends BaseController
 
     public function submitPelaporanLaporan($id)
     {
+        date_default_timezone_set('Asia/Makassar');
         $model = new LaporkanLaporanModel();
         $historiModel = new HistoriLaporanModel();
         $id_pelapor_bencana = $historiModel->select('id_user')->where('id_laporan', $id)->first();
@@ -28,6 +29,7 @@ class LaporkanLaporanController extends BaseController
             'id_laporan' => $id,
             "id_pelapor_bencana" => $id_pelapor_bencana['id_user'],
             'id_pelapor_laporan' => session()->get('id'),
+            'tanggal_pelaporan_laporan'=> date('Y-m-d H:i:s'),
             'alasan' => $this->request->getPost('alasan')
         ]);
         session()->setFlashdata('success', 'Berhasil Melaporkan Laporan.');

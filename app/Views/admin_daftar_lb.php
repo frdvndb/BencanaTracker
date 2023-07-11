@@ -276,7 +276,7 @@
                                 <th>Peristiwa</th>
                                 <th>Lokasi Dari Pengguna</th>
                                 <th>Lokasi Terdeteksi</th>
-                                <th>Tanggal Pelaporan</th>
+                                <th>Tanggal</th>
                                 <th>Gambar</th>
                                 <th>Verifikasi</th>
                                 <th>Aksi</th>
@@ -349,10 +349,7 @@
     </div>
     <script>
     $(document).ready(function() {
-        // Initialize the dropdown
         $('.dropdown-toggle').dropdown();
-
-        // Close dropdown when clicking outside
         $(document).on('click', function(event) {
             var target = $(event.target);
             if (!target.closest('.dropdown').length && !target.hasClass('dropdown-toggle')) {

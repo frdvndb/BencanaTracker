@@ -23,9 +23,9 @@
             });
         });
 
-        // Function to check if user is subscribed and save the player ID
+        // Fungsi untuk memeriksa apakah pengguna berlangganan, dan menyimpan ID pemain
         function checkSubscriptionAndSavePlayerID() {
-            // Check if the user is logged in
+            // Cek apakah pengguna sudah login
             var isLoggedIn = <?php echo $username ? 'true' : 'false'; ?>;
             var userID = "<?php echo $userID; ?>";
             if (isLoggedIn) {
@@ -34,12 +34,12 @@
                         if (isEnabled) {
                             console.log("Push notifications are enabled!");
                             document.getElementById('loading').style.display = 'flex';
-                            // Check if the user is already subscribed
+                            // Cek apakah pengguna sudah subscribed
                             OneSignal.getUserId(function(userId) {
                                 if (userId) {
-                                    // User is subscribed, save the player ID to the database
+                                    // Pengguna berlangganan, simpan ID pemain ke database
                                     var playerId = OneSignal.getRegistrationId();
-                                    savePlayerID(userId, userID); // Pass the user ID to the savePlayerID function
+                                    savePlayerID(userId, userID); // Berikan ID pengguna ke fungsi savePlayerID
                                 }
                             });
                         }
@@ -52,9 +52,9 @@
             }
         }
 
-        // Function to save the player ID to the database
-        function savePlayerID(playerId, userID) { // Add userID as a parameter
-            // Send an AJAX request to your server to save the player ID to the database
+        // Fungsi untuk menyimpan ID pemain ke database
+        function savePlayerID(playerId, userID) { 
+            // Kirim permintaan AJAX ke server untuk menyimpan ID pemain ke database
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '<?= base_url() ?>' + '/simpan_player_id', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -65,20 +65,18 @@
                     document.getElementById('loading').style.display = 'none';
                 }
             };
-            xhr.send('playerId=' + playerId + '&userID=' + userID); // Send the user ID along with the player ID
+            xhr.send('playerId=' + playerId + '&userID=' + userID); // Kirim user ID bersama player ID
         }
 
         OneSignal.push(function() {
-            // Occurs when the user's subscription changes to a new value.
+            // Terjadi bila langganan pengguna berubah ke nilai baru
             OneSignal.on('subscriptionChange', function (isSubscribed) {
                 console.log("The user's subscription state is now:", isSubscribed);
                 checkSubscriptionAndSavePlayerID();
             });
-        
-            // This event can be listened to via the `on()` or `once()` listener.
         });
 
-        // Call the function when the page loads
+        // Panggil fungsi saat halaman dimuat
         window.onload = checkSubscriptionAndSavePlayerID;
         </script>    
     <style>
