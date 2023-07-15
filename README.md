@@ -9,7 +9,7 @@ M. Farid Pebrian   (2110817210015)
 # Penjelasan Aplikasi
 BencanaTracker merupakan aplikasi berbasis web yang berfungsi untuk melihat dan melaporkan bencana yang sedang terjadi.
 
-## Catatan Mengenai Fitur Web Push
+## Catatan Mengenai Fitur Notifikasi Web Push
 Project ini menggunakan OneSignal untuk mengirimkan notifikasi web push. Pada dashboard OneSignal, kami telah memasukkan http://localhost:8080 sebagai site url nya. Disarankan untuk menggunakan perintah `php spark serve` untuk melakukan hosting server pada port 8080 agar notifikasi web push berfungsi dengan baik. 
 
 Jika ingin melakukan hosting server pada port atau domain lain, kami menyarankan untuk melakukan langkah-langkah berikut untuk memastikan notifikasi web push tetap bekerja.
