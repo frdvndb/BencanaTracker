@@ -111,7 +111,6 @@
         var map = L.map('gmapBlock').setView([-3.89, 115.28], 4);
         var marker;
 
-        // set map tiles source
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
             maxZoom: 18
@@ -158,7 +157,7 @@
         map.on('click', function(event) {
             var clickedLocation = event.latlng;
 
-            // Remove existing marker
+            // Hapus penanda yang ada
             if (marker) {
                 map.removeLayer(marker);
             }
@@ -175,7 +174,7 @@
         var getLocationButton = document.getElementById('getLocationButton');
         getLocationButton.addEventListener('click', getUserLocation);
 
-        // Get user's current location
+        // Mendapatkan lokasi user saat ini
         function getUserLocation() {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -193,7 +192,7 @@
 
 
                     marker = L.marker([latitude, longitude]).addTo(map);
-                    // animate zoom to user location
+                    // animasikan zoom ke lokasi user
                     map.flyTo([latitude, longitude], 13, {
                         animate: true,
                         duration: 3 // durasi animasi dalam detik

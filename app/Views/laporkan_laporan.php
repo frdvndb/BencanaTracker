@@ -148,7 +148,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         var clickedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
 
-        // Pre-fill the input fields with the clicked location data
         document.getElementById('latitude').value = clickedLocation.latitude;
         document.getElementById('longitude').value = clickedLocation.longitude;
         document.getElementById('locationName').value = clickedLocation.locationName;

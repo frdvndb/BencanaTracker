@@ -25,20 +25,6 @@ class GMapController extends BaseController
         $database = \Config\Database::connect();
         $queryBuilder = $database->table('laporan_bencana');
 
-        // if ($this->request->getMethod() === 'post') {
-        //     $locationName = $this->request->getPost('peristiwa');
-        //     $latitude = $this->request->getPost('latitude');
-        //     $longitude = $this->request->getPost('longitude');
-
-        //     $data = [
-        //         'location_name' => $locationName,
-        //         'latitude' =>  $latitude,
-        //         'longitude' => $longitude
-        //     ];
-
-        //     $queryBuilder->insert($data);
-        // }
-
         date_default_timezone_set('Asia/Makassar');
 
         // Mengambil waktu 1 minggu yang lalu
@@ -122,15 +108,6 @@ class GMapController extends BaseController
         return $this->response->setJSON($location);
     }
 
-
-    // public function donasi()
-    // {
-    //     return view('donasi', [
-    //         "username" => session()->get('username'),
-    //         "isAdmin" => session()->get('isAdmin')
-    //     ]);
-    // }
-
     public function pencarianrelawan()
     {
         return view('pencarianrelawan', [
@@ -169,14 +146,6 @@ class GMapController extends BaseController
             "isAdmin" => session()->get('isAdmin')
         ]);
     }
-
-    // public function laporkan_laporan()
-    // {
-    //     return view('laporkan_laporan', [
-    //         "username" => session()->get('username'),
-    //         "isAdmin" => session()->get('isAdmin')
-    //     ]);
-    // }
     
     public function notifikasi()
     {
@@ -203,8 +172,8 @@ class GMapController extends BaseController
 
     public function simpanPlayerID()
     {
-        $playerId = $this->request->getPost('playerId'); // Dapatkan player ID dari permintaan POST
-        $userId = $this->request->getPost('userID'); // Dapatkan user ID dari permintaan POST
+        $playerId = $this->request->getPost('playerId');
+        $userId = $this->request->getPost('userID');
     
         $model = new OneSignalPlayerModel();
     
@@ -215,7 +184,7 @@ class GMapController extends BaseController
         $existingRow = $model->where('id_player', $playerId)->where('id_user', $userId)->first();
 
         if (!$existingRow) {
-            // Jika tidak ada baris yang ada, simpan player ID ke database
+            // Jika tidak ada, simpan player ID ke database
             $data = [
                 'id_player' => $playerId,
                 'id_user' => $userId
@@ -223,10 +192,10 @@ class GMapController extends BaseController
             $model->insert($data);
         }        
     
-        // Check if the user already has 10 player IDs in the database
+        // Periksa apakah user sudah memiliki 10 player ID di database
         $playerIdsCount = $model->where('id_user', $userId)->countAllResults();
         if ($playerIdsCount > 10) {
-            // If there are already 10 player IDs, delete the row with the lowest ID for the user
+            // Jika sudah ada 10 player ID, hapus baris dengan ID terendah untuk user
             $lowestIdPlayer = $model->where('id_user', $userId)->orderBy('id', 'ASC')->first();
             $model->delete($lowestIdPlayer['id']);
         }    

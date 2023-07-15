@@ -19,7 +19,7 @@
         window.OneSignal = window.OneSignal || [];
         OneSignal.push(function() {
             OneSignal.init({
-            appId: "b2a2b678-e517-474d-9e66-f23ab88930b2",
+            appId: "b2a2b678-e517-474d-9e66-f23ab88930b2", // ganti dengan App ID dari App > Settings > Keys & IDs pada dashboard OneSgnal
             });
         });
 
@@ -34,10 +34,9 @@
                         if (isEnabled) {
                             console.log("Push notifications are enabled!");
                             document.getElementById('loading').style.display = 'flex';
-                            // Cek apakah pengguna sudah subscribed
+                            // Cek apakah pengguna sudah subscribe
                             OneSignal.getUserId(function(userId) {
                                 if (userId) {
-                                    // Pengguna berlangganan, simpan ID pemain ke database
                                     var playerId = OneSignal.getRegistrationId();
                                     savePlayerID(userId, userID); // Berikan ID pengguna ke fungsi savePlayerID
                                 }
@@ -59,7 +58,6 @@
             xhr.open('POST', '<?= base_url() ?>' + '/simpan_player_id', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function() {
-                // alert(xhr.readyState + " " + xhr.status)
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     console.log('Player ID saved successfully');
                     document.getElementById('loading').style.display = 'none';

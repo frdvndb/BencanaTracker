@@ -36,7 +36,7 @@ class NotifikasiLaporanController extends BaseController
         $data = $model->select('notifikasi_laporan.*, laporan_bencana.*')
             ->join('laporan_bencana', 'laporan_bencana.id = notifikasi_laporan.id_laporan')
             ->where('notifikasi_laporan.id_user', $id)
-            ->where('laporan_bencana.tanggal >=', $oneWeekAgo) // Hanya ambil laporan yang dibuat 1 minggu yang lalu atau setelahnya
+            ->where('laporan_bencana.tanggal >=', $oneWeekAgo) // Hanya ambil laporan yang dibuat 1 minggu yang lalu atau kurang
             ->findAll();  
               
         return view('notifikasi', [
@@ -96,8 +96,6 @@ class NotifikasiLaporanController extends BaseController
         $model->update($id, $data);
     
         session()->setFlashdata('success', 'Berhasil Memperbarui Lokasi.');
-    
-        // Return response JSON
         return $this->response->setJSON(['success' => true]);
     }
     public function updateStatusLangganan() 
@@ -112,16 +110,16 @@ class NotifikasiLaporanController extends BaseController
                 'email_subscribe' => 1
             ];
             $model->update($id, $data);
+
             session()->setFlashdata('success', 'Berhasil Memperbarui Status Langganan.');
-            // Return response JSON
             return $this->response->setJSON(['success' => true]);    
         } else if ($this->request->getPost('type') == 'email' && $this->request->getPost('value') == 'false') {
             $data = [
                 'email_subscribe' => 0
             ];
             $model->update($id, $data);
+
             session()->setFlashdata('success', 'Berhasil Memperbarui Status Langganan.');
-            // Return response JSON
             return $this->response->setJSON(['success' => true]);    
         }
         
@@ -130,16 +128,16 @@ class NotifikasiLaporanController extends BaseController
                 'push_subscribe' => 1
             ];
             $model->update($id, $data);
+
             session()->setFlashdata('success', 'Berhasil Memperbarui Status Langganan.');
-            // Return response JSON
             return $this->response->setJSON(['success' => true]);    
         } else if ($this->request->getPost('type') == 'push' && $this->request->getPost('value') == 'false') {
             $data = [
                 'push_subscribe' => 0
             ];
             $model->update($id, $data);
+
             session()->setFlashdata('success', 'Berhasil Memperbarui Status Langganan.');
-            // Return response JSON
             return $this->response->setJSON(['success' => true]);    
         }
     }    
@@ -151,8 +149,8 @@ class NotifikasiLaporanController extends BaseController
             'radius_notif' => $this->request->getPost('radius')
         ];
         $model->update($id, $data);
+        
         session()->setFlashdata('success', 'Berhasil Memperbarui Radius Notifikasi');
-        // Return response JSON
         return $this->response->setJSON(['success' => true]);    
     }
 }

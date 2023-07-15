@@ -20,7 +20,7 @@
         window.OneSignal = window.OneSignal || [];
         OneSignal.push(function() {
             OneSignal.init({
-            appId: "b2a2b678-e517-474d-9e66-f23ab88930b2",
+            appId: "b2a2b678-e517-474d-9e66-f23ab88930b2", // ganti dengan App ID dari App > Settings > Keys & IDs pada dashboard OneSgnal
             });
         });
     </script>
@@ -347,12 +347,10 @@
                     // Menentukan pergeseran vertikal untuk popup
                     var popupOffset = L.point(0, -20);
                     var lingkaran = <?= $radiusNotif['radius_notif'] ? $radiusNotif['radius_notif'] : 5 ?>
-                    // retrieve user location from the database
+                    // ambil lokasi user dari database
                     var userLocation = <?php echo json_encode($lokasiUser); ?>;
 
                     var map = L.map('gmapBlock').setView([-3.89, 115.28], 2);
-
-                    // set map tiles source
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                         maxZoom: 18
@@ -387,10 +385,10 @@
                         map.flyTo(e.geocode.center, 15);
                     }).addTo(map);
 
-                    // add marker for user location
+                    // tambahkan marker untuk lokasi user yang tersimpan
                     var marker = L.marker([userLocation.garis_lintang, userLocation.garis_bujur]).bindPopup('Lokasi Anda yang tersimpan').addTo(map);
 
-                    // create a circle with 5 kilometer radius around the marker
+                    // membuat lingkaran di sekitar marker dengan radius sesuai dengan yang tersimpan di database
                     var circle = L.circle([userLocation.garis_lintang, userLocation.garis_bujur], {
                         color: 'orange',
                         fillColor: 'orange',
@@ -398,7 +396,7 @@
                         radius: 1000 * lingkaran
                     }).addTo(map);
 
-                    // animate zoom to user location
+                    // menganimasikan zoom ke lokasi user
                     map.flyTo([userLocation.garis_lintang, userLocation.garis_bujur], 12, {
                         animate: true,
                         duration: 3 // durasi animasi dalam detik
@@ -407,7 +405,7 @@
                     var getLocationButton = document.getElementById('getLocationButton');
                     getLocationButton.addEventListener('click', getUserLocation);
 
-                    // Get user's current location
+                    // mendapatkan lokasi pengguna saat ini
                     function getUserLocation() {
                         if ("geolocation" in navigator) {
                             navigator.geolocation.getCurrentPosition(function(position) {
@@ -421,7 +419,7 @@
                                 });
 
                                 var markerLokasiSaatIn = L.marker([latitude, longitude], { icon: customIcon }).bindPopup('Lokasi Anda saat ini', { offset: popupOffset }).addTo(map);
-                                // animate zoom to user location
+                                // menganimasikan zoom ke lokasi user
                                 map.flyTo([latitude, longitude], 15, {
                                     animate: true,
                                     duration: 3 // durasi animasi dalam detik
@@ -432,13 +430,13 @@
                         }
                     }
 
-                    // event handler for clicking on the map to update the user location
+                    // Event Handler saat mengklik peta untuk memperbarui lokasi pengguna
                     map.on('click', function(event) {
                         var clickedLocation = event.latlng;
                         var latitude = clickedLocation.lat;
                         var longitude = clickedLocation.lng;
 
-                        // update user location in the database
+                        // Perbarui lokasi user di database
                         $.ajax({
                             url: '<?= base_url("update_lokasi_user"); ?>',
                             method: 'POST',
@@ -454,14 +452,14 @@
                                 // Sembunyikan elemen loading
                                 $('#loading').hide();
 
-                                // remove previous marker and circle
+                                // Hapus marker dan lingkaran sebelumnya
                                 map.removeLayer(marker);
                                 map.removeLayer(circle);
 
-                                // add new marker for updated location
+                                // Tambahkan marker baru untuk lokasi yang sudah diupdate
                                 marker = L.marker(clickedLocation).bindPopup('Lokasi Anda yang tersimpan').addTo(map);
 
-                                // create a new circle with 5 kilometer radius around the marker
+                                // Membuat lingkaran baru di sekitar marker dengan radius sesuai dengan yang tersimpan di database
                                 circle = L.circle(clickedLocation, {
                                     color: 'orange',
                                     fillColor: 'orange',
@@ -485,9 +483,9 @@
                         });
                     });
 
-                    // Function to handle subscription change
+                    // Fungsi untuk menangani perubahan berlangganan
                     function handleSubscriptionChange(type, value) {
-                        // Update subscription status in the database
+                        // Perbarui status langganan di database
                         $.ajax({
                             url: '<?= base_url("update_status_langganan"); ?>',
                             method: 'POST',
@@ -533,17 +531,16 @@
                     var initialStatusEmail = emailCheckbox.checked;
                     var initialStatusPush = pushCheckbox.checked;
 
-                    // event handler for email subscription switch
+                    // event handler untuk checkbox subscription email
                     $('#emailSwitch').on('change', function() {
                         var isChecked = $(this).prop('checked');
                         handleSubscriptionChange('email', isChecked);
                     });
 
-                    // event handler for push notification subscription switch
+                    // event handler untuk checkbox subscription push
                     $('#pushSwitch').on('change', function() {
                         var isChecked = $(this).prop('checked');
                         if (isChecked) {
-                            // pushCheckbox.checked = false;
                             OneSignal.push(["getNotificationPermission", function(permission) {
                                 console.log("Site Notification Permission:", permission);
                                 if (permission == 'granted') {
@@ -553,7 +550,7 @@
                                     pushCheckbox.checked = false;
                                 } else {
                                     alert('Silahkan mengizinkan notifikasi untuk perangkat ini. Jika permintaan izin tidak muncul, Anda dapat mengizinkannya di \"Site Permission\" untuk BencanaTracker di setelan browser.')
-                                    // Prompt for OneSignal permission
+                                    // Menampilkan prompt native permintaan izin
                                     OneSignal.push(function() {
                                         OneSignal.showNativePrompt();
                                     });
@@ -566,7 +563,7 @@
                     });
 
                     function checkSubscriptionAndSavePlayerID() {
-                        // Check if the user is logged in
+                        // Periksa apakah sudah login
                         var isLoggedIn = <?php echo $username ? 'true' : 'false'; ?>;
                         var userID = "<?php echo $userID; ?>";
                         if (isLoggedIn) {
@@ -575,11 +572,11 @@
                                     if (isEnabled) {
                                         console.log("Push notifications are enabled!");
                                         $('#loading').show();
-                                        // Check if the user is already subscribed
+                                        // Periksa apakah user sudah berlangganan
                                         OneSignal.getUserId(function(userId) {
                                             if (userId) {
-                                                // User is subscribed, save the player ID to the database
-                                                savePlayerID(userId, userID); // Pass the user ID to the savePlayerID function
+                                                // User berlangganan, simpan ID pemain ke database
+                                                savePlayerID(userId, userID); // Memberikan ID Pengguna ke fungsi savePlayerID
                                             }
                                         });
                                     }
@@ -592,9 +589,9 @@
                         }
                     }
 
-                    // Function to save the player ID to the database
-                    function savePlayerID(playerId, userID) { // Add userID as a parameter
-                        // Send an AJAX request to your server to save the player ID to the database
+                    // Fungsi untuk menyimpan ID Player ke database
+                    function savePlayerID(playerId, userID) { // Tambahkan UserID sebagai parameter
+                        // Kirim permintaan AJAX ke server untuk menyimpan ID pemain ke database
                         var xhr = new XMLHttpRequest();
                         xhr.open('POST', '<?= base_url() ?>' + '/simpan_player_id', true);
                         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -604,7 +601,7 @@
                             }
                             $('#loading').hide();
                         };
-                        xhr.send('playerId=' + playerId + '&userID=' + userID); // Send the user ID along with the player ID
+                        xhr.send('playerId=' + playerId + '&userID=' + userID); //Kirim ID Pengguna bersama dengan ID Pemain
                     }
 
 
@@ -621,14 +618,14 @@
 
                     checkSubscriptionAndSavePlayerID();
 
-                    // event handler for radius button click
+                    // event handler saat tombol ubah radius diklik
                     $('#radiusButton').on('click', function() {
                         event.preventDefault(); // Menghentikan aksi default tombol
                         var radius = $('#radiusInput').val();
                         if (radius <= 0) {
                             alert('Radius harus lebih dari 0!')
                         } else {
-                            // Update radius in the database
+                            // Update radius di database
                             $.ajax({
                                 url: '<?= base_url("update_radius"); ?>',
                                 method: 'POST',
@@ -649,7 +646,7 @@
                                         radius = 5;
                                     }
 
-                                    // Update circle radius on the map
+                                    // Update radius lingkaran di peta
                                     circle.setRadius(radius * 1000);
 
                                     // Tampilkan pesan popup menggunakan SweetAlert
@@ -687,10 +684,10 @@
                             map.removeLayer(notificationMarker);
                         }
 
-                        // Add new marker for selected location
+                        // Tambahkan marker baru untuk lokasi yang dipilih
                         notificationMarker = L.marker([lat, lng], { icon: customIconLaporan }).bindPopup(peristiwa, { offset: popupOffset }).addTo(map);
 
-                        // Animate flyTo to the selected marker location
+                        // Animasikan Flyto ke lokasi marker yang dipilih
                         map.flyTo([lat, lng], 12, {
                             animate: true,
                             duration: 2
@@ -703,7 +700,7 @@
         </div>
     </div>
     </body>
-<!-- Include library SweetAlert -->
+<!-- Sertakan library SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Cek flash data 'success' -->

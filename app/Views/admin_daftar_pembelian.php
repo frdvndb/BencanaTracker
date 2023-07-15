@@ -285,7 +285,7 @@
                         </thead>
                         <tbody>
                             <!-- Perulangan foreach()
-                    untuk memanggil memanggil
+                    untuk memanggil
                     semua data yang diperlukan. -->
                             <?php $i = 0 + (10 * ($currentPage - 1)); ?>
                             <?php foreach ($data as $data) : ?>

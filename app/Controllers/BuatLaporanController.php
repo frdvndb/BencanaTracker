@@ -45,32 +45,6 @@ class BuatLaporanController extends BaseController
 
         curl_close($ch);
 
-        // return json_decode($response, true);
-
-        // $client = new \CodeIgniter\HTTP\CURLRequest(
-        //     new \Config\App(),
-        //     new \CodeIgniter\HTTP\URI(),
-        //     new \CodeIgniter\HTTP\Response(new \Config\App()),
-        // );
-        
-        // $headers = [
-        //     'Referer: http://localhost', // Ganti dengan Referer yang valid
-        //     'User-Agent: MyApplication/1.0', // Ganti dengan User-Agent yang valid
-        // ];
-        
-        // $response = $client->request('GET', $url, [], $headers);
-        // if ($response->getStatusCode() === 200) {
-        //     $data = json_decode($response->getBody(), true);
-        //     $nama_lokasi = $data['display_name'];
-        //     echo "Nama Lokasi: " . $nama_lokasi;
-        // } else {
-        //     echo "Permintaan gagal.";
-        // }
-        
-        // $url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=52.5487429714954&lon=-1.81602098644987&zoom=18&addressdetails=1'; // URL eksternal yang ingin Anda ambil kontennya
-        // // Mendapatkan isi konten dari URL eksternal
-        // $content = file_get_contents(urlencode($url));
-
         $lokasi = json_decode($response);
         $lokasi = $lokasi->display_name;
         
@@ -172,7 +146,7 @@ class BuatLaporanController extends BaseController
         );
 
         $fields = array(
-            'app_id' => "b2a2b678-e517-474d-9e66-f23ab88930b2",
+            'app_id' => "b2a2b678-e517-474d-9e66-f23ab88930b2", // ganti dengan App ID dari App > Settings > Keys & IDs pada dashboard OneSgnal
             'include_player_ids' => $playerIds,
             'headings' => array(
                 'en' => $title
@@ -187,7 +161,7 @@ class BuatLaporanController extends BaseController
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json; charset=utf-8',
-            'Authorization: Basic MGQyOGMxYmItNDA1OC00NWYyLThlYjUtMTVkYzA2MTI2NjZh'
+            'Authorization: Basic MGQyOGMxYmItNDA1OC00NWYyLThlYjUtMTVkYzA2MTI2NjZh' // ganti dengan Rest API Key dari App > Settings > Keys & IDs pada dashboard OneSgnal
         ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
