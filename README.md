@@ -15,7 +15,7 @@ Project ini menggunakan OneSignal untuk mengirimkan notifikasi web push. Pada da
 Jika ingin melakukan hosting server pada port atau domain lain, kami menyarankan untuk melakukan langkah-langkah berikut untuk memastikan notifikasi web push tetap bekerja.
 1. Buat akun atau login (jika sudah memiliki akun) di [OneSignal](https://onesignal.com/).
 2. Buat 'App' baru dengan 'Web' sebagai platformnya.
-3. Pada App > Settings, pilih Typical Site.
+3. Pada App > Settings, pilih 'Typical Site'.
 4. Lakukan konfigurasi sesuai keperluan dan pastikan `SITE URL` diisi dengan benar.
 5. Salin OneSignal App ID pada App > Settings > Keys & IDs.
 6. Ganti value `appId` pada baris 22 di file `/Views/landing.php` dengan App ID yang disalin.
